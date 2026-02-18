@@ -4,12 +4,12 @@
  *
  * Usage: router.post('/cache/clear', adminAuth, handler)
  *
- * Authentication methods (checked in order):
- *   1. Header: x-admin-key: <ADMIN_API_KEY>
- *   2. Query:  ?adminKey=<ADMIN_API_KEY>
+ * Authentication: Header only
+ *   x-admin-key: <ADMIN_API_KEY>
  */
 
 import dotenv from 'dotenv';
+import crypto from 'crypto';
 dotenv.config();
 
 const ADMIN_API_KEY = process.env.ADMIN_API_KEY;
@@ -23,16 +23,17 @@ export default function adminAuth(req, res, next) {
     });
   }
 
-  const provided = req.headers['x-admin-key'] || req.query.adminKey;
+  const provided = req.headers['x-admin-key'];
 
   if (!provided) {
     return res.status(401).json({
       success: false,
-      error: 'Authentication required'
+      error: 'Authentication required. Use x-admin-key header.'
     });
   }
 
-  if (provided !== ADMIN_API_KEY) {
+  // Timing-safe comparison to prevent timing attacks
+  if (!crypto.timingSafeEqual(Buffer.from(provided), Buffer.from(ADMIN_API_KEY))) {
     return res.status(403).json({
       success: false,
       error: 'Invalid credentials'

@@ -307,42 +307,40 @@ class ApiOrchestrator {
   }
 
   /**
-   * Pattern B: 2-step Query 실행
+   * Pattern B: 2-step Query 실행 (병렬)
    */
   async executeTwoStepQueries(companyName, brno, crno, meta) {
     const results = [];
+    const filteredApis = TWO_STEP_APIS.filter(api => api.id !== 'ksd_corp');
 
     meta.timing.twoStepStart = Date.now();
 
-    for (const api of TWO_STEP_APIS) {
-      // Skip ksd_corp - same endpoint as discovery step
-      if (api.id === 'ksd_corp') continue;
-
-      try {
+    const tasks = filteredApis.map(api => ({
+      api,
+      fn: async () => {
         meta.apisAttempted++;
         const req = api.buildSearchRequest(companyName);
         const data = await this.httpGet(req.url, req.params);
         const candidates = api.extractCandidates(data);
 
-        if (!candidates || candidates.length === 0) continue;
+        if (!candidates || candidates.length === 0) return null;
 
-        // 후보 중 최적 매칭 선택
         const bestMatch = this.selectBestCandidate(candidates, { brno, crno, companyName });
         if (bestMatch) {
-          results.push({
-            source: api.name,
-            ...bestMatch
-          });
           meta.apisSucceeded++;
+          return { source: api.name, ...bestMatch };
         }
-      } catch (error) {
-        meta.apisFailed++;
-        meta.errors.push({ api: api.id, error: error.message });
+        return null;
       }
+    }));
+
+    const responses = await this.executeWithConcurrencyLimit(tasks, 3, meta, true);
+    for (const resp of responses) {
+      if (resp) results.push(resp);
     }
 
     meta.timing.twoStepMs = Date.now() - meta.timing.twoStepStart;
-    console.log(`  [2-step] ${results.length}/${TWO_STEP_APIS.length} APIs matched (${meta.timing.twoStepMs}ms)`);
+    console.log(`  [2-step] ${results.length}/${filteredApis.length} APIs matched (${meta.timing.twoStepMs}ms)`);
     return results;
   }
 

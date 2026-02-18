@@ -32,7 +32,7 @@ const sequelize = new Sequelize(
     dialectOptions: {
       ssl: process.env.NODE_ENV === 'production' ? {
         require: true,
-        rejectUnauthorized: false
+        rejectUnauthorized: true
       } : false
     }
   }
@@ -88,16 +88,24 @@ export async function executeQuery(sql, replacements = {}) {
  */
 export async function insertWithEncryption(table, data, encryptFields = []) {
   try {
+    const encKey = process.env.ENCRYPTION_KEY;
+    if (encryptFields.length > 0 && !encKey) {
+      throw new Error('ENCRYPTION_KEY not configured');
+    }
+
     const fields = Object.keys(data);
     const values = Object.values(data);
 
-    // Build SQL with encryption for specified fields
+    // Pass encryption key as an additional bind parameter
+    const encKeyIdx = fields.length + 1;
     const valuesPart = fields.map((field, idx) => {
       if (encryptFields.includes(field)) {
-        return `PGP_SYM_ENCRYPT($${idx + 1}, '${process.env.ENCRYPTION_KEY}')`;
+        return `PGP_SYM_ENCRYPT($${idx + 1}, $${encKeyIdx})`;
       }
       return `$${idx + 1}`;
     }).join(', ');
+
+    const bindValues = encryptFields.length > 0 ? [...values, encKey] : values;
 
     const sql = `
       INSERT INTO ${table} (${fields.join(', ')})
@@ -106,7 +114,7 @@ export async function insertWithEncryption(table, data, encryptFields = []) {
     `;
 
     const [result] = await sequelize.query(sql, {
-      bind: values,
+      bind: bindValues,
       type: Sequelize.QueryTypes.INSERT
     });
 
