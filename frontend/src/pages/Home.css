@@ -1,0 +1,38 @@
+.home {
+  max-width: 1200px;
+}
+
+.search-tab {
+  text-align: center;
+  padding: var(--spacing-2xl) 0;
+}
+
+.search-hero {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.search-hero h2 {
+  font-size: 2.5rem;
+  margin-bottom: var(--spacing-md);
+  color: var(--gray-900);
+}
+
+.search-hero p {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  color: var(--gray-600);
+}
+
+.tab-content {
+  margin-top: var(--spacing-xl);
+}
+
+@media (max-width: 768px) {
+  .search-hero h2 {
+    font-size: 1.75rem;
+  }
+
+  .search-hero p {
+    font-size: 1rem;
+  }
+}

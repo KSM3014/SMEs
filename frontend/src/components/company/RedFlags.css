@@ -1,0 +1,118 @@
+.red-flags {
+  background: white;
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+  border-left: 4px solid var(--warning);
+}
+
+.red-flags-header {
+  text-align: center;
+  margin-bottom: var(--spacing-xl);
+}
+
+.red-flags-header h2 {
+  font-size: 1.5rem;
+  margin: 0 0 var(--spacing-sm) 0;
+  color: var(--gray-900);
+}
+
+.flags-list {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-md);
+}
+
+.flag-item {
+  padding: var(--spacing-lg);
+  border-radius: var(--radius-md);
+  border-left: 4px solid;
+}
+
+.flag-item.error {
+  background: var(--error-light);
+  border-left-color: var(--error);
+}
+
+.flag-item.warning {
+  background: var(--warning-light);
+  border-left-color: var(--warning);
+}
+
+.flag-item.info {
+  background: var(--info-light);
+  border-left-color: var(--info);
+}
+
+.flag-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-sm);
+}
+
+.flag-title {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.flag-icon {
+  font-size: 1.25rem;
+}
+
+.flag-name {
+  font-weight: 700;
+  font-size: 1rem;
+  color: var(--gray-900);
+}
+
+.severity-badge {
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+}
+
+.severity-badge.error {
+  background: var(--error);
+  color: white;
+}
+
+.severity-badge.warning {
+  background: var(--warning);
+  color: white;
+}
+
+.severity-badge.info {
+  background: var(--info);
+  color: white;
+}
+
+.flag-description {
+  color: var(--gray-700);
+  line-height: 1.6;
+  margin-bottom: var(--spacing-sm);
+}
+
+.flag-details {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  padding: var(--spacing-sm) var(--spacing-md);
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: var(--radius-sm);
+}
+
+.flag-details strong {
+  color: var(--gray-900);
+}
+
+@media (max-width: 768px) {
+  .flag-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-sm);
+  }
+}

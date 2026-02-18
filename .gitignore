@@ -1,0 +1,159 @@
+# ============================================
+# SME Investor Service - Git Ignore
+# ============================================
+
+# Environment Variables (CRITICAL - DO NOT COMMIT)
+.env
+.env.local
+.env.production
+.env.*.local
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+.pnpm-debug.log*
+
+# Dependencies
+node_modules/
+jspm_packages/
+
+# Build outputs
+dist/
+build/
+output/*/
+!output/.gitkeep
+
+# Testing
+coverage/
+.nyc_output/
+*.lcov
+
+# IDE / Editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Desktop.ini
+
+# Puppeteer / Browser profiles
+.chrome/
+.chromium/
+screenshots/
+UsersAdministrator*/
+backend/UsersAdministrator*/
+*puppeteer*profile*/
+*.png
+*.jpg
+*.jpeg
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+database/backups/
+database/dumps/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+*.swp
+*.swo
+
+# Package managers (track package-lock.json for reproducible builds)
+yarn.lock
+pnpm-lock.yaml
+
+# Uploads
+uploads/
+public/uploads/
+
+# Generated code (Phase 3)
+output/*/backend/
+output/*/frontend/
+output/*/database/
+!output/README.md
+
+# Cache
+.cache/
+.npm/
+.eslintcache
+.stylelintcache
+
+# Session data
+sessions/
+cookies/
+.puppeteerrc.js
+
+# Secrets and credentials
+*.pem
+*.key
+*.cert
+credentials.json
+secrets.json
+
+# Documentation build
+docs/_build/
+site/
+
+# Python (if used for scripts)
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+ENV/
+
+# macOS
+.AppleDouble
+.LSOverride
+
+# Windows
+$RECYCLE.BIN/
+
+# Linux
+.fuse_hidden*
+.directory
+.Trash-*
+.nfs*
+
+# Claude Code
+.claude/
+
+# Temp/intermediate data files
+quick_result.json
+**/smart_collection_log*.json
+**/page_analysis.json
+**/mypage_analysis.json
+**/comprehensive_api_inventory.json
+**/datagokr_scrape_v2.json
+**/batch1_results.json
+**/api_details_collected.json
+**/api_details_report.json
+**/api_drop_keep_report.json
+**/api_test_documentation.json
+**/api_test_report.json
+**/api_final_report.json
+
+# Playwright MCP
+.playwright-mcp/
+
+# Security reports (generated, not source)
+security_best_practices_report.md

@@ -1,0 +1,208 @@
+.rankings-tab {
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+.rankings-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.rankings-header h2 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.rankings-controls {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: var(--spacing-lg);
+  margin-bottom: var(--spacing-2xl);
+  padding: var(--spacing-lg);
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+
+.metric-selector {
+  flex: 1;
+}
+
+.metric-selector label {
+  display: block;
+  font-weight: 600;
+  margin-bottom: var(--spacing-sm);
+  color: var(--gray-700);
+}
+
+.metric-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-sm);
+}
+
+.metric-btn {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--gray-100);
+  border: 2px solid transparent;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: all 0.2s ease;
+}
+
+.metric-btn:hover {
+  background: var(--gray-200);
+}
+
+.metric-btn.active {
+  background: var(--primary-light);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+.limit-selector {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.limit-selector label {
+  font-weight: 600;
+  color: var(--gray-700);
+}
+
+.limit-selector select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.rankings-table-container {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.rankings-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.rankings-table thead {
+  background: var(--gray-50);
+  position: sticky;
+  top: 0;
+  z-index: 1;
+}
+
+.rankings-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.rankings-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.rank-col {
+  width: 80px;
+  text-align: center;
+}
+
+.rank-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 40px;
+  height: 40px;
+  font-weight: 700;
+  font-size: 1.125rem;
+}
+
+.rank-badge.top-three {
+  font-size: 1.5rem;
+}
+
+.company-name-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.company-name {
+  font-weight: 500;
+  color: var(--gray-900);
+}
+
+.industry-cell {
+  color: var(--gray-600);
+  font-size: 0.875rem;
+}
+
+.metric-value {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.clickable-row:hover {
+  background: var(--gray-50);
+}
+
+@media (max-width: 1024px) {
+  .rankings-controls {
+    flex-direction: column;
+  }
+
+  .metric-buttons {
+    justify-content: flex-start;
+  }
+
+  .limit-selector {
+    width: 100%;
+  }
+
+  .rankings-table-container {
+    overflow-x: auto;
+  }
+
+  .rankings-table {
+    min-width: 900px;
+  }
+}
+
+@media (max-width: 768px) {
+  .metric-btn {
+    font-size: 0.75rem;
+    padding: var(--spacing-xs) var(--spacing-sm);
+  }
+
+  .rankings-table th,
+  .rankings-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .rank-badge {
+    min-width: 30px;
+    height: 30px;
+    font-size: 0.875rem;
+  }
+
+  .rank-badge.top-three {
+    font-size: 1.125rem;
+  }
+}

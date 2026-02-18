@@ -1,0 +1,139 @@
+.officers-table {
+  width: 100%;
+}
+
+.officers-table.empty {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.officers-table table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  background: white;
+}
+
+.officers-table thead {
+  background: var(--gray-50);
+}
+
+.officers-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.officers-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700);
+}
+
+.officers-table tr.ceo {
+  background: var(--primary-light);
+}
+
+.officers-table tr.outside {
+  background: var(--success-light);
+}
+
+.position-cell {
+  display: flex;
+  align-items: center;
+}
+
+.position-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.position-badge.ceo {
+  background: var(--primary);
+  color: white;
+}
+
+.position-badge.outside {
+  background: var(--success);
+  color: white;
+}
+
+.position-badge.auditor {
+  background: var(--info);
+  color: white;
+}
+
+.position-badge.general {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.career-cell,
+.note-cell {
+  max-width: 300px;
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  line-height: 1.4;
+}
+
+.officers-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+@media (max-width: 768px) {
+  .officers-table table {
+    min-width: 600px;
+  }
+
+  .officers-table th,
+  .officers-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .career-cell,
+  .note-cell {
+    max-width: 200px;
+  }
+
+  .officers-summary {
+    grid-template-columns: 1fr;
+  }
+}

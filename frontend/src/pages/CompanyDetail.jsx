@@ -1,0 +1,257 @@
+/**
+ * CompanyDetail — Progressive company data page (SSE-powered)
+ *
+ * Uses useCompanyLive() hook for real-time data streaming:
+ *   [0ms]   db_data   → basic info from DB cache
+ *   [~3s]   dart_data → DART financials/officers/shareholders
+ *   [~20s]  live_diff → 86 API diff comparison
+ *   [~20s]  complete  → final merged data
+ */
+import { useParams } from 'react-router-dom';
+import useCompanyLive from '../hooks/useCompanyLive';
+import FinancialChart from '../components/company/FinancialChart';
+import FinancialStatements from '../components/company/FinancialStatements';
+import OfficersTable from '../components/company/OfficersTable';
+import ShareholdersTable from '../components/company/ShareholdersTable';
+import ComparisonMetrics from '../components/company/ComparisonMetrics';
+import RedFlags from '../components/company/RedFlags';
+import StatusBar from '../components/company/StatusBar';
+import DiffSummary from '../components/company/DiffSummary';
+import SourcesPanel from '../components/company/SourcesPanel';
+import './CompanyDetail.css';
+
+function CompanyDetail() {
+  const { id } = useParams();
+
+  // id = business_number (brno) from SearchBar navigation
+  const {
+    status,
+    company,
+    dartAvailable,
+    diff,
+    meta,
+    error,
+    events,
+    isLoading,
+    isComplete,
+    hasData,
+  } = useCompanyLive(id);
+
+  // Initial connecting state — full-page spinner
+  if (status === 'connecting' && !hasData) {
+    return (
+      <div className="company-detail loading">
+        <div className="spinner-container">
+          <div className="spinner"></div>
+          <p>기업 정보를 불러오는 중...</p>
+        </div>
+      </div>
+    );
+  }
+
+  // Error state with no data
+  if (status === 'error' && !hasData) {
+    return (
+      <div className="company-detail error">
+        <div className="error-message">
+          <h2>오류 발생</h2>
+          <p>기업 정보를 불러올 수 없습니다.</p>
+          <p className="text-muted">{error || 'SSE 연결 실패. 서버 상태를 확인해주세요.'}</p>
+        </div>
+      </div>
+    );
+  }
+
+  // No data found (DB empty + API returned nothing)
+  if (isComplete && !hasData) {
+    return (
+      <div className="company-detail error">
+        <div className="error-message">
+          <h2>데이터 없음</h2>
+          <p>사업자등록번호 {id}에 대한 정보를 찾을 수 없습니다.</p>
+        </div>
+      </div>
+    );
+  }
+
+  const formatDate = (dateString) => {
+    if (!dateString) return '-';
+    return new Date(dateString).toLocaleDateString('ko-KR');
+  };
+
+  // Skeleton placeholder for sections waiting on DART data
+  const SectionSkeleton = ({ title }) => (
+    <section className="section-skeleton">
+      <h2>{title}</h2>
+      <div className="skeleton-content">
+        <div className="skeleton-line skeleton-line--wide" />
+        <div className="skeleton-line skeleton-line--medium" />
+        <div className="skeleton-line skeleton-line--narrow" />
+        <div className="skeleton-line skeleton-line--wide" />
+      </div>
+    </section>
+  );
+
+  // Show "DART 데이터 없음" message for non-listed companies
+  const NoDartMessage = ({ title }) => (
+    <section className="section-no-data">
+      <h2>{title}</h2>
+      <p className="no-data-text">비상장 기업 - DART 데이터 없음</p>
+    </section>
+  );
+
+  // Determine what to show for DART-dependent sections
+  const dartLoaded = events.includes('dart_data');
+  const showDartSkeleton = !dartLoaded && isLoading;
+  const showNoDart = dartLoaded && dartAvailable === false;
+
+  return (
+    <div className="company-detail">
+      {/* Status Bar — always visible during loading */}
+      {(isLoading || status === 'error') && (
+        <StatusBar status={status} meta={meta} diff={diff} events={events} />
+      )}
+
+      {/* Complete status — brief summary */}
+      {isComplete && (
+        <StatusBar status="complete" meta={meta} diff={diff} events={events} />
+      )}
+
+      {/* 1. Company Basic Info — available immediately from db_data */}
+      {company && (
+        <section className="company-header">
+          <div className="company-title-row">
+            <h1>{company.company_name || id}</h1>
+            <div className="badges">
+              {company.venture_certification && (
+                <span className="badge badge-primary">벤처인증</span>
+              )}
+              {company.innovation_certification && (
+                <span className="badge badge-success">이노비즈</span>
+              )}
+              {company.main_biz_certification && (
+                <span className="badge badge-info">주력산업</span>
+              )}
+              {company.listed && (
+                <span className="badge badge-secondary">상장</span>
+              )}
+              {company.stock_code && (
+                <span className="badge badge-outline">{company.stock_code}</span>
+              )}
+            </div>
+          </div>
+
+          <div className="company-info-grid">
+            <div className="info-item">
+              <span className="info-label">대표이사</span>
+              <span className="info-value">{company.ceo_name || '-'}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">직원수</span>
+              <span className="info-value">{company.employee_count?.toLocaleString() || '-'}명</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">사업자등록번호</span>
+              <span className="info-value">{company.business_number || id}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">업종</span>
+              <span className="info-value">{company.industry_name || '-'}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">설립일</span>
+              <span className="info-value">{formatDate(company.establishment_date)}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">주소</span>
+              <span className="info-value">{company.address || '-'}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">연락처</span>
+              <span className="info-value">{company.phone || '-'}</span>
+            </div>
+            <div className="info-item">
+              <span className="info-label">홈페이지</span>
+              <span className="info-value">
+                {company.website ? (
+                  <a href={company.website} target="_blank" rel="noopener noreferrer">
+                    {company.website}
+                  </a>
+                ) : (
+                  '-'
+                )}
+              </span>
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* 2. Diff Summary — appears after live_diff */}
+      {diff && <DiffSummary diff={diff} meta={meta} />}
+
+      {/* 3. 3-Year Average Comparison — from DART */}
+      {company?.three_year_average && (
+        <ComparisonMetrics current={company} average={company.three_year_average} />
+      )}
+
+      {/* 4. Red Flags — from entity cross-check + DART */}
+      {company?.red_flags && company.red_flags.length > 0 && (
+        <RedFlags flags={company.red_flags} />
+      )}
+
+      {/* 5. Financial Chart — from DART */}
+      {showDartSkeleton && <SectionSkeleton title="재무 성과 추이" />}
+      {showNoDart && <NoDartMessage title="재무 성과 추이" />}
+      {company?.financial_history && company.financial_history.length > 0 && (
+        <section className="financial-chart-section">
+          <h2>재무 성과 추이</h2>
+          <FinancialChart data={company.financial_history} />
+        </section>
+      )}
+
+      {/* 6. Financial Statements — from DART */}
+      {showDartSkeleton && <SectionSkeleton title="재무제표" />}
+      {showNoDart && !company?.financial_statements && <NoDartMessage title="재무제표" />}
+      {company?.financial_statements && (
+        <section className="financial-statements-section">
+          <h2>재무제표</h2>
+          <FinancialStatements statements={company.financial_statements} />
+        </section>
+      )}
+
+      {/* 7. Officers Table — from DART */}
+      {showDartSkeleton && <SectionSkeleton title="임원 현황" />}
+      {showNoDart && (!company?.officers || company.officers.length === 0) && <NoDartMessage title="임원 현황" />}
+      {company?.officers && company.officers.length > 0 && (
+        <section className="officers-section">
+          <h2>임원 현황</h2>
+          <OfficersTable officers={company.officers} />
+        </section>
+      )}
+
+      {/* 8. Shareholders Table — from DART */}
+      {showDartSkeleton && <SectionSkeleton title="주주 현황" />}
+      {showNoDart && (!company?.shareholders || company.shareholders.length === 0) && <NoDartMessage title="주주 현황" />}
+      {company?.shareholders && company.shareholders.length > 0 && (
+        <section className="shareholders-section">
+          <h2>주주 현황</h2>
+          <ShareholdersTable shareholders={company.shareholders} />
+        </section>
+      )}
+
+      {/* 9. Sources Panel — entity metadata + API raw data */}
+      {company?._entity && (
+        <section className="sources-section">
+          <h2>데이터 소스</h2>
+          <SourcesPanel
+            entity={company._entity}
+            apiData={company._apiData}
+            conflicts={company._conflicts}
+          />
+        </section>
+      )}
+    </div>
+  );
+}
+
+export default CompanyDetail;

@@ -1,0 +1,260 @@
+.shareholders-table {
+  width: 100%;
+}
+
+.shareholders-table.empty {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+
+.table-container {
+  overflow-x: auto;
+  margin-bottom: var(--spacing-lg);
+}
+
+.shareholders-table table {
+  width: 100%;
+  min-width: 800px;
+  border-collapse: collapse;
+  background: white;
+}
+
+.shareholders-table thead {
+  background: var(--gray-50);
+}
+
+.shareholders-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.shareholders-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700);
+}
+
+.shareholders-table tr.founder {
+  background: var(--warning-light);
+}
+
+.type-badge {
+  display: inline-block;
+  padding: var(--spacing-xs) var(--spacing-md);
+  border-radius: var(--radius-full);
+  font-size: 0.875rem;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.type-badge.founder {
+  background: var(--warning);
+  color: white;
+}
+
+.type-badge.institutional {
+  background: var(--primary);
+  color: white;
+}
+
+.type-badge.foreign {
+  background: var(--info);
+  color: white;
+}
+
+.type-badge.individual {
+  background: var(--success);
+  color: white;
+}
+
+.type-badge.treasury {
+  background: var(--error);
+  color: white;
+}
+
+.type-badge.general {
+  background: var(--gray-200);
+  color: var(--gray-700);
+}
+
+.percentage-value {
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.relation-cell,
+.note-cell {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+}
+
+.total-row td {
+  background: var(--gray-50);
+  font-weight: 700;
+  border-top: 2px solid var(--gray-300);
+  border-bottom: 2px solid var(--gray-300);
+}
+
+.text-right {
+  text-align: right;
+}
+
+.shareholders-summary {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.summary-item {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  text-align: center;
+}
+
+.summary-label {
+  font-size: 0.875rem;
+  color: var(--gray-600);
+  font-weight: 500;
+}
+
+.summary-value {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--gray-900);
+}
+
+.ownership-chart {
+  padding: var(--spacing-lg);
+  background: white;
+  border: 1px solid var(--gray-200);
+  border-radius: var(--radius-md);
+}
+
+.chart-title {
+  font-weight: 600;
+  margin-bottom: var(--spacing-md);
+  color: var(--gray-900);
+}
+
+.chart-bar {
+  display: flex;
+  height: 40px;
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  margin-bottom: var(--spacing-md);
+}
+
+.chart-segment {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 0.75rem;
+  font-weight: 600;
+  transition: all 0.3s ease;
+}
+
+.chart-segment:hover {
+  opacity: 0.8;
+  transform: scaleY(1.1);
+}
+
+.chart-segment.founder {
+  background: var(--warning);
+}
+
+.chart-segment.institutional {
+  background: var(--primary);
+}
+
+.chart-segment.foreign {
+  background: var(--info);
+}
+
+.chart-segment.individual {
+  background: var(--success);
+}
+
+.chart-segment.others {
+  background: var(--gray-400);
+}
+
+.segment-label {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  padding: 0 var(--spacing-xs);
+}
+
+.chart-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--spacing-md);
+}
+
+.legend-item {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-xs);
+}
+
+.legend-color {
+  width: 16px;
+  height: 16px;
+  border-radius: var(--radius-sm);
+}
+
+.legend-color.founder {
+  background: var(--warning);
+}
+
+.legend-color.institutional {
+  background: var(--primary);
+}
+
+.legend-color.foreign {
+  background: var(--info);
+}
+
+.legend-color.individual {
+  background: var(--success);
+}
+
+.legend-text {
+  font-size: 0.875rem;
+  color: var(--gray-700);
+}
+
+@media (max-width: 768px) {
+  .shareholders-table table {
+    min-width: 600px;
+  }
+
+  .shareholders-table th,
+  .shareholders-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .shareholders-summary {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .chart-bar {
+    height: 30px;
+  }
+
+  .chart-legend {
+    flex-direction: column;
+  }
+}

@@ -1,0 +1,162 @@
+.industry-tab {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.industry-header {
+  text-align: center;
+  margin-bottom: var(--spacing-2xl);
+}
+
+.industry-header h2 {
+  font-size: 2rem;
+  margin-bottom: var(--spacing-sm);
+}
+
+.industry-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: var(--spacing-md);
+  margin-bottom: var(--spacing-2xl);
+}
+
+.industry-card {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-md);
+  padding: var(--spacing-lg);
+  background: white;
+  border: 2px solid var(--gray-200);
+  border-radius: var(--radius-lg);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  text-align: left;
+}
+
+.industry-card:hover {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-md);
+}
+
+.industry-card.active {
+  border-color: var(--primary);
+  background: var(--primary-light);
+}
+
+.industry-icon {
+  font-size: 2rem;
+  flex-shrink: 0;
+}
+
+.industry-info h3 {
+  font-size: 1rem;
+  margin: 0 0 var(--spacing-xs) 0;
+}
+
+.companies-section {
+  margin-top: var(--spacing-2xl);
+}
+
+.companies-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: var(--spacing-lg);
+}
+
+.companies-header h3 {
+  font-size: 1.5rem;
+}
+
+.sort-controls {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.sort-controls label {
+  font-weight: 500;
+  color: var(--gray-700);
+}
+
+.sort-controls select {
+  padding: var(--spacing-sm) var(--spacing-md);
+  border: 1px solid var(--gray-300);
+  border-radius: var(--radius-md);
+  font-size: 0.875rem;
+}
+
+.companies-table {
+  background: white;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  box-shadow: var(--shadow-md);
+}
+
+.companies-table table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.companies-table thead {
+  background: var(--gray-50);
+}
+
+.companies-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.companies-table td {
+  padding: var(--spacing-md) var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-100);
+}
+
+.clickable-row {
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+
+.clickable-row:hover {
+  background: var(--gray-50);
+}
+
+.company-name-cell {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  font-weight: 500;
+}
+
+.text-right {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .industry-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: var(--spacing-sm);
+  }
+
+  .industry-card {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .companies-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--spacing-md);
+  }
+
+  .companies-table {
+    overflow-x: auto;
+  }
+
+  .companies-table table {
+    min-width: 600px;
+  }
+}

@@ -1,0 +1,130 @@
+.financial-statements {
+  width: 100%;
+}
+
+.financial-statements.empty {
+  padding: var(--spacing-2xl);
+  text-align: center;
+  background: var(--gray-50);
+  border-radius: var(--radius-md);
+}
+
+.statement-tabs {
+  display: flex;
+  gap: var(--spacing-sm);
+  margin-bottom: var(--spacing-lg);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.tab-btn {
+  padding: var(--spacing-md) var(--spacing-xl);
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  cursor: pointer;
+  font-weight: 600;
+  color: var(--gray-600);
+  transition: all 0.2s ease;
+}
+
+.tab-btn:hover {
+  color: var(--primary);
+  background: var(--gray-50);
+}
+
+.tab-btn.active {
+  color: var(--primary);
+  border-bottom-color: var(--primary);
+}
+
+.statement-content {
+  overflow-x: auto;
+}
+
+.statement-table {
+  width: 100%;
+  min-width: 500px;
+}
+
+.statement-table table {
+  width: 100%;
+  border-collapse: collapse;
+  background: white;
+}
+
+.statement-table th {
+  padding: var(--spacing-md) var(--spacing-lg);
+  background: var(--gray-50);
+  text-align: left;
+  font-weight: 600;
+  color: var(--gray-700);
+  border-bottom: 2px solid var(--gray-200);
+}
+
+.statement-table td {
+  padding: var(--spacing-sm) var(--spacing-lg);
+  border-bottom: 1px solid var(--gray-100);
+  color: var(--gray-700);
+}
+
+.statement-table .indent {
+  padding-left: var(--spacing-2xl);
+  color: var(--gray-600);
+}
+
+.statement-table .section-header td {
+  padding-top: var(--spacing-lg);
+  padding-bottom: var(--spacing-sm);
+  background: var(--gray-50);
+  font-weight: 700;
+  color: var(--gray-900);
+  border-top: 2px solid var(--gray-200);
+}
+
+.statement-table .subtotal-row td {
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  background: var(--gray-50);
+  font-weight: 600;
+  color: var(--gray-900);
+}
+
+.statement-table .total-row td {
+  padding-top: var(--spacing-md);
+  padding-bottom: var(--spacing-md);
+  background: var(--primary-light);
+  font-weight: 700;
+  color: var(--primary-dark);
+  border-top: 2px solid var(--primary);
+  border-bottom: 2px solid var(--primary);
+}
+
+.statement-table .total-row.highlight td {
+  background: var(--success-light);
+  color: var(--success-dark);
+  border-color: var(--success);
+  font-size: 1.125rem;
+}
+
+.text-right {
+  text-align: right;
+}
+
+@media (max-width: 768px) {
+  .statement-tabs {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+
+  .tab-btn {
+    white-space: nowrap;
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+
+  .statement-table th,
+  .statement-table td {
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 0.875rem;
+  }
+}

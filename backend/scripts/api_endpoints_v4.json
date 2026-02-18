@@ -1,0 +1,6453 @@
+[
+  {
+    "index": 1,
+    "name": "국세청_사업자등록정보 진위확인 및 상태조회 서비스",
+    "uddiId": "uddi:cd05d81f-c717-48cf-a7d1-d7fb41ca8f0a",
+    "reqId": "106107405",
+    "endpoint": "",
+    "baseUrl": "api.odcloud.kr/api",
+    "swaggerUrl": "https://infuser.odcloud.kr/api/stages/28493/api-docs?1728017570963",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "/validate",
+        "description": "POST",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "/status",
+        "description": "POST",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:28:45.319Z"
+  },
+  {
+    "index": 2,
+    "name": "한국예탁결제원_기업정보서비스",
+    "uddiId": "uddi:ba4f1e89-4f22-4584-838d-af2595062842_202110261632",
+    "reqId": "106025488",
+    "endpoint": "",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "6. [한국예탁결제원 기업정보서비스] 기술문서 20211020.hwp",
+    "operations": [
+      {
+        "name": "매수청구일정정보 조회",
+        "description": "매수청구일정과 관련된 정보를 조회",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역 소유주식수별 현황",
+        "description": "주식분포내역 소유주식수별 현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업기본정보 기업개요 조회",
+        "description": "기업기본정보 기업개요 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식권리일정 조회",
+        "description": "주식권리일정 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업기본정보 잠재주식수 조회",
+        "description": "기업기본정보 잠재주식수 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역 주식분포현황 조회",
+        "description": "주식분포내역 주식분포현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "총회일정정보 조회",
+        "description": "기업의 총회(정기,임시,종류,기타) 일정 조회",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "현금배당내역 조회",
+        "description": "기업별 현금 배당금액을 조회",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "한국산업분류표준업종정보 조회",
+        "description": "한국산업분류표준업종과 관련된 정보를 조회",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "회사명칭으로 발행회사번호 등 조회",
+        "description": "회사명칭으로 발행회사번호 등 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역기준일 조회",
+        "description": "주식분포내역기준일 조회",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역 주주별현황 조회",
+        "description": "주식분포내역 주주별현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역 지역별소유 현황",
+        "description": "주식분포내역 지역별소유 현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포현황 연령별소유 현황",
+        "description": "주식분포현황 연령별소유 현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식분포내역 성별소유 현황",
+        "description": "주식분포내역 성별소유 현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "단축번호로 발행회사번호 조회",
+        "description": "단축번호로 발행회사번호 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "증권별발행정보 주식 조회",
+        "description": "증권별발행정보 주식 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업기본정보 발행주식변동내역 조회",
+        "description": "기업기본정보 발행주식변동내역 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업기본정보 채권발행현황 조회",
+        "description": "기업기본정보 채권발행현황 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업기본정보 기업일정 조회",
+        "description": "기업기본정보 기업일정 조회한다.",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:28:57.278Z"
+  },
+  {
+    "index": 3,
+    "name": "조달청_나라장터 계약정보서비스",
+    "uddiId": "uddi:326a356a-58f8-40f1-8668-9ae94361be07_202410251428",
+    "reqId": "106022007",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/CntrctInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_계약정보서비스_1.0.docx",
+    "operations": [
+      {
+        "name": "계약현황에 대한 물품조회 /getCntrctInfoListThng",
+        "description": "검색조건을 등록일시, 통합계약번호 등을 입력하여 물품 계약현황 (통합계약번호, 계약구분, 확정계약번호, 계약참조번호, 계약건명, 공동계약여부, 장기계속구분, 계약체결일자, 계약기간, 근거법률, 총계약금액, 금차계약금액, 보증금률, 링크URL, 지급구분, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관정보, 업체정보, 상세링크, 채권자명, 근거내역, 계약방법명, 지체상금율) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 물품세부조회 /getCntrctInfoListThngDetail",
+        "description": "검색조건을 등록일시, 통합계약번호 등을 입력하여 물품 계약세부현황 (계약체결일자, 통합계약번호, 확정계약번호, 계약참조번호, 물품분류번호, 물품식별번호, 품명, 한글품목명, 원산지코드, 원산지명, 수량단가금액, 물품수량, 물품금액, 인도조건코드, 인도조건명, 납품일수, 납품기한) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 계약현황 물품조회 /getCntrctInfoListThngPPSSrch",
+        "description": "나라장터 검색조건인 계약체결일자, 확정계약번호, 요청번호, 공고번호, 기관분류, 계약기관, 기관명, 품명, 계약방법, 계약참조번호를 입력하면 물품계약정보(통합계약번호, 계약구분, 확정계약번호, 계약참조번호, 계약건명, 공동계약여부, 장기계속구분, 계약체결일자, 계약기간, 근거법률, 총계약금액, 금차계약금액, 보증금률, 링크URL, 지급구분, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관정보, 업체정보, 상세링크, 채권자명, 근거내역, 계약방법명, 지체상금율)를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 물품변경이력조회 /getCntrctInfoListThngChgHstry",
+        "description": "검색조건에 변경일시, 통합계약번호를 입력하여 물품 계약변경정보(통합계약번호, 계약구분, 확정계약번호, 계약참조번호, 계약건명, 공동계약여부, 장기계속구분, 계약체결일자, 계약기간, 근거법률, 총계약금액, 금차계약금액, 보증금률, 링크URL, 지급구분, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관정보, 업체정보, 상세링크, 채권자명, 근거내역, 계약방법명, 지체상금율) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 물품삭제이력조회 /getCntrctInfoListThngDltHstry",
+        "description": "검색조건에 삭제일시, 통합계약번호를 입력하여 물품 계약삭제이력정보( 삭제일시, 변경구분명, 통합계약번호, 확정계약번호, 계약참조번호) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 공사조회 /getCntrctInfoListCnstwk",
+        "description": "검색조건을 등록일시, 통합계약번호 등을 입력하여 공사 계약현황 (통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명, 물가변동적용기준코드, 물가변동적용기준명, 지체상금율, 착공일자, 금차준공일자, 총준공일자) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 공사서비스정보조회 /getCntrctInfoListCnstwkServcInfo",
+        "description": "검색조건에 통합계약번호를 입력하여 공사서비스정보(통합계약번호, 대표여부,업종명, 공사현장지역명, 공사금액) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 계약현황 공사조회 /getCntrctInfoListCnstwkPPSSrch",
+        "description": "나라장터 검색조건인 계약체결일자, 확정계약번호, 요청번호, 공고번호, 기관분류(계약기관), 기관명, 공종명, 공사명, 계약방법코드, 계약참조번호 등을 입력하면 공사계약정보(통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명, 물가변동적용기준코드, 물가변동적용기준명, 지체상금율, 착공일자, 금차준공일자, 총준공일자)를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 공사변경이력조회 /getCntrctInfoListCnstwkChgHstry",
+        "description": "검색조건에 변경일시,통합계약번호를 입력하여 공사 계약변경정보(통합계약번호,업무명,확정계약번호,계약참조번호,계약명,공동계약여부,장기계속구분명,계약체결일자,계약기간,근거법률,총계약금액,금차계약금액,보증금률,계약사이트URL,지급구분명,요청번호,공고번호,계약기관코드,계약기관명,계약기관소관구분,계약기관담당부서명,계약기관담당자명,계약기관담당자전화번호 ,계약기관담당자팩스번호,수요기관코드,수요기관명,수요기관소관구분,수요기관담당부서명,수요기관담당자성명,수요기관담당자전화번호,업체정보,대표여부,업종명,공사현장지역,공사용역품목코드,공사용역품목명,물품금액,계약화면상세URL,채권자명,근거내역,계약방법명, 물가변동적용기준코드, 물가변동적용기준코드명, 지체상금율, 착공일자, 금차준공일자, 총준공일자) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 공사삭제이력조회 /getCntrctInfoListCnstwkDltHstry",
+        "description": "검색조건에 삭제일시, 통합계약번호를 입력하여 공사 계약삭제이력정보( 삭제일시, 변경구분명, 통합계약번호, 확정계약번호, 계약참조번호) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 용역조회 /getCntrctInfoListServc",
+        "description": "검색조건을 등록일시, 통합계약번호 등을 입력하여 용역 계약현황 (통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명, 지체상금율, 착수일자, 금차완수일자, 총완수일자) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 일반용역서비스정보조회 /getCntrctInfoListGnrlServcServcInfo",
+        "description": "검색조건에 통합계약번호를 입력하여 일반용역서비스정보(통합계약번호, 대표여부, 품명및규격, 지역명, 공사금액) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황 정보에 대한 기술용역서비스정보조회 /getCntrctInfoListTechServcServcInfo",
+        "description": "검색조건에 통합계약번호를 입력하여 기술용역서비스정보(통합계약번호, 대표여부, 업종명, 공사현장지역명, 공사금액) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 계약현황 용역조회 /getCntrctInfoListServcPPSSrch",
+        "description": "나라장터 검색조건인 계약체결일자, 확정계약번호, 요청번호, 공고번호, 기관분류(계약기관), 기관명, 공종명, 계약명, 계약방법, 계약참조번호를 입력하면 용역계약정보(통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명, 지체상금율, 착수일자, 금차완수일자, 총완수일자)를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 용역변경이력조회 /getCntrctInfoListServcChgHstry",
+        "description": "검색조건인 변경일자, 통합계약번호를 입력하면 용역 계약변경이력정보(통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명, 지체상금율, 착수일자, 금차완수일자, 총완수일자)를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 용역삭제이력조회 /getCntrctInfoListServcDltHstry",
+        "description": "검색조건에 삭제일시, 통합계약번호를 입력하여 용역 계약삭제이력정보( 삭제일시, 변경구분명, 통합계약번호, 확정계약번호, 계약참조번호) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 외자조회 /getCntrctInfoListFrgcpt",
+        "description": "검색조건을 등록일시, 통합계약번호 등을 입력하여 외자 계약현황 (통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 외자세부조회 /getCntrctInfoListFrgcptDetail",
+        "description": "검색조건을 계약체결일시, 통합계약번호 등을 입력하여 외자 계약세부현황 (계약체결일자, 통합계약번호, 확정계약번호, 계약참조번호, 부가물품분류번호, 물품분류번호, 물품식별번호, 품명, 한글품목명, 원산지코드, 원산지명, 수량단가금액, 물품수량, 물품금액, 물품금액통화, 인도조건코드, 인도조건명, 납품일수, 납품기한) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 계약현황 외자조회 /getCntrctInfoListFrgcptPPSSrch",
+        "description": "나라장터 검색조건인 계약체결일자, 공급자, 제작사, 공고번호, 기관분류 (계약기관), 기관명, 품명, 계약방법, 계약참조번호를 입력하면 외자계약현황(통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명)를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 외자변경이력조회 /getCntrctInfoListFrgcptChgHstry",
+        "description": "검색조건을 변경일시, 통합계약번호 등을 입력하여 외자 계약변경이력 (통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 장기계속구분명, 계약체결일자, 계약기간, 근거법률명, 총계약금액, 금차계약금액, 보증금률, 계약정보URL, 지급구분명, 요청번호, 공고번호, 계약기관코드, 계약기관명, 계약기관소관구분명, 계약기관담당부서명, 계약기관담당자명, 계약기관담당자전화번호, 계약기관담당자팩스번호, 수요기관목록, 업체목록, 계약상세정보URL, 채권자명, 근거내역, 계약체결방법명) 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 외자삭제이력조회 /getCntrctInfoListFrgcptDltHstry",
+        "description": "검색조건에 삭제일시, 통합계약번호를 입력하여 외자 계약삭제이력정보( 삭제일시, 변경구분명, 통합계약번호, 확정계약번호, 계약참조번호) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:06.115Z"
+  },
+  {
+    "index": 4,
+    "name": "공정거래위원회_통신판매사업자 등록변경현황 제공 서비스",
+    "uddiId": "uddi:cc99ecf8-8c94-4e78-8d5c-b22952c421d4_202402011514",
+    "reqId": "106021523",
+    "endpoint": "https://apis.data.go.kr/1130000/MllBsChg_2Service",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "통신판매사업자 등록변경현황 조회 /getMllBsChgInfo_2",
+        "description": "변경일자를 통해 통신판매사업자의 등록 현황 변경 내역들을 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:14.909Z"
+  },
+  {
+    "index": 5,
+    "name": "공정거래위원회_후원방문판매사업자 정보 상세 제공 서비스",
+    "uddiId": "uddi:0ce52ad4-f0ea-4122-bd11-d6a4224996c3",
+    "reqId": "106021470",
+    "endpoint": "https://apis.data.go.kr/1130000/SrlClslBsIfDtl_2Service",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "후원방문판매사업자 정보 상세 제공 조회 /getSrlClslBsIfInfoDetail_2",
+        "description": "상호명, 대표자명, 후원방문판매업등록번호, 순번값을 이용해 회사정보 회사명, 최근3년간 변경내역 상호, 회사정보 후원방문판매업등록번호 등의 상세 정보들을 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:23.681Z"
+  },
+  {
+    "index": 6,
+    "name": "공정거래위원회_통신판매사업자 등록현황 제공 서비스",
+    "uddiId": "uddi:9a1103e9-bb60-4832-b5b6-d0cf92d4221b_202407230852",
+    "reqId": "106021466",
+    "endpoint": "https://apis.data.go.kr/1130000/MllBs_2Service",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "통신판매사업자 등록현황 조회 /getMllBsInfo_2",
+        "description": "시도명, 시군구명, 업소상태, 상호명, 사업자 등록번호, 신고일자 등을 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "인허가관리번호별 통신판매사업자 등록현황 조회 /getMllBsPrmsnMgtNoInfo_2",
+        "description": "인허가관리번호를 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "신고일자별 통신판매사업자 등록현황 조회 /getMllBsPYmdInfo_2",
+        "description": "신고일자를 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "사업자등록번호별 통신판매사업자 등록현황 조회 /getMllBsBiznoInfo_2",
+        "description": "사업자등록번호를 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "상호명별 통신판매사업자 등록현황 조회 /getMllBsCoNmInfo_2",
+        "description": "상호명을 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "운영상태별 통신판매사업자 등록현황 조회 /getMllBsSteInfo_2",
+        "description": "운영상태를 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "지역별 통신판매사업자 등록현황 조회 /getMllBsRegnInfo_2",
+        "description": "시도명, 시군구명을 통해 통신판매사업자에 대한 인허가번호 년도, 인허가관리번호, 운영상태, 법인명 등의 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:32.232Z"
+  },
+  {
+    "index": 7,
+    "name": "근로복지공단_산재보험 판례 판결문 조회 서비스",
+    "uddiId": "uddi:8b82685a-8f07-41f2-a7cc-b33da1249404_202301041553",
+    "reqId": "106021419",
+    "endpoint": "https://apis.data.go.kr/B490001/sjbPrecedentInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "유형별 개수 조회 /getSjbYuhyeongByCountPstate",
+        "description": "근로복지공단이 보유하고 있는 판결결과유형, 사건유형, 사고,질병구분을 입력하여 유형별 결과 데이터 개수를 조회한다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "산재 판결문 내용정보 조회 /getSjbPrecedentNaeyongPstate",
+        "description": "근로복지공단이 보유하고 있는 사건결과, 유형, 질병구분에 대한 산재 판결문 내용을 조회한다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "사고/질병 구분 조회 /getSjbSagoJilbyeongGubunPstate",
+        "description": "근로복지공단이 보유하고 있는 업무상사고, 업무상 질병 등 사고, 질병 구분 목록을 조회한다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "판결결과 유형 조회 /getSjbPrecedentResultYuhyeongPstate",
+        "description": "근로복지공단이 보유하고 있는 기각, 취하 등 판결 결과에 대한 유형을 조회한다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "사건유형 조회 /getSjbSageonYuhyeongPstate",
+        "description": "근로복지공단이 보유하고 있는 보험료, 유족, 장해 등 사건유형 목록을 조회한다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:41.038Z"
+  },
+  {
+    "index": 8,
+    "name": "근로복지공단_고용/산재보험 현황정보",
+    "uddiId": "uddi:e657aa4a-d9be-4f5d-a258-af21a2569752_202107301529",
+    "reqId": "106021286",
+    "endpoint": "https://apis.data.go.kr/B490001/gySjbPstateInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API활용가이드_근로복지공단_고용산재보험현황정보.hwp",
+    "operations": [
+      {
+        "name": "고용⦁산재보험 가입 사업장 상세정보 조회 /getGySjBoheomBsshItem",
+        "description": "보험 구분을 입력받아 고용인원, 성립일자 등 고용⦁산재보험 가입 사업장 상세정보를 제공한다",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "장애급여 등급별 장애연금 및 일시금 지급현황 /getDisGeupyeoGradeDisYeongeumIlsigeumJigeupPstateList",
+        "description": "장애급여 등급별 장애연금 및 일시금 지급현황",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "산재보험급여 사업규모별 지급현황 /getSjBoheomGeupyeoSaeopGyumoJigeupPstate",
+        "description": "산재보험급여 사업규모별 지급현황",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "고용/산재보험 사업종류별 징수 현황 /getGySjBoheomSaeopJongryuLeyyPstate",
+        "description": "고용/산재보험 사업종류별 징수 현황",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "고용/산재보험 사업규모별 징수 현황 /getGySjBoheomSaeopGyumoLeyyPstate",
+        "description": "고용/산재보험 사업규모별 징수 현황",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "사업종류 검색 서비스 /getSaeopJongryuSearchSrvc",
+        "description": "사업종류 검색 서비스",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "업종별 산재보험요율표 조회 /getEopjongSjBoheomTariffPyoPstateList",
+        "description": "업종별 산재보험요율표 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "보험사무대행기관 인가 현황 조회 /getBoheomSamuAcyGigwanIngaPstateItem",
+        "description": "보험사무대행기관 인가 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "최초요양급여 신청승인 현황 조회 /getFirstYoyangSalApplApprPstateItem",
+        "description": "최초요양급여 신청승인 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "장해급여 등급별 현황 조회 /getDisSalGradePstateItem",
+        "description": "장해급여 등급별 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "산재보험급여 지급 현황 조회 /getSjBoheomGeupyeoSalpayPstateItem",
+        "description": "산재보험급여 지급 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "고용/산재보험 징수 현황 조회 /getGySjBoheomleyyPstateItem",
+        "description": "고용/산재보험 징수 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "고용/산재보험 적용 현황 조회 /getGySjBoheomJyPstateItem",
+        "description": "고용/산재보험 적용 현황 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:49.872Z"
+  },
+  {
+    "index": 9,
+    "name": "국민연금공단_국민연금 가입 사업장 내역",
+    "uddiId": "uddi:4aac5783-afbb-4f14-8654-a7f69d886e34_202504221041",
+    "reqId": "106021226",
+    "endpoint": "https://apis.data.go.kr/B552015/NpsBplcInfoInqireServiceV2",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "국민연금공단_오픈API활용가이드_국민연금 가입 사업장 내역_v2.0.docx",
+    "operations": [
+      {
+        "name": "사업장 정보조회 서비스 /getBassInfoSearchV2",
+        "description": "사업장 기본정보 조회 * 3인이상 법인사업장 정보만 개방되므로 요청항목 중 불필요한 wkpl_styl_dvcd 사업장형태구분코드 (1:법인, 2:개인) 삭제 (2018.01.25.)",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "상세 정보조회 /getDetailInfoSearchV2",
+        "description": "사업장 상세정보 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기간별 현황 정보조회 /getPdAcctoSttusInfoSearchV2",
+        "description": "사업장 기간별 현황 정보조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:29:58.505Z"
+  },
+  {
+    "index": 10,
+    "name": "금융위원회_기업 재무정보",
+    "uddiId": "uddi:c57c1cdd-ff5c-46d7-90a8-fc512a8bc02b_202212230944",
+    "reqId": "106019825",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetFinaStatInfoService_V2",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_기업 재무정보.docx",
+    "operations": [
+      {
+        "name": "요약재무제표조회 /getSummFinaStat_V2",
+        "description": "법인등록번호, 사업연도를 통하여 재무제표구분코드, 기업매출금액, 기업영업이익, 기업총자산금액등을 조회하는 요약재무제표조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "재무상태표조회 /getBs_V2",
+        "description": "법인등록번호, 사업연도를 통하여 전분기계정과목금액, 전기계정과목금액, 계정과목명등을 조회하는 재무상태표조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "손익계산서조회 /getIncoStat_V2",
+        "description": "법인등록번호, 사업연도를 통하여 계정과목명, 당분기계정과목금액, 당기계정과목금액등을 조회하는 손익계산서조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:07.419Z"
+  },
+  {
+    "index": 11,
+    "name": "금융위원회_기업기본정보",
+    "uddiId": "uddi:7357b0f8-b27d-4e89-8e39-df2741cab0a3_202303220957",
+    "reqId": "106019785",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetCorpBasicInfoService_V2/",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_기업기본정보.docx",
+    "operations": [
+      {
+        "name": "계열회사조회 /getAffiliate_V2",
+        "description": "기준일자, 법인등록번호, 계열회사명을 통하여 계열회사법인등록번호, 상장여부를 조회하는 계열회사조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "연결대상종속기업조회 /getConsSubsComp_V2",
+        "description": "기준일자, 법인등록번호, 종속기업명을 통하여 종속기업설립일자, 종속기업주소, 종속기업주요사업내용등을 조회하는 연결대상종속기업조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기업개요조회 /getCorpOutline_V2",
+        "description": "법인등록번호, 법인명을 통하여 기업의 법인영문명, 기업대표자성명, 사업자등록번호 등을 조회하는 기업개요조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:16.228Z"
+  },
+  {
+    "index": 12,
+    "name": "행정안전부_식품_건강기능식품유통전문판매업 조회서비스",
+    "uddiId": "uddi:6d511042-6dd2-4cfa-8123-e62e82706c6a",
+    "reqId": "106029570",
+    "endpoint": "https://apis.data.go.kr/1741000/health_functional_food_specialty_retailers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "식품_건강기능식품유통전문판매업 데이터 조회 /info",
+        "description": "식품_건강기능식품유통전문판매업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "식품_건강기능식품유통전문판매업 데이터 이력조회 /history",
+        "description": "식품_건강기능식품유통전문판매업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:24.969Z"
+  },
+  {
+    "index": 13,
+    "name": "행정안전부_식품_건강기능식품일반판매업 조회서비스",
+    "uddiId": "uddi:fae227b7-25c4-4d54-b4bf-abaadbd0e4c1",
+    "reqId": "106029564",
+    "endpoint": "https://apis.data.go.kr/1741000/health_functional_food_general_retailers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "식품_건강기능식품일반판매업 데이터 조회 /info",
+        "description": "식품_건강기능식품일반판매업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "식품_건강기능식품일반판매업 데이터 이력조회 /history",
+        "description": "식품_건강기능식품일반판매업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:33.610Z"
+  },
+  {
+    "index": 14,
+    "name": "행정안전부_식품_식품운반업 조회서비스",
+    "uddiId": "uddi:e681c75f-02cd-457a-9449-9d43f8e2d604",
+    "reqId": "106029559",
+    "endpoint": "https://apis.data.go.kr/1741000/food_transporters",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "식품_식품운반업 데이터 조회 /info",
+        "description": "식품_식품운반업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "식품_식품운반업 데이터 이력조회 /history",
+        "description": "식품_식품운반업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:42.391Z"
+  },
+  {
+    "index": 15,
+    "name": "행정안전부_자원환경_제재업 조회서비스",
+    "uddiId": "uddi:f7e65f63-0ee2-4d30-ab15-a0438653140d",
+    "reqId": "106029552",
+    "endpoint": "https://apis.data.go.kr/1741000/sawmills",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "자원환경_제재업 데이터 조회 /info",
+        "description": "자원환경_제재업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "자원환경_제재업 데이터 이력조회 /history",
+        "description": "자원환경_제재업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:30:51.249Z"
+  },
+  {
+    "index": 16,
+    "name": "행정안전부_자원환경_목재수입유통업 조회서비스",
+    "uddiId": "uddi:bcaa6a21-620c-4cc4-bfef-94714e59df78",
+    "reqId": "106029528",
+    "endpoint": "https://apis.data.go.kr/1741000/lumber_import_distribution",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "자원환경_목재수입유통업 데이터 조회 /info",
+        "description": "자원환경_목재수입유통업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "자원환경_목재수입유통업 데이터 이력조회 /history",
+        "description": "자원환경_목재수입유통업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:00.228Z"
+  },
+  {
+    "index": 17,
+    "name": "행정안전부_문화_비디오물제작업 조회서비스",
+    "uddiId": "uddi:3efc1209-118e-4c8e-aaa4-dd049facc5d7",
+    "reqId": "106029521",
+    "endpoint": "https://apis.data.go.kr/1741000/video_producers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_비디오물제작업 데이터 조회 /info",
+        "description": "문화_비디오물제작업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_비디오물제작업 데이터 이력조회 /history",
+        "description": "문화_비디오물제작업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:08.832Z"
+  },
+  {
+    "index": 18,
+    "name": "행정안전부_동물_동물전시업 조회서비스",
+    "uddiId": "uddi:468ca022-3c94-472f-988d-ed12b39be75b",
+    "reqId": "106029514",
+    "endpoint": "https://apis.data.go.kr/1741000/animal_exhibition",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물전시업 데이터 조회 /info",
+        "description": "동물_동물전시업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물전시업 데이터 이력조회 /history",
+        "description": "동물_동물전시업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:17.632Z"
+  },
+  {
+    "index": 19,
+    "name": "행정안전부_문화_비디오물배급업 조회서비스",
+    "uddiId": "uddi:3fb2c1a9-58f0-416b-9398-88049668b0cc",
+    "reqId": "106029490",
+    "endpoint": "https://apis.data.go.kr/1741000/video_distributors",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_비디오물배급업 데이터 조회 /info",
+        "description": "문화_비디오물배급업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_비디오물배급업 데이터 이력조회 /history",
+        "description": "문화_비디오물배급업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:26.402Z"
+  },
+  {
+    "index": 20,
+    "name": "행정안전부_동물_종축업 조회서비스",
+    "uddiId": "uddi:84dcc1a2-d437-49be-a29e-9f63c015865d",
+    "reqId": "106029486",
+    "endpoint": "https://apis.data.go.kr/1741000/breeding_stock_businesses",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_종축업 데이터 조회 /info",
+        "description": "동물_종축업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_종축업 데이터 이력조회 /history",
+        "description": "동물_종축업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:35.213Z"
+  },
+  {
+    "index": 21,
+    "name": "행정안전부_동물_부화업 조회서비스",
+    "uddiId": "uddi:bfb31840-5f95-49e5-af4b-ad0b17aea2c1",
+    "reqId": "106029482",
+    "endpoint": "https://apis.data.go.kr/1741000/hatcheries",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_부화업 데이터 조회 /info",
+        "description": "동물_부화업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_부화업 데이터 이력조회 /history",
+        "description": "동물_부화업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:44.003Z"
+  },
+  {
+    "index": 22,
+    "name": "행정안전부_동물_가축사육업 조회서비스",
+    "uddiId": "uddi:e83eee51-f45e-4403-b64d-c8cdcae2ef1e",
+    "reqId": "106029476",
+    "endpoint": "https://apis.data.go.kr/1741000/livestock_farming",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_가축사육업 데이터 조회 /info",
+        "description": "동물_가축사육업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_가축사육업 데이터 이력조회 /history",
+        "description": "동물_가축사육업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:31:52.764Z"
+  },
+  {
+    "index": 23,
+    "name": "행정안전부_생활_후원방문판매업체 조회서비스",
+    "uddiId": "uddi:105c9d0a-6b6c-43b4-8ec7-82d6ed8b74f1",
+    "reqId": "106029471",
+    "endpoint": "https://apis.data.go.kr/1741000/sponsored_door_to_door_sales",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "생활_후원방문판매업체 데이터 조회 /info",
+        "description": "생활_후원방문판매업체 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "생활_후원방문판매업체 데이터 이력조회 /history",
+        "description": "생활_후원방문판매업체 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:01.663Z"
+  },
+  {
+    "index": 24,
+    "name": "행정안전부_문화_음반물배급업 조회서비스",
+    "uddiId": "uddi:090a64ba-2bee-4978-895e-d24103dd8bee",
+    "reqId": "106029463",
+    "endpoint": "https://apis.data.go.kr/1741000/record_distributors",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_음반물배급업 데이터 조회 /info",
+        "description": "문화_음반물배급업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_음반물배급업 데이터 이력조회 /history",
+        "description": "문화_음반물배급업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:10.143Z"
+  },
+  {
+    "index": 25,
+    "name": "행정안전부_문화_음반및음악영상물배급업 조회서비스",
+    "uddiId": "uddi:639f8297-9009-4ab0-8e92-a5a5f98d8d4d",
+    "reqId": "106029458",
+    "endpoint": "https://apis.data.go.kr/1741000/music_video_distributors",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_음반및음악영상물배급업 데이터 조회 /info",
+        "description": "문화_음반및음악영상물배급업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_음반및음악영상물배급업 데이터 이력조회 /history",
+        "description": "문화_음반및음악영상물배급업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:18.685Z"
+  },
+  {
+    "index": 26,
+    "name": "행정안전부_기타_출판사 조회서비스",
+    "uddiId": "uddi:ea38528e-d623-44c4-ac03-ad0e958525e1",
+    "reqId": "106029430",
+    "endpoint": "https://apis.data.go.kr/1741000/publishers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "기타_출판사 데이터 조회 /info",
+        "description": "기타_출판사 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기타_출판사 데이터 이력조회 /history",
+        "description": "기타_출판사 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:27.243Z"
+  },
+  {
+    "index": 27,
+    "name": "행정안전부_문화_게임물제작업 조회서비스",
+    "uddiId": "uddi:28a19be8-4c29-47d3-a7bb-ebde9d36d9ab",
+    "reqId": "106029424",
+    "endpoint": "https://apis.data.go.kr/1741000/game_producers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_게임물제작업 데이터 조회 /info",
+        "description": "문화_게임물제작업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_게임물제작업 데이터 이력조회 /history",
+        "description": "문화_게임물제작업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:35.996Z"
+  },
+  {
+    "index": 28,
+    "name": "행정안전부_문화_게임물배급업 조회서비스",
+    "uddiId": "uddi:f7c48cd8-35ec-463b-a1c9-b760982c2166",
+    "reqId": "106029416",
+    "endpoint": "https://apis.data.go.kr/1741000/game_distributors",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_게임물배급업 데이터 조회 /info",
+        "description": "문화_게임물배급업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_게임물배급업 데이터 이력조회 /history",
+        "description": "문화_게임물배급업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:44.821Z"
+  },
+  {
+    "index": 29,
+    "name": "행정안전부_문화_영화수입업 조회서비스",
+    "uddiId": "uddi:93bbf7af-072f-4b11-9a4e-80db502f6f80",
+    "reqId": "106029408",
+    "endpoint": "https://apis.data.go.kr/1741000/film_importers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_영화수입업 데이터 조회 /info",
+        "description": "문화_영화수입업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_영화수입업 데이터 이력조회 /history",
+        "description": "문화_영화수입업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:32:53.406Z"
+  },
+  {
+    "index": 30,
+    "name": "행정안전부_문화_영화배급업 조회서비스",
+    "uddiId": "uddi:142e03bb-b2f1-4f80-8c2c-d6b4299cc260",
+    "reqId": "106029400",
+    "endpoint": "https://apis.data.go.kr/1741000/film_distributors",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_영화배급업 데이터 조회 /info",
+        "description": "문화_영화배급업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_영화배급업 데이터 이력조회 /history",
+        "description": "문화_영화배급업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:02.299Z"
+  },
+  {
+    "index": 31,
+    "name": "행정안전부_문화_음반및음악영상물제작업 조회서비스",
+    "uddiId": "uddi:516db894-5a36-4d45-aca6-9132e1e84eb0",
+    "reqId": "106029394",
+    "endpoint": "https://apis.data.go.kr/1741000/music_video_producers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_음반및음악영상물제작업 데이터 조회 /info",
+        "description": "문화_음반및음악영상물제작업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_음반및음악영상물제작업 데이터 이력조회 /history",
+        "description": "문화_음반및음악영상물제작업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:11.050Z"
+  },
+  {
+    "index": 32,
+    "name": "행정안전부_문화_온라인음악서비스제공업 조회서비스",
+    "uddiId": "uddi:df77d6a9-e4a6-4c3d-97a1-e92b9469e1b4",
+    "reqId": "106029366",
+    "endpoint": "https://apis.data.go.kr/1741000/online_music_services",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_온라인음악서비스제공업 데이터 조회 /info",
+        "description": "문화_온라인음악서비스제공업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_온라인음악서비스제공업 데이터 이력조회 /history",
+        "description": "문화_온라인음악서비스제공업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:19.481Z"
+  },
+  {
+    "index": 33,
+    "name": "행정안전부_동물_동물위탁관리업 조회서비스",
+    "uddiId": "uddi:305792df-1ed1-419c-bceb-f04a251e06d9",
+    "reqId": "106029362",
+    "endpoint": "https://apis.data.go.kr/1741000/animal_boarding",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물위탁관리업 데이터 조회 /info",
+        "description": "동물_동물위탁관리업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물위탁관리업 데이터 이력조회 /history",
+        "description": "동물_동물위탁관리업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:28.241Z"
+  },
+  {
+    "index": 34,
+    "name": "행정안전부_자원환경_저수조청소업 조회서비스",
+    "uddiId": "uddi:0ee9f403-36af-4d2f-a24e-dbf859a6a5d5",
+    "reqId": "106029358",
+    "endpoint": "https://apis.data.go.kr/1741000/water_tank_cleaning",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "자원환경_저수조청소업 데이터 조회 /info",
+        "description": "자원환경_저수조청소업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "자원환경_저수조청소업 데이터 이력조회 /history",
+        "description": "자원환경_저수조청소업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:36.957Z"
+  },
+  {
+    "index": 35,
+    "name": "행정안전부_동물_동물운송업 조회서비스",
+    "uddiId": "uddi:0871d07e-98b5-482a-bf6b-c88fcde95446",
+    "reqId": "106029352",
+    "endpoint": "https://apis.data.go.kr/1741000/animal_transport",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물운송업 데이터 조회 /info",
+        "description": "동물_동물운송업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물운송업 데이터 이력조회 /history",
+        "description": "동물_동물운송업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:45.602Z"
+  },
+  {
+    "index": 36,
+    "name": "행정안전부_동물_동물수입업 조회서비스",
+    "uddiId": "uddi:c09cc3b7-e354-414a-8228-ddcf52a01bcb",
+    "reqId": "106029349",
+    "endpoint": "https://apis.data.go.kr/1741000/animal_import",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물수입업 데이터 조회 /info",
+        "description": "동물_동물수입업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물수입업 데이터 이력조회 /history",
+        "description": "동물_동물수입업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:33:54.467Z"
+  },
+  {
+    "index": 37,
+    "name": "행정안전부_동물_동물용의료용구판매업 조회서비스",
+    "uddiId": "uddi:b0bc5fae-fdbb-4f6a-a304-d6787bea4cbf",
+    "reqId": "106029344",
+    "endpoint": "https://apis.data.go.kr/1741000/veterinary_medical_equipment_sales",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물용의료용구판매업 데이터 조회 /info",
+        "description": "동물_동물용의료용구판매업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물용의료용구판매업 데이터 이력조회 /history",
+        "description": "동물_동물용의료용구판매업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:03.342Z"
+  },
+  {
+    "index": 38,
+    "name": "행정안전부_문화_영화제작업 조회서비스",
+    "uddiId": "uddi:c2c53fec-1a1b-4e2a-8b22-e61d14787a86",
+    "reqId": "106029339",
+    "endpoint": "https://apis.data.go.kr/1741000/film_producers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_영화제작업 데이터 조회 /info",
+        "description": "문화_영화제작업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_영화제작업 데이터 이력조회 /history",
+        "description": "문화_영화제작업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:12.301Z"
+  },
+  {
+    "index": 39,
+    "name": "행정안전부_문화_음반물제작업 조회서비스",
+    "uddiId": "uddi:97680ef6-8662-4b2e-9f80-b49f2dbfeb35",
+    "reqId": "106029335",
+    "endpoint": "https://apis.data.go.kr/1741000/record_producers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "문화_음반물제작업 데이터 조회 /info",
+        "description": "문화_음반물제작업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "문화_음반물제작업 데이터 이력조회 /history",
+        "description": "문화_음반물제작업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:21.167Z"
+  },
+  {
+    "index": 40,
+    "name": "행정안전부_식품_축산물운반업 조회서비스",
+    "uddiId": "uddi:10ad2abd-e245-467b-88f4-f57c3b79cb96",
+    "reqId": "106029292",
+    "endpoint": "https://apis.data.go.kr/1741000/livestock_transport",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "식품_축산물운반업 데이터 조회 /info",
+        "description": "식품_축산물운반업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "식품_축산물운반업 데이터 이력조회 /history",
+        "description": "식품_축산물운반업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:29.875Z"
+  },
+  {
+    "index": 41,
+    "name": "행정안전부_건강_의료기기판매(임대)업 조회서비스",
+    "uddiId": "uddi:7cc949f5-7546-42e3-825f-f1d13ff8ebc0",
+    "reqId": "106029264",
+    "endpoint": "https://apis.data.go.kr/1741000/medical_device_sales_rental",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "건강_의료기기판매(임대)업 데이터 조회 /info",
+        "description": "건강_의료기기판매(임대)업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "건강_의료기기판매(임대)업 데이터 이력조회 /history",
+        "description": "건강_의료기기판매(임대)업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:38.767Z"
+  },
+  {
+    "index": 42,
+    "name": "행정안전부_생활_방문판매업 조회서비스",
+    "uddiId": "uddi:530cdccf-fb47-4018-a556-e05aa68ce4e9",
+    "reqId": "106029257",
+    "endpoint": "https://apis.data.go.kr/1741000/door_to_door_sales",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "생활_방문판매업 데이터 조회 /info",
+        "description": "생활_방문판매업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "생활_방문판매업 데이터 이력조회 /history",
+        "description": "생활_방문판매업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:47.561Z"
+  },
+  {
+    "index": 43,
+    "name": "행정안전부_기타_담배수입판매업체 조회서비스",
+    "uddiId": "uddi:293f52d1-3628-4e4c-a0cb-a9aeedca0265",
+    "reqId": "106029255",
+    "endpoint": "https://apis.data.go.kr/1741000/tobacco_import_retailers",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "기타_담배수입판매업체 데이터 조회 /info",
+        "description": "기타_담배수입판매업체 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기타_담배수입판매업체 데이터 이력조회 /history",
+        "description": "기타_담배수입판매업체 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:34:56.404Z"
+  },
+  {
+    "index": 44,
+    "name": "행정안전부_기타_옥외광고업 조회서비스",
+    "uddiId": "uddi:0db4c24a-1880-4d73-b82d-8daa2a7e0e93",
+    "reqId": "106029249",
+    "endpoint": "https://apis.data.go.kr/1741000/outdoor_advertising_companies",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "기타_옥외광고업 데이터 조회 /info",
+        "description": "기타_옥외광고업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "기타_옥외광고업 데이터 이력조회 /history",
+        "description": "기타_옥외광고업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:05.097Z"
+  },
+  {
+    "index": 45,
+    "name": "행정안전부_동물_동물미용업 조회서비스",
+    "uddiId": "uddi:cb34a065-6fab-4d64-a23a-ff574fc152f7",
+    "reqId": "106029234",
+    "endpoint": "https://apis.data.go.kr/1741000/pet_grooming",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물미용업 데이터 조회 /info",
+        "description": "동물_동물미용업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물미용업 데이터 이력조회 /history",
+        "description": "동물_동물미용업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:13.951Z"
+  },
+  {
+    "index": 46,
+    "name": "행정안전부_생활_통신판매업 조회서비스",
+    "uddiId": "uddi:13894ff6-0a3b-4fcd-8ce4-a4d73b1b79e8",
+    "reqId": "106029190",
+    "endpoint": "https://apis.data.go.kr/1741000/ecommerce_businesses",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "생활_통신판매업 데이터 조회 /info",
+        "description": "생활_통신판매업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "생활_통신판매업 데이터 이력조회 /history",
+        "description": "생활_통신판매업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:22.749Z"
+  },
+  {
+    "index": 47,
+    "name": "행정안전부_동물_동물생산업 조회서비스",
+    "uddiId": "uddi:093c3d4c-7c1d-4998-bc97-aac74df0ea04",
+    "reqId": "106029186",
+    "endpoint": "https://apis.data.go.kr/1741000/animal_breeding",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "개방자치단체코드.xlsx",
+    "operations": [
+      {
+        "name": "동물_동물생산업 데이터 조회 /info",
+        "description": "동물_동물생산업 데이터를 조회 하기 위한 오퍼레이션 입니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물_동물생산업 데이터 이력조회 /history",
+        "description": "동물_동물생산업 데이터의 이력을 조회하기 위한 오퍼레이션 입니다.입력한 데이터기준일자를 기준으로 과거시점에 개방되었던 데이터를 조회할 수 있습니다.데이터기준일자는 2026.01.01부터 조회일 전일까지 입력 가능합니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:31.535Z"
+  },
+  {
+    "index": 48,
+    "name": "금융위원회_기업지배구조 공시정보",
+    "uddiId": "uddi:c6a0f73a-6b8b-4c65-9178-ffd779356942_202511061110",
+    "reqId": "106029176",
+    "endpoint": "https://apis.data.go.kr/1160100/GetCGDiscInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "FSC-25-SI-DV-06-오픈API활용자 가이드_기업지배구조_공시정보_v1.5.docx",
+    "operations": [
+      {
+        "name": "소액주주현황 /getCGSmamInfo",
+        "description": "기준일자, 사업연도, 법인유형구분명, 법인구분번호, 법인명, 법인등록번호, 접수번호, 소액주주수, 전체주주수, 소액주주비율, 보유주식수, 총발행주식수, 보유주식 비율, 주식종목코드, 결산일자 조회기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "미등기 임원 보수 현황 /getCGUnregExutInfo",
+        "description": "기준일자, 사업연도, 법인유형구분명, 법인구분번호, 법인명, 법인등록번호, 접수번호, 미등기임원수, 연간급여총액, 평균1인급여액, 보수현황비고내용, 주식종목코드, 결산일자 조회기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개인별 보수지급(5억원 이상 상위 5인) /getCGIdvpnPayInfo",
+        "description": "기준일자, 사업연도, 법인유형구분명, 법인구분번호, 법인명, 법인등록번호, 접수번호, 데이터순번, 보수수령자성명, 보수수령자직위명, 총보수금액, 비포함총보수금액, 주식종목코드, 결산일자 조회기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:40.318Z"
+  },
+  {
+    "index": 49,
+    "name": "경상북도_사회적기업 현황조회",
+    "uddiId": "uddi:d27ddfb6-e42d-4f0e-9f97-8d49e07fd653",
+    "reqId": "106029144",
+    "endpoint": "https://apis.data.go.kr/6470000/SocialCompany",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "사회적기업 정보조회 /socialCom",
+        "description": "경상북도 내 사회적기업 정보를 조회한다",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:49.214Z"
+  },
+  {
+    "index": 50,
+    "name": "재단법인천안과학산업진흥원_천안지역내 공장현황정보",
+    "uddiId": "uddi:28af3fd4-391b-4b65-bc8a-b1e133a9e758_202301171247",
+    "reqId": "106029109",
+    "endpoint": "https://apis.data.go.kr/B554597/fctry",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "천안 지역 공장현황 정보 /entCnvrgFctry",
+        "description": "천안 지역 내 공장현황 정보를 제공합니다",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:35:58.179Z"
+  },
+  {
+    "index": 51,
+    "name": "한국자산관리공사_관급자재 선정심의결과 목록",
+    "uddiId": "uddi:8497fd86-1cac-4546-b598-a03fb7d3a8a2",
+    "reqId": "106028795",
+    "endpoint": "https://apis.data.go.kr/B010003/GvslMtrlSlctn",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "관급자재 선정심의결과 /mtrSlctn",
+        "description": "관급자재 선정심의결과 목록을 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:07.038Z"
+  },
+  {
+    "index": 52,
+    "name": "재단법인천안과학산업진흥원_천안지역내 기업현황정보",
+    "uddiId": "uddi:29c5f49c-e513-41fa-b837-ef015becea16_202301161736",
+    "reqId": "106028659",
+    "endpoint": "https://apis.data.go.kr/B554597/service",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "천안 지역 기업현황 정보 /entCnvrg",
+        "description": "천안 지역 내 기업현황 정보를 제공합니다",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:15.476Z"
+  },
+  {
+    "index": 53,
+    "name": "전라남도 보성군_차 생산 및 가공업체 정보 데이터 조회 서비스",
+    "uddiId": "uddi:45f387a3-04a7-44ea-8269-e8cc3b8d30cd_202301031613",
+    "reqId": "106028640",
+    "endpoint": "https://apis.data.go.kr/4890000/teaProdProcInfo",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "전라남도 보성군 차 생산 및 가공업체 정보 데이터 조회 /getTeaProdProcInfoList",
+        "description": "데이터 기준일자 등을 통해 업체명, 업태, 주소, 전화번호, 생산 및 가공 품목 등을 조회하는 전라남도 보성군 차 생산 및 가공업체 정보 데이터 조회 기능",
+        "dailyTraffic": "5000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:24.332Z"
+  },
+  {
+    "index": 54,
+    "name": "한국남부발전(주)_중소기업지원사업 정보_GW",
+    "uddiId": "uddi:ff2b6b4d-eb80-4566-a8b0-843fe4556bc6",
+    "reqId": "106028587",
+    "endpoint": "https://apis.data.go.kr/B552520/RndContest",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "중소기업지원사업 공고조회 서비스 /getDataService",
+        "description": "남부발전 중소기업지원사업 공고를 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:33.045Z"
+  },
+  {
+    "index": 55,
+    "name": "전라남도_천일염 가공기업",
+    "uddiId": "uddi:8af4f5b0-39af-46e4-a6dd-bfd1a52fb413_202012211113",
+    "reqId": "106028506",
+    "endpoint": "https://apis.data.go.kr/6460000/solarsaltCompany",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "기술문서양식_전라남도천일염가공기업.docx",
+    "operations": [
+      {
+        "name": "전라남도 천일염 가공기업 /getSolarsaltCompanyList",
+        "description": "전남천일염 가공기업을 제공하는 서비스",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:41.551Z"
+  },
+  {
+    "index": 56,
+    "name": "충청북도_일자리 우수기업 인증현황",
+    "uddiId": "uddi:92804ec3-5daf-43ad-8387-f8d7cc24a336_202111221545",
+    "reqId": "106028495",
+    "endpoint": "https://apis.data.go.kr/6430000/excellJobCompService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "OpenAPI활용가이드_[충청북도_일자리 우수기업 인증현황]_v1.0.docx",
+    "operations": [
+      {
+        "name": "충청북도 일자리 우수기업 인증현황 데이터 조회 /getExcellJobComp",
+        "description": "충청북도 일자리 우수기업 인증현황 데이터의 인증 번호, 시군, 기업체 명, 대표자, 주요 생산품, 인증 기간을 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:50.335Z"
+  },
+  {
+    "index": 57,
+    "name": "한국중부발전(주)_협력기업 정보",
+    "uddiId": "uddi:b2825a0b-f989-4cc9-8367-d23bfeb42110_202109151550",
+    "reqId": "106028469",
+    "endpoint": "https://apis.data.go.kr/B552521/partners",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "활용가이드(GW)_협력기업정보다운로드서비스V1.1_중부.docx",
+    "operations": [
+      {
+        "name": "중부발전 협력기업정보 다운로드 서비스 /getData",
+        "description": "조회 시작일, 조회 종료일 등을 기준으로 일련번호, 년월, 파일제목, 파일번호, 파일명을 조회 하는 중부발전 협력기업 목록을 제공하는 서비스 입니다.",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:36:59.440Z"
+  },
+  {
+    "index": 58,
+    "name": "전라남도_우수기업 정보",
+    "uddiId": "uddi:50260da1-a064-4d67-ae92-d82b6e65983c",
+    "reqId": "106028114",
+    "endpoint": "https://apis.data.go.kr/6460000/goodCompany",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "기술문서양식_전남공공데이터_우수기업정보.docx",
+    "operations": [
+      {
+        "name": "청년친화강소기업 일자리 목록 /getGoodCompanyList",
+        "description": "전라남도 청년친화강소기업 일자리 정보 목록을 제공하는 서비스",
+        "dailyTraffic": "5000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "강소기업 일자리 목록 /getStrongSmallList",
+        "description": "전라남도 강소기업 일자리 목록을 제공하는 서비스",
+        "dailyTraffic": "5000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "전남우수기업 목록 /getBestCompanyList",
+        "description": "전라남도 우수기업 목록을 제공하는 서비스",
+        "dailyTraffic": "5000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:08.219Z"
+  },
+  {
+    "index": 59,
+    "name": "금융위원회_크라우드펀딩중개업자정보",
+    "uddiId": "uddi:6db318ec-8110-4180-b5b9-fd0977b21497_202006091506",
+    "reqId": "106028089",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetFundBrokInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_크라우드펀딩중개업자정보.docx",
+    "operations": [
+      {
+        "name": "크라우드펀딩중개업자정보 /getFundBrokInfo",
+        "description": "기준일자, 크라우드펀딩중개업자명을 통하여 크라우드펀딩중개업자일련번호, 크라우드펀딩발행금액 등을 조회하는 크라우드펀딩중개업자정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:16.739Z"
+  },
+  {
+    "index": 60,
+    "name": "한국산업기술진흥원_기술은행 등록기술 특허 조회 서비스",
+    "uddiId": "uddi:85ed2c5d-285f-4add-8b79-d258020e1e29_202204281625",
+    "reqId": "106028081",
+    "endpoint": "https://211.188.64.69/OpenAPI/service/tech",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "[한국산업기술진흥원] 기술은행 등록기술 특허 조회 서비스_v1.6_20220928.docx",
+    "operations": [
+      {
+        "name": "기술은행 등록기술 특허 조회",
+        "description": "기술은행(NTB)에 수집된 기술정보(기술번호)를 이용하여 특허출원번호, 출원일, 발명명, 발명자 등 해당기술에 대한 다수의 특허 정보와 그 외 기타정보를 제공하는 기술은행 기술정보 특허 조회 기능",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:25.505Z"
+  },
+  {
+    "index": 61,
+    "name": "한국산업인력공단_블라인드 채용 기업",
+    "uddiId": "uddi:bf81bd80-0ee5-4094-b42b-a7c8e59f50cc_202103091606",
+    "reqId": "106028044",
+    "endpoint": "https://apis.data.go.kr/B490007/ncs.go.kr/api",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "open api _블라인드_기업별분류목록.docx",
+    "operations": [
+      {
+        "name": "블라인드 채용기업 목록 /openapi16.do",
+        "description": "한국산업인력공단에서 개발한 블라인드 채용 기업별분류목록 정보조회 서비스",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:34.309Z"
+  },
+  {
+    "index": 62,
+    "name": "지식재산처_심판 정보 검색 서비스",
+    "uddiId": "uddi:a9ad1f93-2d7c-4634-aacd-f38c2eef8790_201412041907",
+    "reqId": "106027351",
+    "endpoint": "https://kipo-api.kipi.or.kr/openapi/service/judgmentInfoSearchService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "IROS4_OA_DV_0401_OpenAPI활용가이드_07.특허청(산업재산권정보)_v5.0.docx",
+    "operations": [
+      {
+        "name": "일반검색(단어)",
+        "description": "심판정보를 대상으로 단어검색을 통해 출원번호, 명칭, 출원일자 등의 정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "항목별검색(전체검색)",
+        "description": "심판정보를 대상으로 전체검색을 통해 출원번호, 명칭, 출원일자 등의 정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "서지상세정보",
+        "description": "심판정보를 대상으로 서지상세(특허전문서지항목)정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "심판(결)문",
+        "description": "심판정보를 대상으로 변동정보(출원번호 리스트)를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "변동정보",
+        "description": "심판정보를 대상으로 변동정보(출원번호 리스트)를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:43.270Z"
+  },
+  {
+    "index": 63,
+    "name": "중소벤처기업연구원_중소벤처기업연구원 중소기업정책연구정보",
+    "uddiId": "uddi:8c118e6d-1585-47c6-ab09-8894a5e778b9_202109031625",
+    "reqId": "106027334",
+    "endpoint": "https://apis.data.go.kr/B553436/kosi",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "중소벤처기업연구원 오픈API 활용가이드_v3.docx",
+    "operations": [
+      {
+        "name": "발간물목록조회 /api2",
+        "description": "카테고리 구분, 년도, 발행처, 저자, 과제제목을 조건으로 발행기관, 발행년도 저자등의 발간물 목록 정보를 조회하는 기능",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:37:51.921Z"
+  },
+  {
+    "index": 64,
+    "name": "금융위원회_단기금융증권발행정보",
+    "uddiId": "uddi:d48fe1f7-485e-4819-91b3-a2011d773b0e_202006091456",
+    "reqId": "106026560",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetShorTermSecuIssuInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_단기금융증권발행정보.docx",
+    "operations": [
+      {
+        "name": "CD발행기본정보조회 /getCdIssuBasiInfo",
+        "description": "기준일자, 유가증권구분코드명을 통하여 CD액면가, CD잔존일수, CD지급은행명, CD등록일자등을 조회하는 CD발행기본정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "단기기업어음발행기본정보조회 /getShorTermCpBasiInfo",
+        "description": "기준일자, 법인등록번호, CP발행회사명을 통하여 어음종류코드, CP발행일자, CP할인기관명, CP지급은행지점코드등을 조회하는 단기기업어음발행기본정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "전자단기사채발행기본정보조회 /getAbstbIssuBasiInfo",
+        "description": "기준일자, 단기금융상품구분코드명을 통하여 전자단기사채발행일자, 전자단기사채모집방법코드, 전자단기사채발행금액등을 조회하는 전자단기사채발행기본정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "ABCP발행기본정보조회 /getAbcpIssuBasiInfo",
+        "description": "기준일자, 법인등록번호, ABCP발행회사명을 통하여 ABCP발행일자, ABCP만기일자, ABCP상환일자, ABCP발행금액등을 조회하는 ABCP발행기본정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발행자별단기금융증권현황_만기별발행잔액조회 /getIssuShorTermSecuMatuIssuBala",
+        "description": "기준일자, 법인등록번호, 단기금융증권발행인명을 통하여 단기금융증권만기일자, 단기금융증권만기종목수, 단기금융증권만기금액등을 조회하는 발행자별단기금융증권현황_만기별발행잔액조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발행자별단기금융증권현황_월별만기금액조회 /getIssuShorTermSecuMontMatuAmou",
+        "description": "기준년월, 유가증권구분코드명을 통하여 유가증권쿠분코드, 단기금융증권발행금액을 조회하는 발행자별단기금융증권현황_월별만기금액조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발행자유형별발행잔액조회 /getIssuTypeIssuBala",
+        "description": "기준일자, 유가증권구분코드명을 통하여 발행인유형명, 유가증권발행통화코드, 단기상품잔존만기잔액등을 조회하는 발행자유형별발행잔액조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "종류별발행잔액조회 /getKindIssuBala",
+        "description": "기준일자, 유가증권구분코드명, 표준산업분류명을 통하여 유가증권구분코드, 신용등급발행인수, 신용등급발행금액을 조회하는 종류별발행잔액조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발행금리조회 /getIssuInteRate",
+        "description": "기준일자, 단기금융상품구분코드명을 통하여 통화코드, 발행인유형명, 발행금리, 단기금융증권발행금액등을 조회하는 발행금리조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:00.958Z"
+  },
+  {
+    "index": 65,
+    "name": "창업진흥원_창업기업확인서발급기업정보_조회서비스",
+    "uddiId": "uddi:5a1a8be8-ca54-44e6-9bb2-b5587c675da9",
+    "reqId": "106025662",
+    "endpoint": "https://apis.data.go.kr/B552735/kisedCertService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "서비스설계서(창업진흥원_창업기업확인서발급기업정보_조회서비스)_v1.0.docx",
+    "operations": [
+      {
+        "name": "창업기업확인서 발급 기업 정보 /getCorporateInformation",
+        "description": "창업기업확인서 발급 번호, 기업명, 사업자등록번호, 확인서유효기간",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "창업기업확인서 발급 기업 제품 정보 /getProductInformation",
+        "description": "창업기업 확인서 발급 기업의 제품명, 소재지, 제품가격 등 제품 정보",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:09.906Z"
+  },
+  {
+    "index": 66,
+    "name": "금융위원회_금융회사공시정보",
+    "uddiId": "uddi:2ae3d680-640b-4b4e-bb15-f972e6fbef4e_202410311548",
+    "reqId": "106025617",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetFnCoDiscInfoService_V2",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_금융회사공시정보_V2.docx",
+    "operations": [
+      {
+        "name": "금융회사전환사채권발행결정공시정보조회 /getFnCoConvBondRighDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 채권발행차수, 총사채권면금액, 채권발행지역명, 시설자금액, 타법인증권취득금액등을 조회하는 금융회사전환사채권발행결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사해외증권시장주권등상장공시정보조회 /getFnCoOffsSecuMarkListDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 금융회사법인명, 상장보통주수, 금융회사해외거래소상장일자, 정관근거내용등을 조회하는 금융회사해외증권시장주권등상장공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사소송등의제기공시정보조회 /getFnCoLitiEtcDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 소송사건명, 소송청구인명, 소송제기일자, 소송확인일자등을 조회하는 금융회사소송동의제기공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사채권은행등의관리절차개시공시정보조회 /getFnCoProcByCredBankDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 채권관리기관명, 관리기간개월수, 채권은행관리내용, 투자참고내용등을 조회하는 금융회사채권은행등의관리절차개시공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사감자결정공시정보조회 /getFnCoReduOfCapiDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 감자보통주수, 주식액면가, 감자전자본금액, 감자후자본금액등을 조회하는 금융회사감자결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사해산사유발생공시정보조회 /getFinaCompDissReasDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 법인해산사유내용, 법인해산내용, 법인해산사유발생일자, 감사위원참석여부등을 조회하는 금융회사해산사유발생공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사영업정지공시정보조회 /getFnCoBusiSuspDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 영업정지분야명, 영업정지금액, 영업정지금액비율, 영업정지내용등을 조회하는 금융회사영업정지공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사자산양수도(기타)_풋백옵션공시정보조회 /getFnCoAsseTranPutBackOptiDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 금융회사법인명, 보고서파일내용, 보고서파일경로내용을 조회하는 금융회사자산양수도(기타)_풋백옵션공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사사외이사의선임·해임또는중도퇴임에관한신고공시정보조회 /getFnCoOutsDireAffaRepoDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 사외이사성명, 사외이사임기시작일자, 사외이사임기만료일자, 사외이사경력내용등을 조회하는 금융회사사외이사의선임·해임또는중도퇴임에관한신고공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사배당공시정보조회 /getFnCoDiviDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 전전기보통주현금배당금액, 전전기우선주현금배당금액, 전전기보통주주식배당금액, 전전기우선주주식배당금액, 전기액면가등을 조회하는 금융회사배당공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사주식매수선택권부여에관한신고공시정보조회 /getFnCoStocOptiRepoDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 주식매수선택권행사시작일자, 보통주행사가, 기타주행사가, 정관근거내용, 주식내용등을 조회하는 금융회사주식매수선택권부여에관한신고공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사주주총회소집공고공시정보조회 /getFnCoGeneMeetPublNotiDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 법인명, 보고서파일내용, 보고서파일경로내용을 조회하는 금융회사주주총회소집공고공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사무상증자결정공시정보조회 /getFnCoBonuIssuDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 주식액면가, 보통주신주수, 신주배정기준일자, 신주배당기산일자등을 조회하는 금융회사무상증자결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사유상증자결정공시정보조회 /getFnCoCapiIncrWithConsDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 증자전보통주발행주식수, 운영자금액, 증자방식명, 납입예정주식수, 투자참고내용등을 조회하는 금융회사유상증자결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사회생절차개시신청공시정보조회 /getFnCoReviProcDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 기업회생신청인성명, 기업회생관할법원명, 기업회생신청사유내용, 기업회생신청일자등을 조회하는 금융회사회생절차개시신청공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사해외증권시장주권등상장폐지공시정보조회 /getFnCoOffsSecuMarkDeliDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 거래종료일자, 상장거래소소재국가명, 거래종료일자, 투자참고내용, 정관근거내용등을 조회하는 금융회사해외증권시장주권등상장폐지공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사신주인수권부사채권발행결정공시정보조회 /getFnCoBwRighIssuDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 채권발행차수, 기준환율, 채권발행지역명, 시설자금액, 타법인증권취득금액, 만기이율, 사채만기일자등을 조회하는 금융회사신주인수권부사채권발행결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사교환사채권발행결정공시정보조회 /getFnCoEbRighIssuDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 기준환율, 채권발행지역명, 운영자금액, 표면이율, 사채만기일자, 원금상환방법명등을 조회하는 금융회사교환사채권발행결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사상각형조건부자본증권발행결정공시정보조회 /getFnCoAmorCoCoBondDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 기준환율, 채권발행지역명, 사채만기일자, 만기이율, 상각형자본증권발행방법내용등을 조회하는 금융회사상각형조건부자본증권발행결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사자기주식취득결정공시정보조회 /getFnCoTreaStocRepuDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 취득예정보통주수, 취득예정기타주수, 보유예상시작일자, 보유예상종료일자, 취득목적내용등을 조회하는 금융회사자기주식취득결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사자기주식처분결정공시정보조회 /getFnCoTreaStocSellDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 금융회사법인명, 처분대상보통주가격, 처분대상기타주가격, 처분목적내용, 처분예정시작일자, 처분예정종료일자등을 조회하는 금융회사자기주식처분결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사영업양도결정공시정보조회 /getFnCoBusiConvDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 양도목적내용, 양도영향내용, 양도기준일자, 양도대금지급내용, 양도사유내용등을 조회하는 금융회사영업양도결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사타법인주식및출자증권양수결정공시정보조회 /getFnCoStocSubsCertInheDiscInfo_V2",
+        "description": "기준일자, 법인등록번호, 발행회사명을 통하여 회사관계명, 총발행주식수, 발행회사대표자명, 발행회사주요사업명등을 조회하는 금융회사타법인주식및출자증권양수결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사타법인주식및출자증권양도결정공시정보조회 /getFnCoStocSubsCertConvDiscInfo_V2",
+        "description": "기준일자, 법인등록번호, 발행회사명을 통하여 총발행주식수, 발행회사국가명, 양도주식수, 양도금액, 양도후주식수, 양도목적내용등을 조회하는 금융회사타법인주식및출자증권양도결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사주권관련사채권양수결정공시정보조회 /getFnCoDebeInheDiscInfo_V2",
+        "description": "기준일자, 법인등록번호, 발행회사명을 통하여 총발행주식수, 양수결정권면금액, 자기자본금, 거래대금지급내용등을 조회하는 금융회사주권관련사채권양수결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사주권관련사채권양도결정공시정보조회 /getFnCoDebeConvDiscInfo_V2",
+        "description": "기준일자, 법인등록번호, 발행회사명을 통하여 양도결정권면금액, 양도금액, 총발행주식수, 자기자본금등을 조회하는 금융회사주권관련사채권양도결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사회사합병결정공시정보조회 /getFnCoMnaDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 합병형태명, 합병방법명, 합병결정근거사유내용, 합병신주보통주수등을 조회하는 금융회사회사합병결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사회사분할결정공시정보조회 /getFnCoSpilUpDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 분할목적내용, 분할방법명, 분할비율, 분할존속회사명, 분할설립회사명등을 조회하는 금융회사회사분할결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사회사분할합병결정공시정보조회 /getFnCoDiviCombDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 분할합병방법명, 분할존속회사명, 분할존속회사자본금액, 분할설립회사명등을 조회하는 금융회사회사분할합병결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "금융회사주식교환·이전결정공시정보조회 /getFnCoStocExchTranDiscInfo_V2",
+        "description": "기준일자, 법인등록번호를 통하여 교환이전형태명, 주식교환구분명, 총발행보통주수, 총발행종류주수, 외부평가여부등을 조회하는 금융회사주식교환·이전결정공시정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:19.010Z"
+  },
+  {
+    "index": 67,
+    "name": "경기도 용인시_관내 기업 현황 조회 서비스",
+    "uddiId": "uddi:c27b963d-4f2c-46cd-8df4-a3de2f097786_202112291635",
+    "reqId": "106025580",
+    "endpoint": "https://apis.data.go.kr/4050000/entp",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용 가이드_용인시 관내 기업 현황 조회 서비스.docx",
+    "operations": [
+      {
+        "name": "용인시 관내 기업 목록 조회 /getEntp",
+        "description": "기업명을 통해 기업유형과 주력업종 등을 조회할 수 있는 용인시 관내 기업 목록 조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:27.831Z"
+  },
+  {
+    "index": 68,
+    "name": "지식재산처_상표 정보 검색 서비스",
+    "uddiId": "uddi:8e812866-c14d-4f28-a671-ade97c7a9aa9_201412041917",
+    "reqId": "106025575",
+    "endpoint": "https://kipo-api.kipi.or.kr/openapi/service/trademarkInfoSearchService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "IROS4_OA_DV_0401_OpenAPI활용가이드_07.특허청(산업재산권정보)_v5.0.docx",
+    "operations": [
+      {
+        "name": "일반검색(단어)",
+        "description": "상표를 대상으로 단어검색을 통해 출원번호, 명칭, 출원일자 등의 정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "항목별검색(전체검색)",
+        "description": "상표를 대상으로 전체검색을 통해 출원번호, 명칭, 출원일자 등의 정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "서지상세정보",
+        "description": "상표를 대상으로 서지상세(특허전문서지항목)정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "견본이미지",
+        "description": "상표를 대상으로 견본이미지(견본이미지 파일 URL)정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "공고전문",
+        "description": "상표를 대상으로 견본이미지(견본이미지 파일 URL)정보를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "변동정보",
+        "description": "상표를 대상으로 변동정보(출원번호 리스트)를 제공",
+        "dailyTraffic": "100"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:36.684Z"
+  },
+  {
+    "index": 69,
+    "name": "금융위원회_채권발행정보",
+    "uddiId": "uddi:8e8e59df-2802-45b4-8687-e42be42e1f99_202006091500",
+    "reqId": "106025536",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetBondTradInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_채권발행정보.docx",
+    "operations": [
+      {
+        "name": "발행자별발행종목현황조회 /getIssuIssuItemStat",
+        "description": "기준일자, 법인등록번호, 채권발행인명을 통하여 채권납입금액, 채권발행금액, 채권표면이율등을 조회하는 발행자별발행종목현황조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "종류별발행만기현황조회 /getKindIssuMatuStat",
+        "description": "기준일자, 유가증권종목종류코드명을 통하여 채권상환금액, 채권증감금액, 채권신규발행금액등을 조회하는 종류별발행만기현황조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "채권원리금조회 /getBondPrinAndInte",
+        "description": "원리금지급일자, 법인등록번호, 채권발행인명을 기준으로 유가증권종목종류코드, 채권발행통화코드, 채권표면이율등을 조회하는 채권원리금조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:45.238Z"
+  },
+  {
+    "index": 70,
+    "name": "금융위원회_금융회사기본정보",
+    "uddiId": "uddi:23fbc1f1-b32c-4952-ba8c-b728d7ab68b6",
+    "reqId": "106025508",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetFnCoBasiInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API활용자가이드_금융회사기본정보조회서비스.docx",
+    "operations": [
+      {
+        "name": "금융회사기업개요조회 /getFnCoOutl",
+        "description": "기준일자, 법인등록번호, 금융회사명을 통하여 사업자등록번호, 금융회사주소, 금융회사설립일자, 금융회사종업원수 등을 조회하는 금융회사기업개요조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:38:54.025Z"
+  },
+  {
+    "index": 71,
+    "name": "금융위원회_주식발행정보",
+    "uddiId": "uddi:81af7d81-bae6-41c8-9769-b6b5152814be_202312271706",
+    "reqId": "106025502",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetStocIssuInfoService_V2",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_주식발행정보.docx",
+    "operations": [
+      {
+        "name": "주식발행내역조회 /getStocIssuInfo_V2",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 주식발행일자, 주식발행차수, 주식발행사유코드등을 조회하는 주식발행내역조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "의무보호예수반환정보조회 /getLockUpRetuInfo_V2",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 반환일자, 반환주식수, 반환후잔량수등을 조회하는 의무보호예수반환정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "종목기본정보조회 /getItemBasiInfo_V2",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 주식액면가, 발행주식수, 상장일자, 상장폐지일자등을 조회하는 종목기본정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "주식발행현황조회 /getStocIssuStat_V2",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 보통주총발행수, 우선주총발행수를 조회하는 주식발행현황조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:02.989Z"
+  },
+  {
+    "index": 72,
+    "name": "금융위원회_주식배당정보",
+    "uddiId": "uddi:995cedb3-ebeb-4ba3-b94a-b5a0f64aa390",
+    "reqId": "106025448",
+    "endpoint": "https://apis.data.go.kr/1160100/service/GetStocDiviInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "오픈API 활용자가이드_금융위원회_주식배당정보.docx",
+    "operations": [
+      {
+        "name": "배당정보조회 /getDiviInfo",
+        "description": "기준일자, 법인등록번호, 주식발행회사명을 통하여 배당기준일자, 현금배당지급일자, 주식교부일자, 주식일반배당금액, 주식차등배당금액 등을 조회하는 배당정보조회 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:11.831Z"
+  },
+  {
+    "index": 73,
+    "name": "식품의약품안전처_의료기기 GMP 신청품목 현황",
+    "uddiId": "uddi:edc16758-d12c-4e80-b3ef-ce81ee98348d_202209301543",
+    "reqId": "106025062",
+    "endpoint": "https://apis.data.go.kr/1471000/MdeqGMPAplyPrdlstStusService02",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "의료기기 GMP 신청품목 현황조회 /getMdeqGMPAplyPrdlstStusInq02",
+        "description": "최초심사여부,진행상태,담당자승인여부,심사청,심사방식,적용기준,품목명,대표품목유무,품목군제외여부,심사신청일련번호,심사신청품목일련번호,분류번호,등급,형명,제조자국가,제조자명,제조자주소,상태,수출용여부 정보를 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:20.735Z"
+  },
+  {
+    "index": 74,
+    "name": "식품의약품안전처_실험동물제도 및 실험동물 시설정보",
+    "uddiId": "uddi:028949ed-e037-403e-ac2d-b15e91de6888_202111160939",
+    "reqId": "106025055",
+    "endpoint": "https://apis.data.go.kr/1471000/ExperAnimalExperAnimalFcltyInfoService01",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "IROS_35_실험동물제도및실험동물시설정보_v1.1.docx",
+    "operations": [
+      {
+        "name": "동물실험시설등록현황조회(동물실험시설) /getAninalExperFcltyList",
+        "description": "동물실험시설등록현황(동물실험시설) 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물실험시설등록현황조회(실험동물공급자) /getExperAnimalSuplerList",
+        "description": "동물실험시설등록현황(실험동물공급자) 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "동물실험시설등록현황조회(우수실험동물생산시설) /getExclnceExperAnimalFcltyList",
+        "description": "동물실험시설등록현황(우수실험동물생산시설) 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:35.388Z"
+  },
+  {
+    "index": 75,
+    "name": "식품의약품안전처_의약품 생산·수입실적현황",
+    "uddiId": "uddi:1e4bda7c-991a-482f-9963-c1cd864d8f15_202209231554",
+    "reqId": "106025010",
+    "endpoint": "https://apis.data.go.kr/1471000/MdcinPrdctnImportAcmsltService02",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "의약품 생산·수입실적조회 /getMdcinPrdctnImportrstList02",
+        "description": "집계년도, 품목명 별 의약품 생산 및 수입실적 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:44.208Z"
+  },
+  {
+    "index": 76,
+    "name": "식품의약품안전처_의약품 행정처분 정보",
+    "uddiId": "uddi:a195c07c-99d2-4ad5-aa1d-de3a5b3d9301_202202151451",
+    "reqId": "106025007",
+    "endpoint": "https://apis.data.go.kr/1471000/MdcinExaathrService04",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "IROS_50_의약품행정처분서비스_v1.6.docx",
+    "operations": [
+      {
+        "name": "의약품 행정처분조회 /getMdcinExaathrList04",
+        "description": "행정처분일련번호, 업체명, 위반법명, 위반내용 등의 의약품 행정처분 업체 관련 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:39:53.021Z"
+  },
+  {
+    "index": 77,
+    "name": "식품의약품안전처_화장품 관련 정보",
+    "uddiId": "uddi:46c14b6b-7162-4dbc-89be-cbe559b2216a_202111101334",
+    "reqId": "106024999",
+    "endpoint": "https://apis.data.go.kr/1471000/CsmtcsMfcrtrInfoService01",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "IROS_43_화장품 관련 정보_v1.1.docx",
+    "operations": [
+      {
+        "name": "화장품 제조(판매)업 정보조회 /getCsmtcsMfcrtrInfoList01",
+        "description": "화장품 제조(판매)업 업종, 업체명, 대표자명 등 등록 현황 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:01.921Z"
+  },
+  {
+    "index": 78,
+    "name": "식품의약품안전처_의약품 제품 허가정보",
+    "uddiId": "uddi:76b47eba-e1b1-404d-9ece-e0e197be7abe_202510310947",
+    "reqId": "106024088",
+    "endpoint": "https://apis.data.go.kr/1471000/DrugPrdtPrmsnInfoService07",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "의약품 제품 허가 목록 /getDrugPrdtPrmsnInq07",
+        "description": "의약품 제품 허가 목록 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "의약품 제품 허가 상세정보 /getDrugPrdtPrmsnDtlInq06",
+        "description": "허가받은 의약품의 품목, 주성분, 제조원, 포장단위, 저장방법, 성상등의 품목정보와 허가일자, 허가번호, 희귀의약품 여부 등 상세정보로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "의약품 제품 주성분 상세정보 /getDrugPrdtMcpnDtlInq07",
+        "description": "의약품 제품 주성분 상세정보를 목록으로 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:10.525Z"
+  },
+  {
+    "index": 79,
+    "name": "식품의약품안전처_의료기기 품목허가 정보",
+    "uddiId": "uddi:50225c28-d600-48b9-af7a-8cb3b03cd729_202601191503",
+    "reqId": "106024083",
+    "endpoint": "https://apis.data.go.kr/1471000/MdlpPrdlstPrmisnInfoService05",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "의료기기 품목허가 허가정보 목록조회 /getMdlpPrdlstPrmisnList04",
+        "description": "품목명, 의료기기품목허가번호, 허가일자, 등급, 업체명, 사용목적 등의 허가받은 의료기기 품목허가 정보를 목록으로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "의료기기 품목허가 허가정보 상세정보조회 /getMdlpPrdlstPrmisnItem04",
+        "description": "품목명,의료기기품목허가번호,허가일자,등급,업체명,사용목적 등의 허가받은 의료기기 품목허가정보를 상세정보로 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:19.241Z"
+  },
+  {
+    "index": 80,
+    "name": "국토교통부_토지 매매 실거래가 자료",
+    "uddiId": "uddi:04143814-f792-4d8c-bd90-fadea82ca4a3_202407171448",
+    "reqId": "106022257",
+    "endpoint": "https://apis.data.go.kr/1613000/RTMSDataSvcLandTrade",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "토지 매매 실거래가 조회 기술문서.hwp",
+    "operations": [
+      {
+        "name": "토지 매매 실거래가 공개 자료 /getRTMSDataSvcLandTrade",
+        "description": "부동산 거래신고에 관한 법률에 따라 신고된 거래의 실거래 자료를 제공",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:28.088Z"
+  },
+  {
+    "index": 81,
+    "name": "국토교통부_아파트 매매 실거래가 상세 자료",
+    "uddiId": "uddi:0214d0dd-31a0-4396-bf11-eda1f26a57f6_202407121741",
+    "reqId": "106022238",
+    "endpoint": "https://apis.data.go.kr/1613000/RTMSDataSvcAptTradeDev",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "아파트 매매 실거래가 상세자료 기술문서.hwp",
+    "operations": [
+      {
+        "name": "아파트 매매 실거래가 공개 자료(상세) /getRTMSDataSvcAptTradeDev",
+        "description": "부동산 거래신고에 관한 법률에 따라 신고된 거래의 실거래 자료를 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:36.864Z"
+  },
+  {
+    "index": 82,
+    "name": "국토교통부_아파트 매매 실거래가 자료",
+    "uddiId": "uddi:60719bac-89f1-4127-a8b0-c8bb130fa0db_202407171128",
+    "reqId": "106022235",
+    "endpoint": "https://apis.data.go.kr/1613000/RTMSDataSvcAptTrade",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "아파트 매매 실거래가 자료 기술문서.hwp",
+    "operations": [
+      {
+        "name": "아파트 매매 실거래가 공개 자료 /getRTMSDataSvcAptTrade",
+        "description": "부동산 거래신고에 관한 법률에 따라 신고된 거래의 실거래 자료를 제공",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:45.652Z"
+  },
+  {
+    "index": 83,
+    "name": "조달청_나라장터 입찰공고정보서비스",
+    "uddiId": "uddi:53bc9153-fb7f-4c75-8a7c-cf013fe00d5a_202410251427",
+    "reqId": "106022122",
+    "endpoint": "https://apis.data.go.kr/1230000/ad/BidPublicInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_입찰공고정보서비스_1.1.docx",
+    "operations": [
+      {
+        "name": "입찰공고목록 정보에 대한 공사조회 /getBidPblancListInfoCnstwk",
+        "description": "검색조건에 등록일시, 입찰공고번호, 변경일시를 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 공사부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 용역조회 /getBidPblancListInfoServc",
+        "description": "검색조건에 등록일시, 입찰공고번호, 변경일시를 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 용역부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 외자조회 /getBidPblancListInfoFrgcpt",
+        "description": "검색조건에 등록일시, 입찰공고번호, 변경일시를 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 용역부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 물품조회 /getBidPblancListInfoThng",
+        "description": "검색조건에 등록일시, 입찰공고번호, 변경일시를 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 물품부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 물품기초금액조회 /getBidPblancListInfoThngBsisAmount",
+        "description": "검색조건에 기초금액 등록일시, 입찰공고번호를 입력하여 입찰공고번호, 입찰공고명, 기초금액, 기초금액공개일시, 예비가격범위시작율, 평가기준금액, 난이도계수, 기타경비기준율 등 물품의 기초금액정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 공사기초금액조회 /getBidPblancListInfoCnstwkBsisAmount",
+        "description": "검색조건에 기초금액 등록일시, 입찰공고번호를 입력하여 입찰공고번호, 입찰공고명, 기초금액, 기초금액공개일시, 예비가격범위시작율, 평가기준금액, 난이도계수, 기타경비기준율 등의 공사의 기초금액정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 용역기초금액조회 /getBidPblancListInfoServcBsisAmount",
+        "description": "검색조건에 기초금액 등록일시, 입찰공고번호를 입력하여 입찰공고번호, 입찰공고명, 기초금액, 기초금액공개일시, 예비가격범위시작율, 평가기준금액, 난이도계수, 기타경비기준율 등의 용역의 기초금액정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 물품변경이력조회 /getBidPblancListInfoChgHstryThng",
+        "description": "검색조건에 변경일시, 입찰공고번호를 입력하여 변경된 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 변경항목명, 변경전후값 등 물품 입찰공고변경 데이터 조회 ※ 변경이력 추출 대상 항목 PQ신청서접수일시, 물품분류제한여부, 제조여부, 입찰서개시일시, 입찰서마감일시, 개찰일시, 입찰자격등록일시, 공동수급협정서마감일시, PQ신청서접수방법명, 참가가능지역, 면허제한코드, 설명회실시일시, 입찰참가제한여부, 공고서, 규격서, 공고규격화일, 공동수급구성방식코드, 입찰계약방법코드, 공동수급구성방식,실적신청서접수일시, 공고명, 재입찰허용여부, 실적신청서접수방법코드,예가방법구분코드, 집행관코드, 추첨복수예가개수, 배정예산금액,총예가개수, 추정가격, 내역입찰여부, 지사투찰허용여부",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 공사변경이력조회 /getBidPblancListInfoChgHstryCnstwk",
+        "description": "검색조건에 변경일시, 입찰공고번호를 입력하여 변경된 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 변경항목명, 변경전후값 등 공사 입찰공고변경 데이터 조회 ※ 변경이력 추출 대상 항목 PQ신청서접수일시, 물품분류제한여부, 제조여부, 입찰서개시일시, 입찰서마감일시, 개찰일시, 입찰자격등록일시, 공동수급협정서마감일시, PQ신청서접수방법명, 참가가능지역, 면허제한코드, 설명회실시일시, 입찰참가제한여부, 공고서, 규격서, 공고규격화일, 공동수급구성방식코드, 입찰계약방법코드, 공동수급구성방식,실적신청서접수일시, 공고명, 재입찰허용여부, 실적신청서접수방법코드,예가방법구분코드, 집행관코드, 추첨복수예가개수, 배정예산금액,총예가개수, 추정가격, 내역입찰여부, 지사투찰허용여부",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 용역변경이력조회 /getBidPblancListInfoChgHstryServc",
+        "description": "검색조건에 변경일시, 입찰공고번호를 입력하여 변경된 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 변경항목명, 변경전후값 등 용역 입찰공고변경 데이터 조회 ※ 변경이력 추출 대상 항목 PQ신청서접수일시, 물품분류제한여부, 제조여부, 입찰서개시일시, 입찰서마감일시, 개찰일시, 입찰자격등록일시, 공동수급협정서마감일시, PQ신청서접수방법명, 참가가능지역, 면허제한코드, 설명회실시일시, 입찰참가제한여부, 공고서, 규격서, 공고규격화일, 공동수급구성방식코드, 입찰계약방법코드, 공동수급구성방식,실적신청서접수일시, 공고명, 재입찰허용여부, 실적신청서접수방법코드,예가방법구분코드, 집행관코드, 추첨복수예가개수, 배정예산금액,총예가개수, 추정가격, 내역입찰여부, 지사투찰허용여부",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 입찰공고공사조회 /getBidPblancListInfoCnstwkPPSSrch",
+        "description": "검색조건에 공고게시일시, 개찰일시 범위, 공고기관, 수요기관, 참조번호 등을 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 공사부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 입찰공고용역조회 /getBidPblancListInfoServcPPSSrch",
+        "description": "검색조건에 공고게시일시, 개찰일시 범위, 공고기관, 수요기관, 참조번호 등을 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 용역부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 입찰공고외자조회 /getBidPblancListInfoFrgcptPPSSrch",
+        "description": "검색조건에 공고게시일시, 개찰일시 범위, 공고기관, 수요기관, 참조번호 등을 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 외자부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 입찰공고물품조회 /getBidPblancListInfoThngPPSSrch",
+        "description": "검색조건에 공고게시일시, 개찰일시 범위, 공고기관, 수요기관, 참조번호 등을 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 물품부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 면허제한정보조회 /getBidPblancListInfoLicenseLimit",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 제한그룹번호, 제한순번, 면허제한명, 허용업종목록, 등록일시를 포함한 면허제한정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 참가가능지역정보조회 /getBidPblancListInfoPrtcptPsblRgn",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 제한그룹번호, 참가가능지역명, 등록일시 등 참가가능지역정보조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 물품 구매대상물품조회 /getBidPblancListInfoThngPurchsObjPrdct",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 입찰분류번호, 물품순번, 수요기관코드, 수요기관명, 물품분류번호, 품명, 세부품명번호, 세부품명, 수량, 단위, 단가, 납품기한일시, 납품일수, 납품장소, 인도조건명 등 물품 구매대상물품 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 용역 구매대상물품조회 /getBidPblancListInfoServcPurchsObjPrdct",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 입찰분류번호, 물품순번, 수요기관코드, 수요기관명, 물품분류번호, 품명, 세부품명번호, 세부품명, 수량, 단위, 단가, 납품기한일시, 납품일수, 납품장소, 인도조건명 등 용역 구매대상물품 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 외자 구매대상물품조회 /getBidPblancListInfoFrgcptPurchsObjPrdct",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 입찰분류번호, 물품순번, 수요기관코드, 수요기관명, HSK번호, 세부품명번호, 세부품명, 수량, 단위, 배정금액, 배정금액통화 등 외자 구매대상물품 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 e발주 첨부파일정보조회 /getBidPblancListInfoEorderAtchFileInfo",
+        "description": "검색조건에 등록일시범위(통합입찰공고)와 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 첨부순번, e발주문서구분명, e발주첨부파일명, e발주첨부파일URL 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 기타공고조회 /getBidPblancListInfoEtc",
+        "description": "검색조건에 등록일시, 입찰공고번호를 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 기타공고정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터검색조건에 의한 입찰공고 기타조회 /getBidPblancListInfoEtcPPSSrch",
+        "description": "검색조건에 공고게시일시, 개찰일시 범위, 공고기관, 수요기관, 참조번호 등을 입력하여 나라장터의 입찰공고번호, 공고명, 발주기관, 수요기관, 계약체결방법명 등 공사부분의 입찰공고정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 혁신장터 최종제안요청서 교부 첨부파일정보조회 /getBidPblancListPPIFnlRfpIssAtchFileInfo",
+        "description": "낙찰자결정방법이 [경쟁적 대화에 의한 낙찰자 선정 낙찰방법] 일경우 검색조건에 등록일시, 입찰공고번호, 교부일시를 입력하여 혁신장터에서 교부된 최종제안요청서 첨부파일정보를 조회함",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 입찰가격산식A정보조회 /getBidPblancListBidPrceCalclAInfo",
+        "description": "검색조건에 공고게시일시와 입찰공고번호를 입력하여 입찰가격산식 A값 적용 공고의 합산항목인 국민연금보험료, 국민건강보험료, 퇴직공제부금비, 노인장기요양보험료, 산업안전보건관리비, 안전관리비, 품질관리비, 품질관리비 적용대상여부등 입찰가격산식A정보 조회 ( 복수예가는 A값 공개 시 제공)",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "입찰공고목록 정보에 대한 평가대상 주력분야 조회 /getBidPblancListEvaluationIndstrytyMfrcInfo",
+        "description": "검색조건에 등록일시와 입찰공고번호를 입력하여 입찰 평가대상주력분야의 건산법적용여부, 건설업역상호진출가능여부, 건설업역구분코드, 낙찰자선정적용기준코드, 공종유형명, 공사대상업종명, 업종주력분야명, 추정금액, 추정가격, 부가가치세, 평가비율을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:40:54.516Z"
+  },
+  {
+    "index": 84,
+    "name": "조달청_나라장터 공공데이터개방표준서비스",
+    "uddiId": "uddi:c131a2be-3431-4d80-a4eb-801d1b98cd2d_202410251548",
+    "reqId": "106022119",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/PubDataOpnStdService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_공공데이터개방표준서비스_1.1.docx",
+    "operations": [
+      {
+        "name": "데이터셋 개방표준에 따른 입찰공고정보 /getDataSetOpnStdBidPblancInfo",
+        "description": "검색조건을 입찰공고일시로 하여 입찰공고번호, 입찰공고차수, 나라장터공고여부, 입찰공고명, 입찰공고상태명, 입찰공고일자, 입찰공고시각, 업무구분명, 국제입찰여부 등 나라장터에 등록된 입찰공고정보 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "데이터셋 개방표준에 따른 낙찰정보 /getDataSetOpnStdScsbidInfo",
+        "description": "검색조건을 개찰일시, 업무구분명으로 입찰공고번호, 입찰공고차수, 입찰공고명, 업무구분명, 계약체결형태명, 계약체결방법명, 낙찰자결정방법명, 공고기관명, 공고기관코드 등 나라장터에 등록된 낙찰정보 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "데이터셋 개방표준에 따른 계약정보 /getDataSetOpnStdCntrctInfo",
+        "description": "검색조건을 계약체결일자로 계약번호, 통합계약번호, 계약차수, 계약명, 업무구분명, 계약체결형태명, 계약체결방법명, 장기계속구분명, 공동계약여부, 계약체결일자, 계약기간, 계약금액 등 나라장터에 등록된 계약정보 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:03.232Z"
+  },
+  {
+    "index": 85,
+    "name": "조달청_나라장터 낙찰정보서비스",
+    "uddiId": "uddi:8a0aaf4e-4766-4222-a058-e6407b084335_202410251058",
+    "reqId": "106022093",
+    "endpoint": "https://apis.data.go.kr/1230000/as/ScsbidInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_낙찰정보서비스_1.1.docx",
+    "operations": [
+      {
+        "name": "낙찰된 목록 현황 물품조회 /getScsbidListSttusThng",
+        "description": "검색조건을 등록일시, 공고일시, 개찰일시, 입찰공고번호로 물품에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관, 최종낙찰일, 최종낙찰업체담당자)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "낙찰된 목록 현황 공사조회 /getScsbidListSttusCnstwk",
+        "description": "검색조건을 등록일시, 공고일시, 개찰일시, 입찰공고번호로 공사에대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관, 최종낙찰일, 최종낙찰업체담당자)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "낙찰된 목록 현황 용역조회 /getScsbidListSttusServc",
+        "description": "검색조건을 등록일시, 공고일시, 개찰일시, 입찰공고번호로 용역에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관, 최종낙찰일, 최종낙찰업체담당자)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "낙찰된 목록 현황 외자조회 /getScsbidListSttusFrgcpt",
+        "description": "검색조건을 등록일시, 공고일시, 개찰일시, 입찰공고번호로 외자에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관, 최종낙찰일, 최종낙찰업체담당자)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 물품 목록 조회 /getOpengResultListInfoThng",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 입력일시, 공고일시, 개찰일시, 입찰공고번호로하여 물품에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 공사 목록 조회 /getOpengResultListInfoCnstwk",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 입력일시, 공고일시, 개찰일시, 입찰공고번호로하여 공사에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 용역 목록 조회 /getOpengResultListInfoServc",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 입력일시, 공고일시, 개찰일시, 입찰공고번호로하여 용역에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 외자 목록 조회 /getOpengResultListInfoFrgcpt",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 입력일시, 공고일시, 개찰일시, 입찰공고번호로하여 외자에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 물품 예비가격상세 목록 조회 /getOpengResultListInfoThngPreparPcDetail",
+        "description": "검색조건을 입력일시, 입찰공고번호로 물품에 대한 나라장터 개찰결과 예비가격상세 목록(입찰공고번호, 입찰공고명, 예정가격, 기초금액, 총예가건수, 복수예가순번, 기초예정가격, 추첨여부, 추첨횟수, 실개찰일시, 기초금액기준상위건수, 복수예비가격작성일시, 입력일시)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 공사 예비가격상세 목록 조회 /getOpengResultListInfoCnstwkPreparPcDetail",
+        "description": "검색조건을 등록일시, 입찰공고번호로 공사에 대한 나라장터 개찰결과 예비가격상세 목록(입찰공고번호, 입찰공고명, 예정가격, 기초금액, 총예가건수, 복수예가순번, 기초예정가격, 추첨여부, 추첨횟수, 실개찰일시, 기초금액기준상위건수, 복수예비가격작성일시, 입력일시)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 용역 예비가격상세 목록 조회 /getOpengResultListInfoServcPreparPcDetail",
+        "description": "검색조건을 등록일시, 입찰공고번호로 용역에 대한 나라장터 개찰결과 예비가격상세 목록(입찰공고번호, 입찰공고명, 예정가격, 기초금액, 총예가건수, 복수예가순번, 기초예정가격, 추첨여부, 추첨횟수, 실개찰일시, 기초금액기준상위건수, 복수예비가격작성일시, 입력일시)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 외자 예비가격상세 목록 조회 /getOpengResultListInfoFrgcptPreparPcDetail",
+        "description": "검색조건을 등록일시, 입찰공고번호로 외자에 대한 나라장터 개찰결과 외자 예비가격상세 목록(입찰공고번호, 입찰공고명, 예정가격, 기초금액, 총예가건수, 복수예가순번, 기초예정가격, 추첨여부, 추첨횟수, 실개찰일시, 기초금액기준상위건수, 복수예비가격작성일시, 입력일시)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 개찰완료 목록 조회 /getOpengResultListInfoOpengCompt",
+        "description": "물품, 공사, 용역, 외자의 개찰완료된 건에 대하여 최종낙찰업체 및 투찰업체의 개찰순위 정보를 제공하며 검색조건을 입찰공고번호하여 나라장터 개찰결과 개찰완료 목록(개찰결과구분명, 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 개찰순위, 최종낙찰업체사업자등록번호, 최종낙찰업체명, 최종낙찰업체대표자명, 투찰금액, 투찰룰, 비고, 공종별입찰금액URL), 추첨번호1, 추첨번호2, 투찰일시 등 개찰완료 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 유찰 목록 조회 /getOpengResultListInfoFailing",
+        "description": "검색조건을 입찰공고번호 입력하여 물품, 공사, 용역, 외자의 나라장터 개찰결과 유찰 목록(개찰결과구분명, 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 유찰사유)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "개찰결과 재입찰 목록 조회 /getOpengResultListInfoRebid",
+        "description": "검색조건을 입찰공고번호 입력하여 물품, 공사, 용역, 외자의 나라장터 개찰결과 재입찰 목록(개찰결과구분명, 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 입찰마감일시, 개찰일시, 재입찰사유, 공동수급협정마감일시)을 조회.",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 낙찰된 목록 현황 물품조회 /getScsbidListSttusThngPPSSrch",
+        "description": "검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 물품에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 낙찰된 목록 현황 공사조회 /getScsbidListSttusCnstwkPPSSrch",
+        "description": "검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 공사에대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 낙찰된 목록 현황 용역조회 /getScsbidListSttusServcPPSSrch",
+        "description": "검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 용역에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 낙찰된 목록 현황 외자조회 /getScsbidListSttusFrgcptPPSSrch",
+        "description": "검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 외자에 대한 나라장터 최종낙찰자 목록(입찰공고번호, 입찰공고명, 참가업체수, 최종낙찰업체명, 사업자번호, 최종낙찰률, 실개찰일시, 수요기관)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 개찰결과 물품 목록 조회 /getOpengResultListInfoThngPPSSrch",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 하여 물품에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 개찰결과 공사 목록 조회 /getOpengResultListInfoCnstwkPPSSrch",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 하여 공사에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 개찰결과 용역 목록 조회 /getOpengResultListInfoServcPPSSrch",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로하여 용역에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 개찰결과 외자 목록 조회 /getOpengResultListInfoFrgcptPPSSrch",
+        "description": "유찰, 개찰완료, 재입찰건에 대한 개찰결과를 제공하며 검색조건을 공고일시, 개찰일시, 입찰공고번호, 입찰공고명, 공고기관코드, 공고기관명, 수요기관코드, 수요기관명, 참조번호, 참가제한지역코드, 참가제한지역명, 업종코드, 업종명, 추정가격시작, 추정가격종료, 세부품명번호, 다수공급경쟁자여부, 조달요청번호, 국제구분코드로 하여 외자에 대한 나라장터 개찰결과 목록(입찰공고번호, 입찰공고명, 개찰일시, 참가업체수, 개찰업체정보, 진행구분코드명, 입력일시, 예비가격파일존재여부, 공고기관명, 수요기관명)을 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:11.975Z"
+  },
+  {
+    "index": 86,
+    "name": "조달청_나라장터 발주계획현황서비스",
+    "uddiId": "uddi:cbb9ece9-b09c-4bde-a717-c73b02f6f3e4_202410251303",
+    "reqId": "106022063",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/OrderPlanSttusService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_발주계획현황서비스_1.0.docx",
+    "operations": [
+      {
+        "name": "발주계획현황에 대한 물품조회 /getOrderPlanSttusListThng",
+        "description": "검색조건을 조회구분, 발주년월범위, 게시일자범위, 발주기관코드, 발주기관명, 발주계획통합번호로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 물품에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발주계획현황에 대한 공사조회 /getOrderPlanSttusListCnstwk",
+        "description": "검색조건을 조회구분, 발주년월범위, 게시일자범위, 발주기관코드, 발주기관명, 발주계획통합번호로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 공사에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발주계획현황에 대한 용역조회 /getOrderPlanSttusListServc",
+        "description": "검색조건을 조회구분, 발주년월범위, 게시일자범위, 발주기관코드, 발주기관명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 용역에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "발주계획현황에 대한 외자조회 /getOrderPlanSttusListFrgcpt",
+        "description": "검색조건을 조회구분, 발주년월범위, 게시일자범위, 발주기관코드, 발주기관명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 외자에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 발주계획현황에 대한 물품조회 /getOrderPlanSttusListThngPPSSrch",
+        "description": "검색조건을 발주시작년월, 발주종료년월, 게시일시, 발주기관코드, 발주기관명, 협정여부, 조달방식, 기관소재지, 세부품명번호, 사업명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 물품에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 발주계획현황에 대한 공사조회 /getOrderPlanSttusListCnstwkPPSSrch",
+        "description": "검색조건을 발주시작년월, 발주종료년월, 게시일시, 발주기관코드, 발주기관명, 업무유형, 조달방식, 기관소재지, 공종, 사업명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 공사에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 발주계획현황에 대한 용역조회 /getOrderPlanSttusListServcPPSSrch",
+        "description": "검색조건을 발주시작년월, 발주종료년월, 게시일시, 발주기관코드, 발주기관명, 업무유형, 조달방식, 기관소재지, 공종, 사업명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 용역에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 발주계획현황에 대한 외자조회 /getOrderPlanSttusListFrgcptPPSSrch",
+        "description": "검색조건을 발주시작년월, 발주종료년월, 게시일시, 발주기관코드, 발주기관명, 업무유형, 조달방식, 기관소재지, 사업명으로 하여 발주년도, 발주기관, 소관기관, 계약방법, 발주도급금액, 물품분류 정보, 규격항목정보 등 외자에 대한 발주계획현황 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:20.710Z"
+  },
+  {
+    "index": 87,
+    "name": "조달청_누리장터 민간낙찰정보_서비스",
+    "uddiId": "uddi:2208fbe4-e3be-46f2-a8f2-c78fc8b1f290_202410251026",
+    "reqId": "106022046",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/PrvtScsbidInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_누리장터_민간낙찰정보서비스_1.0.docx",
+    "operations": [
+      {
+        "name": "민간 낙찰된 목록 현황 조회 /getPrvtScsbidListSttus",
+        "description": "검색조건에 조회구분, 조회시작일시, 조회종료일시, 입찰공고번호를 입력하여 업무구분코드 입찰공고번호, 입찰공고차수, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 실개찰일시, 참가업체수, 최종낙찰금액, 최종낙찰률, 최종낙찰업체명, 최종낙찰업체대표자명, 최종낙찰업체주소, 최종낙찰업체전화번호 등의 누리장터시스템에 등록된 낙찰 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "민간 개찰결과 목록 조회 /getPrvtOpengResultListInfo",
+        "description": "검색조건에 조회구분, 조회시작일시, 조회종료일시, 입찰공고번호를 입력하여 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 개찰일시, 참가업체수, 진행구분코드명, 개찰업체정보, 결과코드, 결과메세지, 한 페이지 결과 수, 페이지 번호, 데이터 총 개수, 입찰공고차수, 입찰분류번호, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 개찰일시, 참가업체수, 진행구분코드명, 개찰업체정보 등의 누리장터시스템에 등록된 개찰결과 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 민간 낙찰된 목록 현황 조회 /getPrvtScsbidListSttusPPSSrch",
+        "description": "나라장터 검색조건으로 업무구분코드 입찰공고번호, 입찰공고차수, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 실개찰일시, 참가업체수, 최종낙찰금액, 최종낙찰률, 최종낙찰업체명, 최종낙찰업체대표자명, 최종낙찰업체주소, 최종낙찰업체전화번호 등의 누리장터시스템에 등록된 낙찰 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 민간 개찰결과 목록 조회 /getPrvtOpengResultListInfoPPSSrch",
+        "description": "나라장터 검색조건을 입력하여 입찰공고번호, 입찰공고차수, 입찰분류번호, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 개찰일시, 참가업체수, 진행구분코드명, 개찰업체정보, 결과코드, 결과메세지, 한 페이지 결과 수, 페이지 번호, 데이터 총 개수, 입찰공고차수, 입찰분류번호, 재입찰번호, 입찰공고명, 수요기관코드, 수요기관명, 개찰일시, 참가업체수, 진행구분코드명, 개찰업체정보 등의 누리장터시스템에 등록된 개찰결과 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "민간 개찰결과 개찰완료 목록 조회 /getPrvtOpengResultListInfoOpengCompt",
+        "description": "검색조건에 입찰공고번호, 입찰공고차수, 재입찰번호를 입력하여 개찰결과구분명, 입찰공고번호, 입찰공고차수, 재입찰번호, 개찰순위, 투찰업체사업자등록번호, 투찰업체명, 투찰업체대표자명, 투찰금액, 투찰률, 비고, 투찰일시등 개찰완료 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "민간 개찰결과 유찰 목록 조회 /getPrvtOpengResultListInfoFailing",
+        "description": "검색조건에 입찰공고번호, 입찰공고차수, 재입찰번호를 입력하여 개찰결과구분명, 입찰공고번호, 입찰공고차수, 재입찰번호, 유찰사유 등 유찰 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "민간 개찰결과 재입찰 목록 조회 /getPrvtOpengResultListInfoRebid",
+        "description": "검색조건에 입찰공고번호, 입찰공고차수, 재입찰번호를 입력하여 개찰결과구분명, 입찰공고번호, 입찰공고차수, 재입찰번호, 유찰사유 등 재입찰 정보를 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:29.491Z"
+  },
+  {
+    "index": 88,
+    "name": "조달청_누리장터 민간계약정보 서비스",
+    "uddiId": "uddi:af7815ca-ae42-4481-87f1-8355e44f6fbe_202410251309",
+    "reqId": "106022036",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/PrvtCntrctInfoService",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_누리장터_민간계약정보서비스_1.0.docx",
+    "operations": [
+      {
+        "name": "계약현황 민간조회 /getPrvtCntrctInfoList",
+        "description": "검색조건을 등록일시, 통합계약번호로 하여 통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 계약체결일자, 계약기간, 총계약금액 등의 누리장터시스템에 등록된 계약 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "나라장터 검색조건에 의한 계약현황 민간조회 /getPrvtCntrctInfoListPPSSrch",
+        "description": "검색조건을 계약일자, 기관코드, 기관명, 계약번호, 공고번호로하여 통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 계약체결일자, 계약기간, 총계약금액 등의 누리장터시스템에 등록된 계약 정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 민간변경이력조회 /getPrvtCntrctInfoListChgHstry",
+        "description": "검색조건을 변경일시, 통합계약번호로 하여 통합계약번호, 업무구분명, 확정계약번호, 계약참조번호, 계약명, 공동계약여부, 계약체결일자, 계약기간, 총계약금액 등의 누리장터시스템에 등록된 계약변경정보 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "계약현황에 대한 민간삭제이력조회 /getPrvtCntrctInfoListDltHstry",
+        "description": "검색조건에 삭제일시, 통합계약번호를 입력하여 민간 계약삭제이력정보(삭제일시, 변경구분명, 통합계약번호, 확정계약번호, 계약참조번호) 조회",
+        "dailyTraffic": "1000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:37.952Z"
+  },
+  {
+    "index": 89,
+    "name": "조달청_나라장터 사용자정보 서비스",
+    "uddiId": "uddi:e637c1a0-b530-447e-8577-d39f309bdc3c_202601061417",
+    "reqId": "106021995",
+    "endpoint": "https://apis.data.go.kr/1230000/ao/UsrInfoService02",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "JSON+XML",
+    "serviceType": "REST",
+    "referenceDoc": "조달청_OpenAPI참고자료_나라장터_사용자정보서비스_1.1.docx",
+    "operations": [
+      {
+        "name": "부정당제재업체정보조회 /getUnptRsttCorpInfo02",
+        "description": "부정당 제재 업체 정보를 사업자등록번호, 제재시작일자 검색조건으로 사업자등록번호, 업체명, 법인등록번호, 제재시작일자, 제재종료일자, 제재기관명, 계약법구분, 제재근거법률, 조항호, 조항호코드, 조항도코드명, 시행규칙코드, 시행규칙코드명 목록을 조회(나라장터미등록업체, 개인에 대한 부정당제재는 미제공) [국가계약법]-조회시점에 제재만료, 해제된 것은 제공되지 않습니다. [지방계약법]-조회시점에 정지, 제재만료, 해제된 것은 제공되지 않습니다.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "수요기관정보조회 /getDminsttInfo02",
+        "description": "수요기관코드, 사업자등록번호, 수요기관명을 입력하여 수요기관명, 유효기간,법인등록번호, 사업자등록번호, 소관구분명, 기관유형명, 업태명, 업종명, 주소,등록일시 등 수요기관정보 목록을 조회.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "조달업체 기본정보 조회 /getPrcrmntCorpBasicInfo02",
+        "description": "검색조건에 사업자등록번호와 업체명을 입력하여 사업자등록번호, 업체명, 영문업체명, 개업일시, 지역코드, 지역명, 우편번호, 주소, 상세주소, 전화번호, 팩스번호, 국가명, 홈페이지주소, 제조구분코드, 제조구분명, 종업원수, 업체업무구분코드, 업체업무구분명, 본사구분명, 등록일시, 변경일시, 고유번호증명등록여부, 대표자명 등 조달업체 기본정보 목록을 조회.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "조달업체업종정보조회 /getPrcrmntCorpIndstrytyInfo02",
+        "description": "검색조건에 사업자등록번호를 입력하여 사업자등록번호, 업종코드, 업종명, 등록일시, 유효기간만료일시, 시스템등록일시, 변경일시, 업종상태명, 대표업종여부 등 조달업체 업종정보 목록을 조회.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      },
+      {
+        "name": "조달업체공급물품정보조회 /getPrcrmntCorpSplyPrdctInfo02",
+        "description": "검색조건에 사업자등록번호를 입력하여 사업자등록번호, 세부품명, 세부품명번호, 등록일시, 변경일시, 대표품명여부 등 조달업체 공급물품정보 목록을 조회.",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:46.631Z"
+  },
+  {
+    "index": 90,
+    "name": "공정거래위원회_대규모기업집단 계열 편입/제외/유예 변경내역 조회",
+    "uddiId": "uddi:25243311-f11f-4e45-b4ce-c010373e022c_202406101615",
+    "reqId": "106021934",
+    "endpoint": "https://apis.data.go.kr/1130000/tyAssetsRentDelngDtlsList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "대규모기업집단 계열 편입/제외/유예 변경내역 현황 정보 조회 /tyAssetsRentDelngDtlsListApi",
+        "description": "대규모기업집단 계열 편입/제외/유예 변경내역 사유 및 일자 현황 정보를 조회",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:41:55.032Z"
+  },
+  {
+    "index": 91,
+    "name": "공정거래위원회_대규모기업집단 소속회사 임원현황 정보 조회 서비스",
+    "uddiId": "uddi:bf361dff-93ab-4ca0-bdb8-fa23ffb84b48_202406101614",
+    "reqId": "106021911",
+    "endpoint": "https://apis.data.go.kr/1130000/executiveCompSttusList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "대규모기업집단 소속회사 임원현황 정보 조회 /executiveCompSttusListApi",
+        "description": "기업집단에 속한 소속회사의 임원명, 동일인과의 관계, 직위 등 지정 기업집단 소속회사의 임원현황 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:03.734Z"
+  },
+  {
+    "index": 92,
+    "name": "공정거래위원회_대규모기업집단 소속회사 주주현황 정보 조회 서비스",
+    "uddiId": "uddi:9a7f1386-fed8-477c-b06b-b0d63a280b7d_202406101616",
+    "reqId": "106021905",
+    "endpoint": "https://apis.data.go.kr/1130000/stockholderCompSttusList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "대규모기업집단 소속회사 주주현황 정보 조회 /stockholderCompSttusListApi",
+        "description": "기업집단에 속한 소속회사의 주주구분, 주주명, 보통주 수/지분율, 우선주 수/지분율 등 지정 기업집단 소속회사의 임원현황 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:12.332Z"
+  },
+  {
+    "index": 93,
+    "name": "공정거래위원회_대규모기업집단 소속회사 재무현황 정보 조회 서비스",
+    "uddiId": "uddi:2bd7e560-c0cd-4124-ba40-e07f5eca7e61_202406041700",
+    "reqId": "106021903",
+    "endpoint": "https://apis.data.go.kr/1130000/financeCompSttusList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "대규모기업집단 소속회사 재무현황 정보 조회 /financeCompSttusListApi",
+        "description": "기업집단에 속한 소속회사의 대표자명, 결산일자, 자산총액, 부채총액, 자본총액, 자본금, 매출액, 당기순이익 등 지정 기업집단 소속회사의 개요 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:23.346Z"
+  },
+  {
+    "index": 94,
+    "name": "공정거래위원회_대규모기업집단 소속회사 개요 정보 조회 서비스",
+    "uddiId": "uddi:4f8546a9-3120-4cf3-9f82-ce14143d7047_202406101613",
+    "reqId": "106021897",
+    "endpoint": "https://apis.data.go.kr/1130000/affiliationCompSttusList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "소속회사 개요 정보 조회 /affiliationCompSttusListApi",
+        "description": "기업집단에 속한 소속회사의 기업집단명, 소속회사명, 대표자명, 기업설립일, 집단편입일, 업종명, 업종코드 등 지정 기업집단 소속회사의 개요 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:31.521Z"
+  },
+  {
+    "index": 95,
+    "name": "공정거래위원회_지정된 대규모기업집단 조회 서비스",
+    "uddiId": "uddi:8f0ebfd8-dd05-4c61-9383-f4bdab5e29fd",
+    "reqId": "106021895",
+    "endpoint": "https://apis.data.go.kr/1130000/appnGroupSttusList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "2. 오픈API활용가이드_지정된 대규모기업집단 조회 서비스_공정거래위원회.docx",
+    "operations": [
+      {
+        "name": "지정된 대규모기업집단 조회 /appnGroupSttusListApi",
+        "description": "지정된 기업집단에 대한 기업집단명, 기업집단코드, 계열회사 수, 동일인, 대표회사 등 지정 대규모기업집단의 일반현황 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:43.234Z"
+  },
+  {
+    "index": 96,
+    "name": "공정거래위원회_지정된 대규모기업집단 소속회사 조회 서비스",
+    "uddiId": "uddi:0b51d715-2fe9-4277-97ce-b00a1ccc55a1_202406101618",
+    "reqId": "106021828",
+    "endpoint": "https://apis.data.go.kr/1130000/appnGroupAffiList",
+    "baseUrl": "",
+    "swaggerUrl": "",
+    "dataFormat": "XML",
+    "serviceType": "REST",
+    "referenceDoc": "",
+    "operations": [
+      {
+        "name": "지정된 대규모기업집단 소속회사 조회 /appnGroupAffiListApi",
+        "description": "지정된 기업집단에 대한 기업집단명, 소속회사명, 법인등록번호, 대표자, 설립일, 계열편입일 등 지정 대규모기업집단의 소속회사 정보를 조회하는 기능",
+        "dailyTraffic": "10000"
+      },
+      {
+        "name": "stdt",
+        "description": "",
+        "dailyTraffic": "조회시작년도"
+      },
+      {
+        "name": "",
+        "description": "조회시작년도",
+        "dailyTraffic": ""
+      }
+    ],
+    "error": null,
+    "collectedAt": "2026-02-17T14:42:52.014Z"
+  }
+]
