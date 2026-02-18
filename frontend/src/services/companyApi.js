@@ -15,10 +15,17 @@ api.interceptors.response.use(
 );
 
 /**
- * 기업 검색 (자동 판별: 사업자번호/법인번호/회사명)
+ * 기업 검색 (자동 판별: 사업자번호/법인번호/회사명) — 전체 86 API
  */
 export const searchCompany = async (query) => {
   return api.get('/search', { params: { q: query } });
+};
+
+/**
+ * 경량 후보 검색 (DB only) — 드롭다운용, 즉시 응답
+ */
+export const suggestCompany = async (query) => {
+  return api.get('/suggest', { params: { q: query } });
 };
 
 /**

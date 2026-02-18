@@ -1,24 +1,78 @@
 /**
- * SourcesPanel — Shows 86 API source list with expandable raw_data
- *
- * Displays:
- * - Total sources count
- * - List of API sources with toggleable raw data
- * - Entity metadata (confidence, matchLevel)
+ * SourcesPanel — "기타" 섹션: 주요 API 소스 결과를 카드형으로 표시
  */
 import { useState } from 'react';
 import './SourcesPanel.css';
 
-function SourcesPanel({ entity, apiData, conflicts }) {
-  const [expandedSources, setExpandedSources] = useState(new Set());
+// 주요 API 소스에서 표시할 필드 매핑
+const SOURCE_FIELD_MAP = {
+  '금융위원회_기업기본정보': [
+    { key: 'crno', label: '법인등록번호' },
+    { key: 'corpNm', label: '법인명' },
+    { key: 'enpBsadr', label: '소재지' },
+    { key: 'enpRprFnm', label: '대표자' },
+    { key: 'enpEstbDt', label: '설립일' },
+    { key: 'smenpYn', label: '중소기업여부' },
+    { key: 'enpEmpeCnt', label: '종업원수' },
+    { key: 'lastModDt', label: '최종수정일' },
+  ],
+  '국세청_사업자등록상태조회': [
+    { key: 'b_stt', label: '사업자상태' },
+    { key: 'b_stt_cd', label: '상태코드' },
+    { key: 'tax_type', label: '과세유형' },
+    { key: 'tax_type_cd', label: '과세유형코드' },
+    { key: 'end_dt', label: '폐업일' },
+    { key: 'utcc_yn', label: '단위과세전환' },
+    { key: 'invoice_apply_dt', label: '세금계산서적용일' },
+  ],
+  '국민연금공단_가입사업장내역': [
+    { key: 'wkplNm', label: '사업장명' },
+    { key: 'bzowrRgstNo', label: '사업자등록번호' },
+    { key: 'wkplRoadNmDtlAddr', label: '주소' },
+    { key: 'wkplJnngStdt', label: '가입일' },
+    { key: 'crrmmNtcAmt', label: '당월고지금액' },
+    { key: 'jnngpCnt', label: '가입자수' },
+    { key: 'saeopjangNm', label: '사업장명(원문)' },
+  ],
+};
+
+// 소스명에서 매칭되는 키 찾기
+function findSourceConfig(sourceName) {
+  for (const [key, fields] of Object.entries(SOURCE_FIELD_MAP)) {
+    if (sourceName?.includes(key) || key.includes(sourceName)) {
+      return { displayName: key, fields };
+    }
+  }
+  return null;
+}
+
+// raw_data에서 실제 값 추출 (중첩 객체 지원)
+function extractValue(data, key) {
+  if (!data) return null;
+  // 직접 키
+  if (data[key] !== undefined) return data[key];
+  // items 배열 내부
+  if (Array.isArray(data.items)) {
+    for (const item of data.items) {
+      if (item[key] !== undefined) return item[key];
+    }
+  }
+  // data 객체 내부
+  if (data.data && typeof data.data === 'object') {
+    if (data.data[key] !== undefined) return data.data[key];
+  }
+  return null;
+}
+
+function SourcesPanel({ entity, apiData }) {
+  const [showRaw, setShowRaw] = useState(new Set());
 
   if (!entity && !apiData) return null;
 
-  const sources = entity?.sources || [];
   const data = apiData || [];
 
-  const toggleSource = (idx) => {
-    setExpandedSources(prev => {
+  const toggleRaw = (idx) => {
+    setShowRaw(prev => {
       const next = new Set(prev);
       next.has(idx) ? next.delete(idx) : next.add(idx);
       return next;
@@ -27,101 +81,79 @@ function SourcesPanel({ entity, apiData, conflicts }) {
 
   return (
     <div className="sources-panel">
-      {/* Entity metadata */}
-      {entity && (
-        <div className="sources-panel__meta">
-          <div className="meta-item">
-            <span className="meta-label">Entity ID</span>
-            <span className="meta-value mono">{entity.entityId}</span>
-          </div>
-          <div className="meta-item">
-            <span className="meta-label">신뢰도</span>
-            <span className={`meta-value confidence-${getConfidenceLevel(entity.confidence)}`}>
-              {entity.confidence != null ? `${(entity.confidence * 100).toFixed(1)}%` : '-'}
-            </span>
-          </div>
-          <div className="meta-item">
-            <span className="meta-label">매칭 수준</span>
-            <span className="meta-value">{entity.matchLevel || '-'}</span>
-          </div>
-          <div className="meta-item">
-            <span className="meta-label">데이터 소스</span>
-            <span className="meta-value">{entity.sourcesCount || sources.length}개</span>
-          </div>
-        </div>
-      )}
-
-      {/* Conflicts */}
-      {conflicts && conflicts.length > 0 && (
-        <div className="sources-panel__conflicts">
-          <h4>소스간 불일치 ({conflicts.length}건)</h4>
-          <div className="conflict-list">
-            {conflicts.slice(0, 5).map((c, i) => (
-              <div key={i} className="conflict-item">
-                <span className="conflict-field">{c.field}</span>
-                <span className="conflict-values">
-                  &ldquo;{truncate(c.valueA, 30)}&rdquo; vs &ldquo;{truncate(c.valueB, 30)}&rdquo;
-                </span>
-                <span className="conflict-sim">{((c.similarity || 0) * 100).toFixed(0)}%</span>
-              </div>
-            ))}
-            {conflicts.length > 5 && (
-              <span className="conflict-more">...외 {conflicts.length - 5}건</span>
-            )}
-          </div>
-        </div>
-      )}
-
-      {/* API source list */}
+      {/* 주요 API 소스 카드형 표시 */}
       {data.length > 0 && (
-        <div className="sources-panel__list">
-          <h4>API 소스 데이터 ({data.length}개)</h4>
-          {data.map((src, idx) => (
-            <div key={idx} className="source-item">
-              <button
-                className="source-item__header"
-                onClick={() => toggleSource(idx)}
-              >
-                <span className="source-item__name">{src.source || src.sourceName || `Source ${idx + 1}`}</span>
-                <span className="source-item__toggle">
-                  {expandedSources.has(idx) ? '−' : '+'}
-                </span>
-              </button>
-              {expandedSources.has(idx) && (
-                <pre className="source-item__data">
-                  {JSON.stringify(src.data || src.rawData || src, null, 2)}
-                </pre>
-              )}
-            </div>
-          ))}
+        <div className="sources-cards">
+          {data.map((src, idx) => {
+            const sourceName = src.source || src.sourceName || `Source ${idx + 1}`;
+            const rawData = src.data || src.rawData || src;
+            const config = findSourceConfig(sourceName);
+
+            if (config) {
+              // 주요 소스: 카드형 필드 표시
+              return (
+                <div key={idx} className="source-card">
+                  <div className="source-card__header">
+                    <h4>{config.displayName}</h4>
+                    <button
+                      className="raw-toggle"
+                      onClick={() => toggleRaw(idx)}
+                    >
+                      {showRaw.has(idx) ? 'JSON 닫기' : 'JSON'}
+                    </button>
+                  </div>
+                  <div className="source-card__fields">
+                    {config.fields.map(({ key, label }) => {
+                      const val = extractValue(rawData, key);
+                      if (val === null || val === undefined || val === '') return null;
+                      return (
+                        <div key={key} className="source-field">
+                          <span className="source-field__label">{label}</span>
+                          <span className="source-field__value">{String(val)}</span>
+                        </div>
+                      );
+                    })}
+                  </div>
+                  {showRaw.has(idx) && (
+                    <pre className="source-card__raw">
+                      {JSON.stringify(rawData, null, 2)}
+                    </pre>
+                  )}
+                </div>
+              );
+            }
+
+            // 기타 소스: 접을 수 있는 JSON
+            return (
+              <div key={idx} className="source-card source-card--minor">
+                <button
+                  className="source-card__header source-card__header--toggle"
+                  onClick={() => toggleRaw(idx)}
+                >
+                  <h4>{sourceName}</h4>
+                  <span>{showRaw.has(idx) ? '−' : '+'}</span>
+                </button>
+                {showRaw.has(idx) && (
+                  <pre className="source-card__raw">
+                    {JSON.stringify(rawData, null, 2)}
+                  </pre>
+                )}
+              </div>
+            );
+          })}
         </div>
       )}
 
-      {/* Source names only (if no apiData but has source names) */}
-      {data.length === 0 && sources.length > 0 && (
-        <div className="sources-panel__list">
-          <h4>수집 소스 ({sources.length}개)</h4>
-          <div className="source-tags">
-            {sources.map((s, i) => (
-              <span key={i} className="source-tag">{s}</span>
-            ))}
-          </div>
+      {/* 데이터 없을 때 소스 이름 태그 표시 */}
+      {data.length === 0 && entity?.sources?.length > 0 && (
+        <div className="source-tags">
+          {entity.sources.map((s, i) => (
+            <span key={i} className="source-tag">{s}</span>
+          ))}
         </div>
       )}
     </div>
   );
-}
-
-function getConfidenceLevel(conf) {
-  if (conf == null) return 'unknown';
-  if (conf >= 0.8) return 'high';
-  if (conf >= 0.6) return 'medium';
-  return 'low';
-}
-
-function truncate(str, max) {
-  if (!str) return '-';
-  return str.length > max ? str.slice(0, max) + '...' : str;
 }
 
 export default SourcesPanel;

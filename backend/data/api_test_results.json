@@ -1,0 +1,757 @@
+{
+  "testDate": "2026-02-18T05:06:22.977Z",
+  "testCrno": "1301110006246",
+  "testBrno": "1248100998",
+  "summary": {
+    "total": 67,
+    "ok": 43,
+    "needKey": 0,
+    "notFound": 0,
+    "serverErrors": 3,
+    "rateLimited": 0,
+    "others": 21
+  },
+  "results": [
+    {
+      "id": "15059649",
+      "name": "금융위_공시정보(배당)",
+      "url": "https://apis.data.go.kr/1160100/service/GetDiscInfoService_V2/getDiviDiscInfo_V2",
+      "result": "OK",
+      "detail": "totalCount=10",
+      "status": 200,
+      "totalCount": 10,
+      "sampleData": [
+        "basDt",
+        "crno",
+        "bpvtrParPrc",
+        "pvtrCrtmNpf",
+        "bpvtrPstcNpf",
+        "bpvtrCashTdvdAmt",
+        "bpvtrStckTdvdAmt",
+        "bpvtrCashDvdnTndnCtt"
+      ]
+    },
+    {
+      "id": "15094775",
+      "name": "금융위_KRX상장종목정보",
+      "url": "https://apis.data.go.kr/1160100/service/GetKrxListedInfoService/getItemInfo",
+      "result": "OK",
+      "detail": "totalCount=1503",
+      "status": 200,
+      "totalCount": 1503,
+      "sampleData": [
+        "basDt",
+        "srtnCd",
+        "isinCd",
+        "mrktCtg",
+        "itmsNm",
+        "crno",
+        "corpNm"
+      ]
+    },
+    {
+      "id": "15059594",
+      "name": "금융위_금융회사재무신용정보",
+      "url": "https://apis.data.go.kr/1160100/service/GetFnCoFinaStatCredInfoService_V2/getFnCoBs_V2",
+      "result": "OK",
+      "detail": "totalCount=0",
+      "status": 200,
+      "totalCount": 0,
+      "sampleData": null
+    },
+    {
+      "id": "15139255",
+      "name": "금융위_자금조달공시정보",
+      "url": "https://apis.data.go.kr/1160100/service/GetPBFincDiscInfoService/getPrplcCptUseInfo",
+      "result": "OK",
+      "detail": "totalCount=10",
+      "status": 200,
+      "totalCount": 10,
+      "sampleData": [
+        "basDt",
+        "bizYr",
+        "corpPtrnSeNm",
+        "corpSeNo",
+        "cmpyNm",
+        "crno",
+        "rcptNo",
+        "dataSno"
+      ]
+    },
+    {
+      "id": "15150946",
+      "name": "금융위_주식발행공시정보",
+      "url": "https://apis.data.go.kr/1160100/GetStkIssuInfoService/getStkIssuInfo",
+      "result": "OK",
+      "detail": "totalCount=38",
+      "status": 200,
+      "totalCount": 38,
+      "sampleData": [
+        "basDt",
+        "bizYear",
+        "corpPtrnSeNm",
+        "corpSeNo",
+        "corpNm",
+        "crno",
+        "rcptNo",
+        "dataSno"
+      ]
+    },
+    {
+      "id": "15043364",
+      "name": "금융위_주식분포및사고주권",
+      "url": "https://apis.data.go.kr/1160100/service/GetStocTradInfoService/getIrreRigforSecu",
+      "result": "OK",
+      "detail": "totalCount=1075291",
+      "status": 200,
+      "totalCount": 1075291,
+      "sampleData": [
+        "basDt",
+        "crno",
+        "isinCd",
+        "stckIssuCmpyNm",
+        "isinCdNm",
+        "scrsDcd",
+        "scrsDcdNm",
+        "stckAcdnDcd"
+      ]
+    },
+    {
+      "id": "15059609",
+      "name": "금융위_주식권리일정",
+      "url": "https://apis.data.go.kr/1160100/service/GetStocRighScheService/getRighExerReasSche",
+      "result": "OK",
+      "detail": "totalCount=500",
+      "status": 200,
+      "totalCount": 500,
+      "sampleData": [
+        "basDt",
+        "issuCmpyKsdCustNo",
+        "crno",
+        "stckIssuCmpyNm",
+        "stckParPrc",
+        "stckIssuRcd",
+        "stckIssuRcdNm",
+        "rgtExertRcdNm"
+      ]
+    },
+    {
+      "id": "15059585",
+      "name": "금융위_차입투자정보",
+      "url": "https://apis.data.go.kr/1160100/service/GetBorrInveInfoService/getNPLReviInfo",
+      "result": "OK",
+      "detail": "totalCount=0",
+      "status": 200,
+      "totalCount": 0,
+      "sampleData": null
+    },
+    {
+      "id": "15059607",
+      "name": "금융위_주식등록예탁가능",
+      "url": "https://apis.data.go.kr/1160100/service/GetStocDepoInfoService/getDepoAvaiWhet",
+      "result": "OK",
+      "detail": "totalCount=15984",
+      "status": 200,
+      "totalCount": 15984,
+      "sampleData": [
+        "basDt",
+        "crno",
+        "isinCd",
+        "stckIssuCmpyNm",
+        "isinCdNm",
+        "scrsItmsKcd",
+        "scrsItmsKcdNm",
+        "lstgDt"
+      ]
+    },
+    {
+      "id": "15059582",
+      "name": "금융위_국제거래종목(DR)",
+      "url": "https://apis.data.go.kr/1160100/service/GetDrTradItemInfoService/getDepoReceItem",
+      "result": "OK",
+      "detail": "totalCount=9968",
+      "status": 200,
+      "totalCount": 9968,
+      "sampleData": [
+        "basDt",
+        "crno",
+        "isinCd",
+        "isinCdNm",
+        "drIssuCmpyNm",
+        "stckKcd",
+        "stckKcdNm",
+        "orshIsinCdNm"
+      ]
+    },
+    {
+      "id": "15094808",
+      "name": "금융위_주식시세정보",
+      "url": "https://apis.data.go.kr/1160100/service/GetStockSecuritiesInfoService/getStockPriceInfo",
+      "result": "OK",
+      "detail": "totalCount=0",
+      "status": 200,
+      "totalCount": 0,
+      "sampleData": null
+    },
+    {
+      "id": "15094806",
+      "name": "금융위_증권상품시세(ETF)",
+      "url": "https://apis.data.go.kr/1160100/service/GetSecuritiesProductInfoService/getETFPriceInfo",
+      "result": "OK",
+      "detail": "totalCount=0",
+      "status": 200,
+      "totalCount": 0,
+      "sampleData": null
+    },
+    {
+      "id": "15059611",
+      "name": "금융위_채권권리일정",
+      "url": "https://apis.data.go.kr/1160100/service/GetBondRighScheInfoService/getBondRighExerSche",
+      "result": "OK",
+      "detail": "totalCount=0",
+      "status": 200,
+      "totalCount": 0,
+      "sampleData": null
+    },
+    {
+      "id": "15091902",
+      "name": "공정위_대규모기업집단_참여업종",
+      "url": "https://apis.data.go.kr/1130000/typeOfBusinessCompSttusList/typeOfBusinessCompSttusListApi",
+      "result": "OK_MAYBE",
+      "detail": "keys: typeOfBusinessCompSttus,resultCode,resultMsg,numOfRows,pageNo,totalCount",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15091909",
+      "name": "공정위_지주회사_자회사손자회사",
+      "url": "https://apis.data.go.kr/1130000/holdingProgCompSttusList/holdingProgCompStusListApi",
+      "result": "OK_MAYBE",
+      "detail": "keys: holdingProgCompSttus,resultCode,resultMsg,numOfRows,pageNo,totalCount",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126302",
+      "name": "공정위_방문판매_등록현황",
+      "url": "https://apis.data.go.kr/1130000/ClslBs_2Service/getClslBsBiznoInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126301",
+      "name": "공정위_방문판매_등록상세",
+      "url": "https://apis.data.go.kr/1130000/ClslBsDtl_2Service/getClslBsInfoDetail_2",
+      "result": "SERVER_ERROR",
+      "detail": "500 - 서버 에러 | Unexpected errors\n",
+      "status": 500,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126329",
+      "name": "공정위_후원방문판매_등록현황",
+      "url": "https://apis.data.go.kr/1130000/SrlClslBs_2Service/getSrlClslBsBiznoInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126332",
+      "name": "공정위_후원방문판매_등록상세",
+      "url": "https://apis.data.go.kr/1130000/SrlClslBsDtl_2Service/getSrlClslBsInfoDetail_2",
+      "result": "SERVER_ERROR",
+      "detail": "500 - 서버 에러 | Unexpected errors\n",
+      "status": 500,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126315",
+      "name": "공정위_통신판매_등록상세",
+      "url": "https://apis.data.go.kr/1130000/MllBsDtl_3Service/getMllBsInfoDetail_3",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126345",
+      "name": "공정위_전화권유판매_등록현황",
+      "url": "https://apis.data.go.kr/1130000/TelidsalBs_2Service/getTelidsalBsBiznoInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126339",
+      "name": "공정위_전화권유판매_등록상세",
+      "url": "https://apis.data.go.kr/1130000/TelidsalBsDtl_2Service/getTelidsalBsInfoDetail_2",
+      "result": "SERVER_ERROR",
+      "detail": "500 - 서버 에러 | Unexpected errors\n",
+      "status": 500,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126348",
+      "name": "공정위_선불식할부거래_등록현황",
+      "url": "https://apis.data.go.kr/1130000/InstallplanBs_2Service/getInstallplanBsInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15126347",
+      "name": "공정위_선불식할부거래_등록상세",
+      "url": "https://apis.data.go.kr/1130000/InstallplanBsDtl_3Service/getInstallplanBsInfoDetail_3",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15127078",
+      "name": "공정위_선불식할부거래_정보",
+      "url": "https://apis.data.go.kr/1130000/InstallplanBsIf_2Service/getInstallplanBsIfBiznoInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>00</resultCode><resultMsg>NORMAL SERVICE</resultMsg><numOfRows>1</numOfRows><pa",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15127082",
+      "name": "공정위_선불식할부거래_정보상세",
+      "url": "https://apis.data.go.kr/1130000/InstallplanBsIfDtl_2Service/getInstallplanBsIfInfoDetail_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>11</resultCode><resultMsg>ESSENTIAL_PARAMETER_ERROR</resultMsg></EgovMap>",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15125441",
+      "name": "공정위_가맹정보_가맹본부등록",
+      "url": "https://apis.data.go.kr/1130000/FftcJnghdqrtrsRgsInfo2_Service/getjnghdqrtrsListinfo",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>11</resultCode><resultMsg>ESSENTIAL_PARAMETER_ERROR</resultMsg></EgovMap>",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15143521",
+      "name": "공정위_페어데이터_가맹본부현황",
+      "url": "https://apis.data.go.kr/1130000/FftcCtpvJnghdqrtrsStusService/getFftcCtpvJnghdqrtrsStus",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>11</resultCode><resultMsg>ESSENTIAL_PARAMETER_ERROR</resultMsg></EgovMap>",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15117398",
+      "name": "식약처_급식_식재료공급업체",
+      "url": "https://apis.data.go.kr/1471000/SlunchScolIngrSuplyEntpInfoService/getSlunchScolIngrSuplyEntpInfoService",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15117399",
+      "name": "식약처_급식_위탁급식업체",
+      "url": "https://apis.data.go.kr/1471000/SlunchScolCnsgSlunchEntpInfoService/getSlunchScolCnsgSlunchEntpInfoService",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15058806",
+      "name": "식약처_대조약조회",
+      "url": "https://apis.data.go.kr/1471000/MdcCompDrugInfoService04/getMdcCompDrugList04",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15058930",
+      "name": "식약처_의료기기GMP지정현황",
+      "url": "https://apis.data.go.kr/1471000/MdlpGmpAppnSttusInfoService02/getItemGroupList01",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15117405",
+      "name": "식약처_의료기기유통업체",
+      "url": "https://apis.data.go.kr/1471000/MdeqCircEntpInfoService/getMdeqCircEntpInfoService",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15117407",
+      "name": "식약처_의료기기통합업체",
+      "url": "https://apis.data.go.kr/1471000/MdeqItgrtEntpInfoService/getMdeqItgrtEntpInfoService",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15117141",
+      "name": "식약처_의료기기행정처분",
+      "url": "https://apis.data.go.kr/1471000/MdeqAdmmInfoService1/getMdeqAdmmInfoService1",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15115469",
+      "name": "식약처_의약외품생산수입실적",
+      "url": "https://apis.data.go.kr/1471000/QdrgProdIprtPfmc/getQdrgProdIprtPfmc",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15095679",
+      "name": "식약처_의약외품제품허가",
+      "url": "https://apis.data.go.kr/1471000/QdrgPrdtPrmsnInfoService03/getQdrgPrdtPrmsnInfoInq03",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15057639",
+      "name": "식약처_의약품낱알식별",
+      "url": "https://apis.data.go.kr/1471000/MdcinGrnIdntfcInfoService03/getMdcinGrnIdntfcInfoList03",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15111775",
+      "name": "식약처_의약품유효기간",
+      "url": "https://apis.data.go.kr/1471000/DrugPrdlstVldPrdInfoService01/getDrugPrdlstVldPrdInfoService01",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15059114",
+      "name": "식약처_의약품회수판매중지",
+      "url": "https://apis.data.go.kr/1471000/MdcinRtrvlSleStpgeInfoService04/getMdcinRtrvlSleStpgeEtcItem03",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15059486",
+      "name": "식약처_DUR품목정보",
+      "url": "https://apis.data.go.kr/1471000/DURPrdlstInfoService03/getUsjntTabooInfoList03",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15124968",
+      "name": "환경공단_비점오염저감시설",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/TpYnNppService/getNpsFcYn",
+      "result": "OK_MAYBE",
+      "detail": "keys: header,body",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15141648",
+      "name": "환경공단_순환자원인정업체",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/rotatRsrcRcgService/getRotatRsrcRcgBzentyInfo",
+      "result": "EMPTY",
+      "detail": "<response><header><resultCode>91</resultCode><resultMsg>잘못된 파라미터 요청입니다.</resultMsg></header><body/><",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15141609",
+      "name": "환경공단_순환자원유통지원",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/rtlSprtService/getRtlSprtInfo",
+      "result": "EMPTY",
+      "detail": "<response><header><resultCode>91</resultCode><resultMsg>잘못된 파라미터 요청입니다.</resultMsg></header><body/><",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15125000",
+      "name": "환경공단_올바로회원정보",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/TpYnAbrMbrService/getAllbaroMbrTpYn",
+      "result": "OK_MAYBE",
+      "detail": "keys: header,body",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15141647",
+      "name": "환경공단_전기전자재활용업체",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/ecoassysBzentyService/getEcoassysBzentyInfo",
+      "result": "EMPTY",
+      "detail": "<response><header><resultCode>91</resultCode><resultMsg>잘못된 파라미터 요청입니다.</resultMsg></header><body/><",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15124997",
+      "name": "환경공단_측정대행업체",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/EmaMeasService/getMeasCmpyReg",
+      "result": "OK_MAYBE",
+      "detail": "keys: header,body",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15141649",
+      "name": "환경공단_폐기물처리업체",
+      "url": "https://apis.data.go.kr/B552584/kecoapi/wstdspBzentyService/getWstdspBzentyInfo",
+      "result": "EMPTY",
+      "detail": "<response><header><resultCode>91</resultCode><resultMsg>잘못된 파라미터 요청입니다.</resultMsg></header><body/><",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15124946",
+      "name": "지식재산처_등록원부",
+      "url": "https://apis.data.go.kr/1430000/PttRgstRtInfoInqSvc/getPatentRegisterHistory",
+      "result": "OK_MAYBE",
+      "detail": "keys: resultCode,resultMsg,totalCount",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15110018",
+      "name": "산업인력공단_훈련참여정보",
+      "url": "https://apis.data.go.kr/B490007/hrd4uService1/getBizHrdInfo",
+      "result": "OK_MAYBE",
+      "detail": "keys: responseHeader,responseBody",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15012005",
+      "name": "소상공인_상가상권정보",
+      "url": "https://apis.data.go.kr/B553077/api/open/sdsc2/storeZoneOne",
+      "result": "OK",
+      "detail": "header OK",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15127059",
+      "name": "공정위_다단계판매_정보",
+      "url": "https://apis.data.go.kr/1130000/MvlBsIf_2Service/getMvlBsIfCoRegNoInfo_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>11</resultCode><resultMsg>ESSENTIAL_PARAMETER_ERROR</resultMsg></EgovMap>",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15127067",
+      "name": "공정위_다단계판매_정보상세",
+      "url": "https://apis.data.go.kr/1130000/MvlBsIfDtl_2Service/getMvlBsIfInfoDetail_2",
+      "result": "EMPTY",
+      "detail": "<EgovMap><resultCode>11</resultCode><resultMsg>ESSENTIAL_PARAMETER_ERROR</resultMsg></EgovMap>",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15155088",
+      "name": "행안부_상조업",
+      "url": "https://apis.data.go.kr/1741000/funeral_service_providers/info",
+      "result": "OK",
+      "detail": "totalCount=412",
+      "status": 200,
+      "totalCount": 412,
+      "sampleData": null
+    },
+    {
+      "id": "15155095",
+      "name": "행안부_승강기유지관리",
+      "url": "https://apis.data.go.kr/1741000/elevator_maintenance/info",
+      "result": "OK",
+      "detail": "totalCount=1697",
+      "status": 200,
+      "totalCount": 1697,
+      "sampleData": null
+    },
+    {
+      "id": "15155100",
+      "name": "행안부_승강기제조수입",
+      "url": "https://apis.data.go.kr/1741000/elevator_manufacturers_importers/info",
+      "result": "OK",
+      "detail": "totalCount=489",
+      "status": 200,
+      "totalCount": 489,
+      "sampleData": null
+    },
+    {
+      "id": "15154973",
+      "name": "행안부_대기오염배출시설",
+      "url": "https://apis.data.go.kr/1741000/air_pollution_facility_installation/info",
+      "result": "OK",
+      "detail": "totalCount=138872",
+      "status": 200,
+      "totalCount": 138872,
+      "sampleData": null
+    },
+    {
+      "id": "15154989",
+      "name": "행안부_수질오염원시설",
+      "url": "https://apis.data.go.kr/1741000/water_pollution_source_other/info",
+      "result": "OK",
+      "detail": "totalCount=63700",
+      "status": 200,
+      "totalCount": 63700,
+      "sampleData": null
+    },
+    {
+      "id": "15125655",
+      "name": "행안부_재난배상책임보험",
+      "url": "https://apis.data.go.kr/1741000/ndms/facilInfo",
+      "result": "OK_MAYBE",
+      "detail": "keys: currentCount,data,matchCount,page,perPage,totalCount",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15020284",
+      "name": "국민연금_탈퇴사업장",
+      "url": "https://apis.data.go.kr/B552015/NpsScsnBplcInfoInqireServiceV2/getDetailInfoSearchV2",
+      "result": "EMPTY",
+      "detail": "<?xml version='1.0' encoding='UTF-8'?><response><header><resultCode>00</resultCode><resultMsg>NORMAL",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15119539",
+      "name": "한국조폐공사_가맹점기본정보",
+      "url": "https://apis.data.go.kr/B190001/localFranchisesV2/franchiseV2",
+      "result": "OK_MAYBE",
+      "detail": "keys: currentCount,data,matchCount,page,perPage,totalCount",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15107784",
+      "name": "체육진흥공단_스포츠강좌",
+      "url": "https://apis.data.go.kr/B551014/SRVC_OD_API_FACIL_COURSE/todz_api_facil_course_i",
+      "result": "EMPTY",
+      "detail": "<?xml version=\"1.0\" encoding=\"UTF-8\"?><response>\n  <header>\n    <resultCode>10</resultCode>\n    <res",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15125366",
+      "name": "창업진흥원_주관기관정보",
+      "url": "https://apis.data.go.kr/B552735/kisedPmsService/getInstitutionInformation",
+      "result": "EMPTY",
+      "detail": "<results><currentCount>10</currentCount><data><item><col name=\"natn_clss_cd\">C03001</col><col name=\"",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15072207",
+      "name": "한국가스공사_계약정보",
+      "url": "https://apis.data.go.kr/B551210/contractInfoList4/getContractinfoList4",
+      "result": "EMPTY",
+      "detail": "<?xml version=\"1.0\" encoding=\"UTF-8\"?>\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n\r\n<response>\r\n\t<header>\r\n\t\t<resultCode>00</res",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15156661",
+      "name": "환경공단_폐기물행정처분",
+      "url": "https://apis.data.go.kr/B552584/wstdspGrndsInfo/getlist",
+      "result": "OK_MAYBE",
+      "detail": "keys: header,body",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15156648",
+      "name": "환경공단_전기전자업체정보",
+      "url": "https://apis.data.go.kr/B552584/elcPrdBzentInfo/getlist",
+      "result": "OK_MAYBE",
+      "detail": "keys: header,body",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    },
+    {
+      "id": "15141320",
+      "name": "부산_경매결과일정산",
+      "url": "https://apis.data.go.kr/6260000/KjMarketAuction2/getAuctionResultDay",
+      "result": "EMPTY",
+      "detail": "<response><header><resultMsg>NORMAL_CODE</resultMsg><resultCode>00</resultCode></header><body><total",
+      "status": 200,
+      "totalCount": null,
+      "sampleData": null
+    }
+  ]
+}

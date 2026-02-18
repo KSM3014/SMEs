@@ -24,8 +24,102 @@ import { safeErrorMessage } from '../middleware/safeError.js';
 const router = Router();
 
 /**
+ * GET /api/company/suggest
+ * DB 기반 경량 검색 — 드롭다운 후보 목록용 (즉시 응답)
+ * entity_registry + dart_corp_codes에서 검색
+ */
+router.get('/suggest', async (req, res) => {
+  try {
+    const { q } = req.query;
+    if (!q || q.trim().length < 2) {
+      return res.json({ success: true, data: [] });
+    }
+
+    const query = q.trim();
+    const isNumber = /^\d+$/.test(query.replace(/-/g, ''));
+    const candidates = [];
+    console.log(`[Suggest] q="${query}" isNumber=${isNumber}`);
+
+    if (isNumber) {
+      // 사업자등록번호 또는 법인등록번호로 검색
+      const normalized = query.replace(/-/g, '');
+      const [entities] = await sequelize.query(`
+        SELECT entity_id, canonical_name, brno, crno, sources_count, confidence
+        FROM entity_registry
+        WHERE brno = $1 OR crno = $1 OR brno LIKE $2
+        ORDER BY sources_count DESC
+        LIMIT 10
+      `, { bind: [normalized, `${normalized}%`] });
+
+      for (const e of entities) {
+        candidates.push({
+          id: e.brno || e.entity_id,
+          business_number: e.brno,
+          corp_number: e.crno,
+          company_name: e.canonical_name,
+          confidence: parseFloat(e.confidence) || 1,
+          sourcesCount: parseInt(e.sources_count) || 0,
+          source: 'db'
+        });
+      }
+    } else {
+      // 회사명으로 검색 — entity_registry
+      const [entities] = await sequelize.query(`
+        SELECT entity_id, canonical_name, brno, crno, sources_count, confidence
+        FROM entity_registry
+        WHERE canonical_name ILIKE $1
+        ORDER BY sources_count DESC
+        LIMIT 10
+      `, { bind: [`%${query}%`] });
+
+      for (const e of entities) {
+        candidates.push({
+          id: e.brno || e.entity_id,
+          business_number: e.brno,
+          corp_number: e.crno,
+          company_name: e.canonical_name,
+          confidence: parseFloat(e.confidence) || 1,
+          sourcesCount: parseInt(e.sources_count) || 0,
+          source: 'db'
+        });
+      }
+
+      // dart_corp_codes에서도 검색 (entity_registry에 없는 것만)
+      const existingNames = new Set(candidates.map(c => c.company_name));
+      const [dartCodes] = await sequelize.query(`
+        SELECT corp_code, corp_name, stock_code
+        FROM dart_corp_codes
+        WHERE corp_name ILIKE $1
+        ORDER BY LENGTH(corp_name)
+        LIMIT 10
+      `, { bind: [`%${query}%`] });
+
+      for (const d of dartCodes) {
+        if (!existingNames.has(d.corp_name)) {
+          candidates.push({
+            id: d.corp_code,
+            business_number: null,
+            corp_number: null,
+            company_name: d.corp_name,
+            stock_code: d.stock_code?.trim() || null,
+            confidence: 1,
+            sourcesCount: 0,
+            source: 'dart'
+          });
+        }
+      }
+    }
+
+    res.json({ success: true, data: candidates.slice(0, 15) });
+  } catch (error) {
+    console.error('[Company] Suggest error:', error.message, error.stack);
+    res.status(500).json({ success: false, error: safeErrorMessage(error), data: [] });
+  }
+});
+
+/**
  * GET /api/company/search
- * 기업 검색 (사업자번호, 법인번호, 회사명)
+ * 기업 검색 (사업자번호, 법인번호, 회사명) — 전체 86 API 호출
  */
 router.get('/search', async (req, res) => {
   try {
@@ -252,8 +346,9 @@ router.get('/live/:brno', async (req, res) => {
         const entityForDart = dbEntity || { canonicalName: null, brno };
         // If no canonicalName from DB, try to get it from a quick search
         if (!entityForDart.canonicalName) {
-          entityForDart.canonicalName = brno; // fallback
+          entityForDart.canonicalName = brno; // fallback to brno
         }
+        console.log(`[SSE] DART lookup: canonicalName=${entityForDart.canonicalName}, brno=${entityForDart.brno}, dbEntity=${!!dbEntity}`);
         const dartData = await fetchDartData(entityForDart);
         if (dartData && dartData.company_info) {
           const dartMapped = mapEntityToCompanyDetail(dbEntity || { brno, entityId: `ent_${brno}`, apiData: [], conflicts: [], sources: [] }, dartData);
@@ -277,7 +372,7 @@ router.get('/live/:brno', async (req, res) => {
             debt_ratio: dartMapped.debt_ratio
           });
         } else {
-          send('dart_data', { available: false, message: 'DART 데이터 없음, sminfo 조회 중...' });
+          send('dart_data', { available: false, message: 'DART 전자공시에 등록되지 않은 기업입니다.' });
 
           // Sminfo fallback for non-listed companies
           try {
@@ -369,7 +464,10 @@ router.get('/live/:brno', async (req, res) => {
 
     // 5. Complete — 최종 매핑된 데이터 전송
     const updatedEntity = await loadEntityFromDb({ brno });
-    const finalCompany = mapEntityToCompanyDetail(updatedEntity || dbEntity, dartDataResult);
+    const sourceEntity = updatedEntity || dbEntity;
+    const finalCompany = sourceEntity
+      ? mapEntityToCompanyDetail(sourceEntity, dartDataResult)
+      : null;
     send('complete', {
       company: finalCompany,
       conflicts: updatedEntity?.conflicts || [],

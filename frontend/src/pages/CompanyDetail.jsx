@@ -16,7 +16,6 @@ import ShareholdersTable from '../components/company/ShareholdersTable';
 import ComparisonMetrics from '../components/company/ComparisonMetrics';
 import RedFlags from '../components/company/RedFlags';
 import StatusBar from '../components/company/StatusBar';
-import DiffSummary from '../components/company/DiffSummary';
 import SourcesPanel from '../components/company/SourcesPanel';
 import './CompanyDetail.css';
 
@@ -214,9 +213,9 @@ function CompanyDetail() {
         </section>
       )}
 
-      {/* 3. 인물 정보 (DART) — 3-Column Grid */}
+      {/* 3. 인물 정보 (DART) — 3-Column Grid (DART 데이터 있을 때만) */}
       {showDartSkeleton && <SectionSkeleton title="인물 정보 (DART)" />}
-      {dartLoaded && (company?.officers?.length > 0 || company?.shareholders?.length > 0) && (
+      {dartAvailable && (company?.officers?.length > 0 || company?.shareholders?.length > 0) && (
         <section className="personnel-section">
           <h2>인물 정보 (DART)</h2>
           <div className="personnel-grid">
@@ -260,14 +259,8 @@ function CompanyDetail() {
           </div>
         </section>
       )}
-      {showNoDart && (!company?.officers?.length && !company?.shareholders?.length) && (
-        <NoDartMessage title="인물 정보 (DART)" />
-      )}
 
-      {/* 4. Diff Summary — appears after live_diff */}
-      {diff && <DiffSummary diff={diff} meta={meta} />}
-
-      {/* 5. 3-Year Average Comparison — from DART */}
+      {/* 4. 3-Year Average Comparison — from DART */}
       {company?.three_year_average && (
         <ComparisonMetrics current={company} average={company.three_year_average} />
       )}
@@ -279,7 +272,6 @@ function CompanyDetail() {
 
       {/* 7. Financial Chart — from DART */}
       {showDartSkeleton && <SectionSkeleton title="재무 성과 추이" />}
-      {showNoDart && <NoDartMessage title="재무 성과 추이" />}
       {company?.financial_history && company.financial_history.length > 0 && (
         <section className="financial-chart-section">
           <h2>재무 성과 추이</h2>
@@ -289,7 +281,6 @@ function CompanyDetail() {
 
       {/* 8. Financial Statements — from DART or sminfo */}
       {showDartSkeleton && <SectionSkeleton title="재무제표" />}
-      {showNoDart && !company?.financial_statements && <NoDartMessage title="재무제표" />}
       {company?.financial_statements && (
         <section className="financial-statements-section">
           <h2>
@@ -307,26 +298,26 @@ function CompanyDetail() {
         </section>
       )}
 
-      {/* 9. Officers Full Table — from DART (detailed view below compact) */}
-      {company?.officers && company.officers.length > 0 && (
+      {/* 9. Officers Full Table — from DART (DART 데이터 있을 때만) */}
+      {dartAvailable && company?.officers && company.officers.length > 0 && (
         <section className="officers-section">
           <h2>임원 현황 (상세)</h2>
           <OfficersTable officers={company.officers} />
         </section>
       )}
 
-      {/* 10. Shareholders Full Table — from DART (detailed view below compact) */}
-      {company?.shareholders && company.shareholders.length > 0 && (
+      {/* 10. Shareholders Full Table — from DART (DART 데이터 있을 때만) */}
+      {dartAvailable && company?.shareholders && company.shareholders.length > 0 && (
         <section className="shareholders-section">
           <h2>주주 현황 (상세)</h2>
           <ShareholdersTable shareholders={company.shareholders} />
         </section>
       )}
 
-      {/* 9. Sources Panel — entity metadata + API raw data */}
+      {/* 11. Sources Panel — entity metadata + API raw data */}
       {company?._entity && (
         <section className="sources-section">
-          <h2>데이터 소스</h2>
+          <h2>기타</h2>
           <SourcesPanel
             entity={company._entity}
             apiData={company._apiData}

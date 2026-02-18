@@ -152,6 +152,24 @@ quick_result.json
 **/api_test_report.json
 **/api_final_report.json
 
+# Debug HTML dumps
+sminfo_*.html
+backend/sminfo_*.html
+backend/*.html
+backend/scripts/activity_page.html
+
+# Debug JSON dumps
+sminfo_*.json
+backend/pagination_analysis.json
+backend/single_session_collection_log*.json
+
+# OCR training data (large binary)
+*.traineddata
+
+# One-off debug/helper scripts
+backend/scripts/_*.py
+backend/scripts/_*.cjs
+
 # Playwright MCP
 .playwright-mcp/
 

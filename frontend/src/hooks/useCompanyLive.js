@@ -50,6 +50,21 @@ export function useCompanyLive(brno) {
     const es = new EventSource(`/api/company/live/${brno}`);
     esRef.current = es;
 
+    // Timeout: close SSE if no complete event within 120s
+    const timeoutId = setTimeout(() => {
+      if (es.readyState !== EventSource.CLOSED) {
+        console.warn('[useCompanyLive] SSE timeout after 120s');
+        es.close();
+        esRef.current = null;
+        setState(prev => ({
+          ...prev,
+          status: prev.status === 'complete' ? prev.status : 'complete',
+          error: prev.status === 'complete' ? null : 'SSE 응답 시간 초과 (120초)',
+          events: [...prev.events, 'timeout'],
+        }));
+      }
+    }, 120000);
+
     // --- Event: db_data (instant DB cache) ---
     es.addEventListener('db_data', (e) => {
       try {
@@ -154,24 +169,27 @@ export function useCompanyLive(brno) {
         }
 
         // Merge sminfo financial data into company
-        setState(prev => ({
-          ...prev,
-          sminfoAvailable: true,
-          company: prev.company ? {
-            ...prev.company,
-            financial_statements: payload.financial_statements || prev.company.financial_statements,
-            revenue: payload.revenue ?? prev.company.revenue,
-            operating_margin: payload.operating_margin ?? prev.company.operating_margin,
-            roe: payload.roe ?? prev.company.roe,
-            debt_ratio: payload.debt_ratio ?? prev.company.debt_ratio,
-            total_assets: payload.total_assets ?? prev.company.total_assets,
-            net_profit: payload.net_profit ?? prev.company.net_profit,
-            _hasSminfo: true,
-            _sminfoMatchScore: payload.matchScore,
-            _sminfoMatchedCompany: payload.matchedCompany,
-          } : null,
-          events: [...prev.events, 'sminfo_data'],
-        }));
+        setState(prev => {
+          const base = prev.company || {};
+          return {
+            ...prev,
+            sminfoAvailable: true,
+            company: {
+              ...base,
+              financial_statements: payload.financial_statements || base.financial_statements,
+              revenue: payload.revenue ?? base.revenue,
+              operating_margin: payload.operating_margin ?? base.operating_margin,
+              roe: payload.roe ?? base.roe,
+              debt_ratio: payload.debt_ratio ?? base.debt_ratio,
+              total_assets: payload.total_assets ?? base.total_assets,
+              net_profit: payload.net_profit ?? base.net_profit,
+              _hasSminfo: true,
+              _sminfoMatchScore: payload.matchScore,
+              _sminfoMatchedCompany: payload.matchedCompany,
+            },
+            events: [...prev.events, 'sminfo_data'],
+          };
+        });
       } catch (err) {
         console.error('[useCompanyLive] sminfo_data parse error:', err);
       }
@@ -206,6 +224,7 @@ export function useCompanyLive(brno) {
       } catch (err) {
         console.error('[useCompanyLive] complete parse error:', err);
       }
+      clearTimeout(timeoutId);
       es.close();
       esRef.current = null;
     });
@@ -225,6 +244,7 @@ export function useCompanyLive(brno) {
 
     // Cleanup on unmount or brno change
     return () => {
+      clearTimeout(timeoutId);
       es.close();
       esRef.current = null;
     };

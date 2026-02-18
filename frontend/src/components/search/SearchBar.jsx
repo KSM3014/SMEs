@@ -1,119 +1,176 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect, useCallback } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useQuery } from 'react-query';
-import { searchCompany } from '../../services/companyApi';
+import { suggestCompany } from '../../services/companyApi';
 import './SearchBar.css';
 
 function SearchBar() {
   const [query, setQuery] = useState('');
-  const [showResults, setShowResults] = useState(false);
+  const [candidates, setCandidates] = useState([]);
+  const [showDropdown, setShowDropdown] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [selectedIdx, setSelectedIdx] = useState(-1);
+  const containerRef = useRef(null);
+  const debounceRef = useRef(null);
   const navigate = useNavigate();
 
-  const { data: searchResponse, isLoading } = useQuery(
-    ['companySearch', query],
-    () => searchCompany(query),
-    {
-      enabled: query.length >= 2,
-      onSuccess: () => setShowResults(true),
-      retry: 1,
-      staleTime: 30000,
-    }
-  );
+  // 외부 클릭 시 드롭다운 닫기
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (containerRef.current && !containerRef.current.contains(e.target)) {
+        setShowDropdown(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
-  // Map entity results to display format
-  const results = searchResponse?.data?.entities?.map(entity => ({
-    id: entity.identifiers?.brno || entity.entityId,
-    business_number: entity.identifiers?.brno || null,
-    company_name: entity.canonicalName,
-    confidence: entity.confidence,
-    sourcesCount: entity.sourcesCount,
-    nameVariants: entity.nameVariants,
-  })) || [];
+  // 디바운스 검색 (300ms)
+  const debouncedSearch = useCallback((value) => {
+    if (debounceRef.current) clearTimeout(debounceRef.current);
 
-  const apiMeta = searchResponse?.meta || null;
-
-  const handleSearch = (e) => {
-    e.preventDefault();
-    if (query.trim().length < 2) {
-      alert('검색어를 2자 이상 입력해주세요');
+    if (value.trim().length < 2) {
+      setCandidates([]);
+      setShowDropdown(false);
       return;
+    }
+
+    debounceRef.current = setTimeout(async () => {
+      setIsLoading(true);
+      try {
+        const res = await suggestCompany(value.trim());
+        const data = res?.data || [];
+        setCandidates(data);
+        setShowDropdown(data.length > 0);
+        setSelectedIdx(-1);
+      } catch {
+        setCandidates([]);
+      } finally {
+        setIsLoading(false);
+      }
+    }, 300);
+  }, []);
+
+  const handleInputChange = (e) => {
+    const value = e.target.value;
+    setQuery(value);
+    debouncedSearch(value);
+  };
+
+  const handleSelect = (candidate) => {
+    const brno = candidate.business_number;
+    if (brno) {
+      navigate(`/company/${brno}`);
+    } else {
+      // DART-only 후보: 회사명으로 재검색 필요 — 일단 이름 표시
+      alert(`사업자등록번호 미확인 기업입니다. DART 코드: ${candidate.id}`);
+      return;
+    }
+    setShowDropdown(false);
+    setQuery('');
+    setCandidates([]);
+  };
+
+  const handleKeyDown = (e) => {
+    if (!showDropdown || candidates.length === 0) {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        // Enter 시에도 suggest 트리거
+        debouncedSearch(query);
+      }
+      return;
+    }
+
+    if (e.key === 'ArrowDown') {
+      e.preventDefault();
+      setSelectedIdx(prev => Math.min(prev + 1, candidates.length - 1));
+    } else if (e.key === 'ArrowUp') {
+      e.preventDefault();
+      setSelectedIdx(prev => Math.max(prev - 1, -1));
+    } else if (e.key === 'Enter') {
+      e.preventDefault();
+      if (selectedIdx >= 0 && selectedIdx < candidates.length) {
+        handleSelect(candidates[selectedIdx]);
+      }
+    } else if (e.key === 'Escape') {
+      setShowDropdown(false);
     }
   };
 
-  const handleResultClick = (company) => {
-    navigate(`/company/${company.business_number || company.id}`);
-    setShowResults(false);
-    setQuery('');
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    if (query.trim().length < 2) return;
+    debouncedSearch(query);
   };
 
   return (
-    <div className="search-bar-container">
-      <form onSubmit={handleSearch} className="search-form">
+    <div className="search-bar-container" ref={containerRef}>
+      <form onSubmit={handleSubmit} className="search-form">
         <div className="search-input-wrapper">
           <input
             type="text"
             className="search-input"
-            placeholder="사업자등록번호 또는 회사명 검색 (예: 124-81-00998, 삼성전자)"
+            placeholder="사업자등록번호 또는 회사명 검색 (예: 210-81-29428, 아이센스)"
             value={query}
-            onChange={(e) => setQuery(e.target.value)}
-            onFocus={() => query.length >= 2 && setShowResults(true)}
+            onChange={handleInputChange}
+            onKeyDown={handleKeyDown}
+            onFocus={() => candidates.length > 0 && setShowDropdown(true)}
           />
           <button type="submit" className="search-button">
             {isLoading ? <span className="spinner small"></span> : '검색'}
           </button>
         </div>
 
-        {showResults && results.length > 0 && (
+        {showDropdown && candidates.length > 0 && (
           <div className="search-results">
             <div className="results-header">
-              <span className="results-count">
-                {results.length}개 기업 발견
-                {apiMeta && (
-                  <span className="results-meta">
-                    {' '}({apiMeta.apisSucceeded}/{apiMeta.apisAttempted} APIs, {((apiMeta.durationMs || 0) / 1000).toFixed(1)}초)
-                  </span>
-                )}
-              </span>
+              <span className="results-count">{candidates.length}개 후보</span>
               <button
                 type="button"
                 className="close-results"
-                onClick={() => setShowResults(false)}
+                onClick={() => setShowDropdown(false)}
               >
                 &times;
               </button>
             </div>
             <div className="results-list">
-              {results.map((company) => (
+              <p className="results-instruction">조회할 기업을 선택하세요</p>
+              {candidates.map((c, i) => (
                 <div
-                  key={company.id}
-                  className="result-item"
-                  onClick={() => handleResultClick(company)}
+                  key={c.id || i}
+                  className={`result-item${i === selectedIdx ? ' selected' : ''}`}
+                  onClick={() => handleSelect(c)}
+                  onMouseEnter={() => setSelectedIdx(i)}
                 >
                   <div className="result-main">
                     <div className="result-title">
-                      <h4>{company.company_name}</h4>
-                      <span className={`confidence-badge confidence-${getConfidenceClass(company.confidence)}`}>
-                        {((company.confidence || 0) * 100).toFixed(0)}%
-                      </span>
+                      <h4>{c.company_name}</h4>
+                      {c.stock_code && (
+                        <span className="badge badge-outline">{c.stock_code}</span>
+                      )}
+                      {c.source === 'dart' && (
+                        <span className="confidence-badge confidence-medium">DART</span>
+                      )}
                     </div>
                     <p className="result-meta text-muted">
-                      {company.business_number || '-'} &middot; {company.sourcesCount || 0}개 소스
-                      {company.nameVariants?.length > 1 && (
-                        <> &middot; {company.nameVariants.slice(1, 3).join(', ')}</>
-                      )}
+                      {c.business_number
+                        ? formatBrno(c.business_number)
+                        : c.corp_number || '-'}
+                      {c.sourcesCount > 0 && <> &middot; {c.sourcesCount}개 소스</>}
                     </p>
                   </div>
-                  <div className="result-sources">
-                    <span className="source-count">{company.sourcesCount || 0}</span>
-                    <span className="source-label">소스</span>
-                  </div>
+                  {c.sourcesCount > 0 && (
+                    <div className="result-sources">
+                      <span className="source-count">{c.sourcesCount}</span>
+                      <span className="source-label">소스</span>
+                    </div>
+                  )}
                 </div>
               ))}
             </div>
           </div>
         )}
 
-        {showResults && searchResponse && results.length === 0 && (
+        {showDropdown && !isLoading && query.length >= 2 && candidates.length === 0 && (
           <div className="search-results">
             <div className="no-results">
               <p>검색 결과가 없습니다</p>
@@ -127,24 +184,23 @@ function SearchBar() {
 
       <div className="search-examples">
         <span className="text-muted">예시:</span>
-        <button type="button" className="example-query" onClick={() => setQuery('1248100998')}>
-          삼성전자
+        <button type="button" className="example-query" onClick={() => { setQuery('아이센스'); debouncedSearch('아이센스'); }}>
+          아이센스
         </button>
-        <button type="button" className="example-query" onClick={() => setQuery('1301116006')}>
-          LG전자
+        <button type="button" className="example-query" onClick={() => { setQuery('삼성'); debouncedSearch('삼성'); }}>
+          삼성
         </button>
-        <button type="button" className="example-query" onClick={() => setQuery('2208717787')}>
-          SK하이닉스
+        <button type="button" className="example-query" onClick={() => { setQuery('2108129428'); debouncedSearch('2108129428'); }}>
+          210-81-29428
         </button>
       </div>
     </div>
   );
 }
 
-function getConfidenceClass(confidence) {
-  if (confidence >= 0.8) return 'high';
-  if (confidence >= 0.6) return 'medium';
-  return 'low';
+function formatBrno(brno) {
+  if (!brno || brno.length !== 10) return brno || '-';
+  return `${brno.slice(0, 3)}-${brno.slice(3, 5)}-${brno.slice(5)}`;
 }
 
 export default SearchBar;

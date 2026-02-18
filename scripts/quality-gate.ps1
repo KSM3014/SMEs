@@ -1,7 +1,9 @@
 param(
   [switch]$Full,
   [switch]$WithProposal,
-  [int]$ProposalMaxItems = 8
+  [int]$ProposalMaxItems = 8,
+  [bool]$WithSummary = $true,
+  [int]$SummaryTopItems = 5
 )
 
 Set-StrictMode -Version Latest
@@ -428,11 +430,78 @@ if ($WithProposal) {
   $proposalRelPath = To-RelPath $proposalPath
 }
 
+$summaryRelPath = $null
+$latestSummaryRelPath = $null
+if ($WithSummary) {
+  $summaryMax = [Math]::Max(1, $SummaryTopItems)
+  $sortedIssuesForSummary = @(
+    $issues |
+      Sort-Object `
+        @{ Expression = { Get-SeverityWeight $_.Severity }; Descending = $true }, `
+        @{ Expression = { $_.Category } }, `
+        @{ Expression = { $_.FileLine } }
+  )
+
+  $summaryLines = New-Object System.Collections.Generic.List[string]
+  $summaryLines.Add('[Quality Gate Quick Summary]')
+  $summaryLines.Add("- Run time: $($now.ToString('yyyy-MM-dd HH:mm:ss zzz'))")
+  $summaryLines.Add("- Overall: $overall")
+  $summaryLines.Add("- Blocking: $($blocking.Count)")
+  $summaryLines.Add("- Total issues: $($issues.Count)")
+  $summaryLines.Add("- Report: $(To-RelPath $reportPath)")
+  if ($proposalRelPath) {
+    $summaryLines.Add("- Proposal: $proposalRelPath")
+  }
+  $summaryLines.Add('')
+  $summaryLines.Add('## 문제파악')
+  if ($sortedIssuesForSummary.Count -eq 0) {
+    $summaryLines.Add('- 이슈 없음')
+  } else {
+    foreach ($issue in ($sortedIssuesForSummary | Select-Object -First $summaryMax)) {
+      $summaryLines.Add("- [$($issue.Severity)][$($issue.Category)] $($issue.FileLine) :: $($issue.Evidence)")
+    }
+  }
+  $summaryLines.Add('')
+  $summaryLines.Add('## Suggestion')
+  $fixes = @(
+    $sortedIssuesForSummary |
+      ForEach-Object { $_.Fix } |
+      Select-Object -Unique |
+      Select-Object -First $summaryMax
+  )
+  if ($fixes.Count -eq 0) {
+    $summaryLines.Add('- 유지')
+  } else {
+    foreach ($fix in $fixes) {
+      $summaryLines.Add("- $fix")
+    }
+  }
+
+  $summaryBody = $summaryLines -join "`n"
+  $summaryPath = Join-Path $reportDir ("summary-{0}.md" -f $now.ToString('yyyyMMdd-HHmmss'))
+  $latestSummaryPath = Join-Path $reportDir 'latest-summary.md'
+  Set-Content -Path $summaryPath -Value $summaryBody -Encoding UTF8
+  Set-Content -Path $latestSummaryPath -Value $summaryBody -Encoding UTF8
+
+  $feedPath = Join-Path $reportDir 'summary-feed.log'
+  $feedLine = "[{0}] overall={1} blocking={2} issues={3} report={4} proposal={5} summary={6}" -f `
+    $now.ToString('yyyy-MM-dd HH:mm:ss zzz'), $overall, $blocking.Count, $issues.Count, `
+    (To-RelPath $reportPath), `
+    ($(if ($proposalRelPath) { $proposalRelPath } else { 'n/a' })), `
+    (To-RelPath $summaryPath)
+  Add-Content -Path $feedPath -Value $feedLine -Encoding UTF8
+
+  $summaryRelPath = To-RelPath $summaryPath
+  $latestSummaryRelPath = To-RelPath $latestSummaryPath
+}
+
 $newState = [PSCustomObject]@{
   lastRunUtc = $nowUtc.ToString('o')
   mode       = $mode
   reportPath = To-RelPath $reportPath
   proposalPath = $proposalRelPath
+  summaryPath = $summaryRelPath
+  latestSummaryPath = $latestSummaryRelPath
 }
 $newState | ConvertTo-Json | Set-Content -Path $stateFile -Encoding UTF8
 
@@ -441,4 +510,8 @@ Write-Output ""
 Write-Output "Report saved: $(To-RelPath $reportPath)"
 if ($WithProposal) {
   Write-Output "Proposal saved: $proposalRelPath"
+}
+if ($WithSummary) {
+  Write-Output "Summary saved: $summaryRelPath"
+  Write-Output "Latest summary: $latestSummaryRelPath"
 }

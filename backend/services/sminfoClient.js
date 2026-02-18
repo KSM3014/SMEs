@@ -34,6 +34,8 @@ class SminfoClient {
 
   /**
    * Rate limit 체크 및 대기
+   * sminfo는 1분에 3회 이상 조회 시 해당 IP를 1시간 동안 차단
+   * 안전하게 2회/분으로 제한하고, 요청 간 최소 25초 간격 유지
    */
   async checkRateLimit() {
     const now = Date.now();
@@ -43,8 +45,6 @@ class SminfoClient {
     if (elapsedTime >= 60000) {
       this.requestCount = 0;
       this.lastResetTime = now;
-      console.log('[Sminfo] Rate limit reset');
-      return;
     }
 
     // Rate limit 초과 시 대기
@@ -52,18 +52,32 @@ class SminfoClient {
       const waitTime = 60000 - elapsedTime;
       console.warn(`[Sminfo] Rate limit reached (${this.requestCount}/${this.maxRequestsPerMinute}). Waiting ${Math.ceil(waitTime / 1000)}s...`);
       await this.sleep(waitTime);
-
-      // 대기 후 리셋
       this.requestCount = 0;
       this.lastResetTime = Date.now();
     }
 
+    // 최소 요청 간격: 25초 (안전 마진)
+    if (this._lastRequestTime) {
+      const gap = now - this._lastRequestTime;
+      if (gap < 25000) {
+        const wait = 25000 - gap;
+        console.log(`[Sminfo] Minimum gap wait: ${Math.ceil(wait / 1000)}s`);
+        await this.sleep(wait);
+      }
+    }
+
     this.requestCount++;
+    this._lastRequestTime = Date.now();
     console.log(`[Sminfo] Request ${this.requestCount}/${this.maxRequestsPerMinute} this minute`);
   }
 
   /**
    * 로그인
+   *
+   * sminfo.mss.go.kr 로그인 플로우:
+   * 1. 홈페이지 위젯: #login_id / #login_password / button.login_btn
+   * 2. 전용 로그인 페이지 (/cm/mm/CMM004R0.do): #id / #pwd / button.btn_blue
+   * 3. 로그인 성공 시 '로그아웃' 텍스트 노출
    */
   async login() {
     try {
@@ -72,140 +86,88 @@ class SminfoClient {
         return true;
       }
 
+      if (!this.userId || !this.password) {
+        console.error('[Sminfo] ❌ SMINFO_USER_ID / SMINFO_PASSWORD not configured');
+        return false;
+      }
+
       console.log('[Sminfo] Logging in...');
 
       if (!this.browser) {
         this.browser = await puppeteer.launch({
           headless: true,
-          args: ['--no-sandbox', '--disable-setuid-sandbox']
+          args: ['--no-sandbox', '--disable-setuid-sandbox', '--disable-gpu', '--disable-dev-shm-usage'],
+          protocolTimeout: 180000
         });
       }
 
       this.page = await this.browser.newPage();
-      await this.page.goto(this.loginUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+      await this.page.setViewport({ width: 1280, height: 900 });
 
-      // 로그인 폼 찾기 (실제 셀렉터는 페이지 구조에 맞게 조정 필요)
-      const loginExists = await this.page.evaluate(() => {
-        return document.querySelector('input[name="userId"], input[name="id"], input#userId') !== null;
+      // Handle dialogs (login errors, confirm prompts)
+      this._lastDialog = null;
+      this.page.on('dialog', async dialog => {
+        this._lastDialog = { type: dialog.type(), message: dialog.message() };
+        console.log(`[Sminfo] Dialog: ${dialog.message()}`);
+        await dialog.accept();
       });
 
-      if (!loginExists) {
-        console.log('[Sminfo] Login form not found, might already be logged in or page structure changed');
-        this.isLoggedIn = true;
-        return true;
+      // 로그인: 홈페이지 AJAX 위젯 → fnSubmit으로 기업정보 이동
+      // (doAlert는 버그로 항상 로그인 리다이렉트하므로 사용하지 않음)
+      console.log('[Sminfo] Step 1: Homepage AJAX login');
+      await this.page.goto(this.loginUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+      await this.sleep(1000);
+
+      await this.page.click('#login_id', { clickCount: 3 });
+      await this.page.type('#login_id', this.userId, { delay: 20 });
+      await this.page.click('#login_password', { clickCount: 3 });
+      await this.page.type('#login_password', this.password, { delay: 20 });
+
+      await Promise.all([
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 15000 }).catch(() => null),
+        this.page.click('button.login_btn')
+      ]);
+      await this.sleep(2000);
+
+      // Check for login error dialog
+      if (this._lastDialog && this._lastDialog.message.includes('등록되어 있지 않')) {
+        console.error('[Sminfo] ❌ Login failed: account not registered');
+        this.isLoggedIn = false;
+        return false;
+      }
+      if (this._lastDialog && this._lastDialog.message.includes('비밀번호')) {
+        console.error('[Sminfo] ❌ Login failed: wrong password');
+        this.isLoggedIn = false;
+        return false;
       }
 
-      // 로그인 정보 입력 (확장된 셀렉터 포함)
-      const loginResult = await this.page.evaluate((userId, password) => {
-        // 한국 정부 사이트 패턴 포함한 다양한 셀렉터
-        const userIdSelectors = [
-          'input[name="userId"]', 'input[name="id"]', 'input[name="user_id"]',
-          'input#userId', 'input#id', 'input#user_id',
-          'input[name="mberId"]', 'input#mberId', // 회원ID
-          'input[name="loginId"]', 'input#loginId',
-          'input[name="mber_id"]', 'input#mber_id'
-        ];
-        const passwordSelectors = [
-          'input[name="password"]', 'input[name="pw"]', 'input[name="passwd"]',
-          'input#password', 'input#pw', 'input#passwd',
-          'input[name="mberPw"]', 'input#mberPw', // 회원비밀번호
-          'input[name="loginPw"]', 'input#loginPw',
-          'input[name="mber_pw"]', 'input#mber_pw'
-        ];
+      // Verify login via loginFlag or 로그아웃 text
+      const loginVerified = await this.page.evaluate(() => {
+        const bodyText = document.body?.innerText || '';
+        return bodyText.includes('로그아웃');
+      });
 
-        let userIdInput = null;
-        let passwordInput = null;
-
-        // visible input만 찾기
-        for (const selector of userIdSelectors) {
-          const input = document.querySelector(selector);
-          if (input && input.type !== 'hidden' && input.offsetParent !== null) {
-            userIdInput = input;
-            userIdInput.value = userId;
-            break;
-          }
-        }
-
-        for (const selector of passwordSelectors) {
-          const input = document.querySelector(selector);
-          if (input && input.type !== 'hidden' && input.offsetParent !== null) {
-            passwordInput = input;
-            passwordInput.value = password;
-            break;
-          }
-        }
-
-        // fallback: 첫 번째 text와 password input 사용
-        if (!userIdInput) {
-          const textInputs = Array.from(document.querySelectorAll('input[type="text"]'));
-          userIdInput = textInputs.find(input => input.offsetParent !== null);
-          if (userIdInput) userIdInput.value = userId;
-        }
-
-        if (!passwordInput) {
-          const pwInputs = Array.from(document.querySelectorAll('input[type="password"]'));
-          passwordInput = pwInputs.find(input => input.offsetParent !== null);
-          if (passwordInput) passwordInput.value = password;
-        }
-
-        if (!userIdInput || !passwordInput) {
-          return { success: false, error: 'Login inputs not found' };
-        }
-
-        // 로그인 버튼 찾기 및 클릭
-        const loginButtons = [
-          'button[type="submit"]', 'input[type="submit"]', 'input[type="image"]',
-          'button.login', 'a.login', 'button#loginBtn', 'button#login',
-          'a[href*="login"]', 'button[onclick*="login"]'
-        ];
-
-        let clicked = false;
-        for (const selector of loginButtons) {
-          const btn = document.querySelector(selector);
-          if (btn && btn.offsetParent !== null) {
-            btn.click();
-            clicked = true;
-            break;
-          }
-        }
-
-        // fallback: "로그인" 텍스트가 있는 버튼 찾기
-        if (!clicked) {
-          const allButtons = Array.from(document.querySelectorAll('button, a, input[type="submit"], input[type="image"]'));
-          const loginBtn = allButtons.find(btn =>
-            (btn.textContent && btn.textContent.includes('로그인')) ||
-            (btn.value && btn.value.includes('로그인')) ||
-            (btn.alt && btn.alt.includes('로그인'))
-          );
-          if (loginBtn && loginBtn.offsetParent !== null) {
-            loginBtn.click();
-            clicked = true;
-          }
-        }
-
-        return {
-          success: true,
-          clicked: clicked,
-          userIdSelector: userIdInput.name || userIdInput.id || 'unknown',
-          passwordSelector: passwordInput.name || passwordInput.id || 'unknown'
-        };
-      }, this.userId, this.password);
-
-      console.log('[Sminfo] Login form fill result:', loginResult);
-
-      if (!loginResult.success) {
-        console.warn('[Sminfo] ⚠️ Could not find login form elements');
-        // 디버깅용 스크린샷 저장
-        await this.page.screenshot({ path: 'sminfo_debug_login.png', fullPage: true });
-        console.log('[Sminfo] Screenshot saved: sminfo_debug_login.png');
+      if (!loginVerified) {
+        console.error('[Sminfo] ❌ Login failed (no 로그아웃 text)');
+        this.isLoggedIn = false;
+        return false;
       }
 
-      // 로그인 완료 대기 (URL 변경 또는 특정 요소 확인)
-      await this.page.waitForTimeout(3000);
+      // Step 2: fnSubmit으로 기업정보 페이지 이동 (같은 세션 유지)
+      console.log('[Sminfo] Step 2: Navigate to 기업정보 via fnSubmit');
+      await Promise.all([
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+        this.page.evaluate(() => {
+          fnSubmit('/gc/sf/GSF002R0.print', '421010100', true);
+        })
+      ]);
+      await this.sleep(2000);
+
+      const finalUrl = this.page.url();
+      console.log(`[Sminfo] On 기업정보 page: ${finalUrl}`);
 
       this.isLoggedIn = true;
-      console.log('[Sminfo] Login successful');
-
+      console.log('[Sminfo] ✅ Login successful, on 기업정보 page');
       return true;
 
     } catch (error) {
@@ -217,196 +179,79 @@ class SminfoClient {
 
   /**
    * 사업자등록번호로 기업 재무정보 조회
+   * sminfo 상세검색 폼에서 cmQueryOptionCombo=03 (사업자번호) 사용
    */
   async getCompanyByBusinessNumber(businessNumber) {
     try {
-      // Rate limit 체크
       await this.checkRateLimit();
 
-      // 로그인 확인
       if (!this.isLoggedIn) {
-        await this.login();
+        const loggedIn = await this.login();
+        if (!loggedIn) return null;
       }
 
-      console.log(`[Sminfo] Fetching company data for ${businessNumber}...`);
+      const brn = businessNumber.replace(/-/g, '');
+      console.log(`[Sminfo] Searching by BRN: ${brn}`);
 
-      // 기업정보 페이지로 이동 (실제 URL은 조정 필요)
-      const searchUrl = `https://sminfo.mss.go.kr/cm/sv/CSV001R0.do`;
-      await this.page.goto(searchUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+      // 사업자번호 모드로 검색
+      await this.page.evaluate((num) => {
+        const form = document.search;
+        form.cmQueryOptionCombo.value = '03'; // 사업자번호
+        form.cmQuery.value = num;
+      }, brn);
 
-      // 사업자등록번호 입력 및 검색 (확장된 셀렉터)
-      const searchResult = await this.page.evaluate((bizNum) => {
-        // 다양한 사업자번호 입력 필드 패턴
-        const bizNoSelectors = [
-          'input[name="bizNo"]', 'input[name="businessNumber"]', 'input[name="bizrno"]',
-          'input#bizNo', 'input#businessNumber', 'input#bizrno',
-          'input[name="brno"]', 'input#brno', // 사업자등록번호
-          'input[name="bmanEnprsDscmNo"]', // 국민연금 API 패턴
-          'input[name="corpNo"]', 'input#corpNo'
-        ];
+      await this.page.click('#searchTxt', { clickCount: 3 });
+      await this.page.type('#searchTxt', brn, { delay: 20 });
 
-        let bizNoInput = null;
+      await Promise.all([
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+        this.page.evaluate(() => searchByTarget(1, '_self'))
+      ]);
+      await this.sleep(2000);
 
-        for (const selector of bizNoSelectors) {
-          const input = document.querySelector(selector);
-          if (input && input.type !== 'hidden' && input.offsetParent !== null) {
-            bizNoInput = input;
-            bizNoInput.value = bizNum.replace(/-/g, ''); // 하이픈 제거
-            break;
+      // 결과에서 첫 번째 기업 클릭
+      const firstResult = await this.page.evaluate(() => {
+        for (const table of document.querySelectorAll('table')) {
+          const ths = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+          if (!ths.includes('기업명')) continue;
+          const link = table.querySelector('tr td a[onclick]');
+          if (link) {
+            const onclick = link.getAttribute('onclick');
+            return { name: link.textContent.trim(), onclick };
           }
         }
-
-        // fallback: placeholder나 label에 "사업자"가 있는 input 찾기
-        if (!bizNoInput) {
-          const allTextInputs = Array.from(document.querySelectorAll('input[type="text"]'));
-          bizNoInput = allTextInputs.find(input =>
-            input.offsetParent !== null &&
-            (input.placeholder?.includes('사업자') ||
-             input.parentElement?.textContent?.includes('사업자'))
-          );
-          if (bizNoInput) bizNoInput.value = bizNum.replace(/-/g, '');
-        }
-
-        if (!bizNoInput) {
-          return { success: false, error: 'Business number input not found' };
-        }
-
-        // 검색 버튼 클릭
-        const searchButtons = [
-          'button.search', 'button#searchBtn', 'button.searchBtn',
-          'button[type="submit"]', 'input[type="submit"]',
-          'button[onclick*="search"]', 'a[onclick*="search"]'
-        ];
-
-        let clicked = false;
-        for (const selector of searchButtons) {
-          const btn = document.querySelector(selector);
-          if (btn && btn.offsetParent !== null) {
-            btn.click();
-            clicked = true;
-            break;
-          }
-        }
-
-        // fallback: "검색", "조회" 텍스트가 있는 버튼
-        if (!clicked) {
-          const allButtons = Array.from(document.querySelectorAll('button, input[type="submit"], a'));
-          const searchBtn = allButtons.find(btn =>
-            btn.offsetParent !== null &&
-            ((btn.textContent && (btn.textContent.includes('검색') || btn.textContent.includes('조회'))) ||
-             (btn.value && (btn.value.includes('검색') || btn.value.includes('조회'))))
-          );
-          if (searchBtn) {
-            searchBtn.click();
-            clicked = true;
-          }
-        }
-
-        return {
-          success: true,
-          clicked: clicked,
-          selector: bizNoInput.name || bizNoInput.id || 'unknown'
-        };
-      }, businessNumber);
-
-      console.log('[Sminfo] Search form fill result:', searchResult);
-
-      if (!searchResult.success) {
-        console.warn('[Sminfo] ⚠️ Could not find business number input');
-        await this.page.screenshot({ path: 'sminfo_debug_search.png', fullPage: true });
-        console.log('[Sminfo] Screenshot saved: sminfo_debug_search.png');
-      }
-
-      await this.page.waitForTimeout(3000);
-
-      // 재무정보 추출 (확장된 패턴 매칭)
-      const financialData = await this.page.evaluate(() => {
-        const data = {};
-        const foundLabels = []; // 디버깅용
-
-        // 1. 테이블에서 데이터 추출
-        const tables = document.querySelectorAll('table');
-        tables.forEach(table => {
-          const rows = table.querySelectorAll('tr');
-          rows.forEach(row => {
-            const cells = row.querySelectorAll('td, th');
-            if (cells.length >= 2) {
-              const label = cells[0].textContent.trim();
-              const value = cells[1].textContent.trim();
-
-              foundLabels.push(label);
-
-              // 매출액 (다양한 패턴)
-              if (label.match(/매출|revenue|sales/i) && !data.revenue) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.revenue = num;
-              }
-              // 영업이익
-              if (label.match(/영업이익|operating.*profit/i) && !data.operating_profit) {
-                const num = parseInt(value.replace(/[^0-9-]/g, ''));
-                if (!isNaN(num)) data.operating_profit = num;
-              }
-              // 당기순이익
-              if (label.match(/당기순이익|순이익|net.*profit|net.*income/i) && !data.net_profit) {
-                const num = parseInt(value.replace(/[^0-9-]/g, ''));
-                if (!isNaN(num)) data.net_profit = num;
-              }
-              // 자산총계
-              if (label.match(/자산총계|총자산|total.*asset/i) && !data.total_assets) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_assets = num;
-              }
-              // 부채총계
-              if (label.match(/부채총계|총부채|total.*liabilit/i) && !data.total_liabilities) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_liabilities = num;
-              }
-              // 자본총계
-              if (label.match(/자본총계|총자본|자기자본|total.*equity|shareholders.*equity/i) && !data.total_equity) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_equity = num;
-              }
-            }
-          });
-        });
-
-        // 2. dl/dt/dd 구조에서 추출 (일부 사이트는 이 구조 사용)
-        const dts = document.querySelectorAll('dt');
-        dts.forEach(dt => {
-          const dd = dt.nextElementSibling;
-          if (dd && dd.tagName === 'DD') {
-            const label = dt.textContent.trim();
-            const value = dd.textContent.trim();
-
-            if (label.match(/매출/i) && !data.revenue) {
-              const num = parseInt(value.replace(/[^0-9]/g, ''));
-              if (num > 0) data.revenue = num;
-            }
-            // ... 동일한 패턴으로 다른 필드들 추출
-          }
-        });
-
-        return { data, foundLabels: foundLabels.slice(0, 20) }; // 디버깅용 라벨 샘플
+        return null;
       });
 
-      console.log('[Sminfo] Found labels sample:', financialData.foundLabels);
-
-      if (Object.keys(financialData.data).length === 0) {
-        console.log(`[Sminfo] ❌ No financial data found for ${businessNumber}`);
-
-        // 디버깅용 스크린샷 및 HTML 저장
-        await this.page.screenshot({ path: 'sminfo_debug_nodata.png', fullPage: true });
-        const html = await this.page.content();
-        const fs = await import('fs');
-        fs.default.writeFileSync('sminfo_debug_nodata.html', html);
-
-        console.log('[Sminfo] Debug files saved: sminfo_debug_nodata.png, sminfo_debug_nodata.html');
+      if (!firstResult) {
+        console.log(`[Sminfo] No results for BRN ${brn}`);
         return null;
       }
 
-      console.log(`[Sminfo] ✅ Financial data retrieved:`, Object.keys(financialData.data).join(', '));
+      console.log(`[Sminfo] Found: "${firstResult.name}"`);
 
-      return this.normalizeData(businessNumber, financialData.data);
+      // 상세 페이지 이동
+      await Promise.all([
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+        this.page.evaluate((onclick) => eval(onclick), firstResult.onclick)
+      ]);
+      await this.sleep(3000);
+
+      // 재무정보 추출
+      const financialData = await this._extractFinancials();
+
+      if (!financialData) {
+        console.log(`[Sminfo] No financial data for ${brn}`);
+        return null;
+      }
+
+      console.log(`[Sminfo] ✅ Financial data: ${Object.keys(financialData).join(', ')}`);
+
+      // 검색 페이지로 복귀
+      await this.page.goBack({ waitUntil: 'networkidle2', timeout: 15000 }).catch(() => null);
+      await this.sleep(1000);
+
+      return this.normalizeData(businessNumber, financialData);
 
     } catch (error) {
       console.error(`[Sminfo] Error fetching ${businessNumber}:`, error.message);
@@ -416,9 +261,16 @@ class SminfoClient {
 
   /**
    * 회사명으로 기업 검색 + 확률 매칭 + 재무정보 추출
-   * @param {string} companyName - 검색할 회사명 (일부 또는 전체)
-   * @param {Object} matchCriteria - 매칭 기준 데이터
-   *   { companyName, ceoName, industry, address, companyType }
+   *
+   * sminfo 상세검색 페이지 (GSF002R0.print) 구조:
+   * - Form: document.search (POST to /gc/sf/GSF002R0.print)
+   * - 검색어 입력: #searchTxt (name=cmQuery)
+   * - 검색 모드: cmQueryOptionCombo (00=기업통합검색, 01=업체명, 03=사업자번호)
+   * - 검색 실행: searchByTarget(pageNo, target) → ckInput() → form.submit()
+   * - 결과 테이블: 기업명 | 대표자명 | 기업유형 | 업종 | 주소(도로명주소)
+   *
+   * @param {string} companyName - 검색할 회사명
+   * @param {Object} matchCriteria - { ceoName, industry, address, companyType }
    * @returns {Object|null} { financials, matchScore, matchedCompany }
    */
   async searchByCompanyName(companyName, matchCriteria = {}) {
@@ -428,264 +280,133 @@ class SminfoClient {
       if (!this.isLoggedIn) {
         const loggedIn = await this.login();
         if (!loggedIn) {
-          console.error('[Sminfo] Login failed, cannot search by company name');
+          console.error('[Sminfo] ❌ Login failed, cannot search');
           return null;
         }
       }
 
-      console.log(`[Sminfo] Searching by company name: "${companyName}"`);
+      console.log(`[Sminfo] Searching: "${companyName}"`);
 
-      // 1. 기업정보 페이지로 이동
-      const infoUrl = 'https://sminfo.mss.go.kr/cm/sv/CSV001R0.do';
-      await this.page.goto(infoUrl, { waitUntil: 'networkidle2', timeout: 30000 });
-      await this.sleep(1000);
-
-      // 2. 기업통합검색 탭/모드 선택 + 회사명 입력 + 검색 실행
-      const searchResult = await this.page.evaluate((name) => {
-        // "기업통합검색" 탭 또는 라디오 버튼 선택
-        const tabs = Array.from(document.querySelectorAll('a, button, label, li'));
-        const integSearchTab = tabs.find(el =>
-          el.textContent?.includes('기업통합검색') || el.textContent?.includes('통합검색')
-        );
-        if (integSearchTab) {
-          integSearchTab.click();
-        }
-
-        // 회사명 입력 필드 찾기
-        const nameSelectors = [
-          'input[name="searchNm"]', 'input[name="companyName"]', 'input[name="srchWrd"]',
-          'input[name="searchKeyword"]', 'input#searchNm', 'input#companyName',
-          'input[name="schWrd"]', 'input[name="entNm"]'
-        ];
-
-        let nameInput = null;
-        for (const selector of nameSelectors) {
-          const input = document.querySelector(selector);
-          if (input && input.type !== 'hidden' && input.offsetParent !== null) {
-            nameInput = input;
-            break;
-          }
-        }
-
-        // fallback: placeholder나 label에 "기업명", "회사명" 있는 input
-        if (!nameInput) {
-          const allTextInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'));
-          nameInput = allTextInputs.find(input =>
-            input.offsetParent !== null &&
-            (input.placeholder?.includes('기업명') || input.placeholder?.includes('회사명') ||
-             input.placeholder?.includes('검색') ||
-             input.parentElement?.textContent?.includes('기업명') ||
-             input.parentElement?.textContent?.includes('회사명'))
-          );
-        }
-
-        // 최종 fallback: 모든 visible text input 중 첫 번째
-        if (!nameInput) {
-          const allTextInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'));
-          nameInput = allTextInputs.find(input => input.offsetParent !== null);
-        }
-
-        if (!nameInput) {
-          return { success: false, error: 'Company name input not found' };
-        }
-
-        nameInput.value = name;
-        nameInput.dispatchEvent(new Event('input', { bubbles: true }));
-        nameInput.dispatchEvent(new Event('change', { bubbles: true }));
-
-        // 검색 버튼 클릭
-        const searchBtns = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="image"], a'));
-        const searchBtn = searchBtns.find(btn =>
-          btn.offsetParent !== null &&
-          ((btn.textContent?.includes('검색') || btn.textContent?.includes('조회')) ||
-           (btn.value?.includes('검색') || btn.value?.includes('조회')) ||
-           (btn.alt?.includes('검색') || btn.alt?.includes('조회')) ||
-           btn.classList.contains('btn_search') || btn.classList.contains('searchBtn'))
-        );
-
-        if (searchBtn) {
-          searchBtn.click();
-          return { success: true, clicked: true, selector: nameInput.name || nameInput.id };
-        }
-
-        // form submit fallback
-        const form = nameInput.closest('form');
-        if (form) {
-          form.submit();
-          return { success: true, clicked: true, selector: nameInput.name || nameInput.id, method: 'form.submit' };
-        }
-
-        return { success: true, clicked: false, selector: nameInput.name || nameInput.id };
+      // 1. 검색 폼에 회사명 입력 + searchByTarget 호출
+      // login()이 이미 기업정보 페이지(GSF002R0.print)에 위치시킴
+      await this.page.evaluate((name) => {
+        const form = document.search;
+        form.cmQueryOptionCombo.value = '01'; // 업체명 검색
+        form.cmQuery.value = name;
       }, companyName);
 
-      console.log('[Sminfo] Name search result:', searchResult);
+      // Puppeteer type()으로도 입력 (DOM 이벤트 정상 발화)
+      await this.page.click('#searchTxt', { clickCount: 3 });
+      await this.page.type('#searchTxt', companyName, { delay: 20 });
 
-      if (!searchResult.success) {
-        console.warn('[Sminfo] Could not find company name input field');
-        await this.page.screenshot({ path: 'sminfo_debug_namesearch.png', fullPage: true });
-        return null;
-      }
+      // searchByTarget 호출 (ckInput → form POST)
+      await Promise.all([
+        this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+        this.page.evaluate(() => searchByTarget(1, '_self'))
+      ]);
+      await this.sleep(2000);
 
-      // 검색 결과 대기
-      await this.sleep(3000);
+      // 2. 결과 파싱
+      const searchResult = await this.page.evaluate(() => {
+        const data = { candidates: [], totalText: null };
 
-      // 3. 결과 테이블에서 후보 목록 추출
-      const candidates = await this.page.evaluate(() => {
-        const results = [];
-        const tables = document.querySelectorAll('table');
+        // 총 건수
+        const bodyText = document.body?.innerText || '';
+        const m = bodyText.match(/검색결과\s*([\d,]+)\s*건/);
+        data.totalText = m ? m[1] : '0';
 
-        for (const table of tables) {
-          const rows = table.querySelectorAll('tbody tr, tr');
-          for (const row of rows) {
-            const cells = Array.from(row.querySelectorAll('td'));
-            if (cells.length >= 3) {
-              const name = cells[0]?.textContent?.trim() || '';
-              const ceoName = cells[1]?.textContent?.trim() || '';
-              // 다양한 테이블 구조 대응
-              const type = cells[2]?.textContent?.trim() || '';
-              const industry = cells.length > 3 ? cells[3]?.textContent?.trim() || '' : '';
-              const address = cells.length > 4 ? cells[4]?.textContent?.trim() || '' : '';
+        // 결과 테이블 (기업명 헤더가 있는 테이블)
+        for (const table of document.querySelectorAll('table')) {
+          const ths = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+          if (!ths.includes('기업명')) continue;
 
-              // 빈 행 스킵
-              if (name && name !== '번호' && name !== 'No' && !name.match(/^\d+$/)) {
-                // 클릭 가능한 링크 찾기
-                const link = cells[0]?.querySelector('a') || row.querySelector('a');
-                results.push({
-                  name,
-                  ceoName,
-                  type,
-                  industry,
-                  address,
-                  hasLink: !!link,
-                  linkHref: link?.href || null,
-                  linkOnclick: link?.getAttribute('onclick') || null,
-                  rowIndex: results.length
-                });
-              }
-            }
+          for (const tr of table.querySelectorAll('tr')) {
+            const cells = Array.from(tr.querySelectorAll('td'));
+            if (cells.length < 3) continue;
+
+            const name = cells[0]?.textContent?.trim() || '';
+            if (!name || name === '조회된 내용이 없습니다.') continue;
+
+            const link = cells[0]?.querySelector('a');
+            data.candidates.push({
+              name,
+              ceoName: cells[1]?.textContent?.trim() || '',
+              type: cells[2]?.textContent?.trim() || '',
+              industry: cells[3]?.textContent?.trim() || '',
+              address: cells[4]?.textContent?.trim() || '',
+              onclick: link?.getAttribute('onclick') || null
+            });
           }
+          break; // 첫 번째 결과 테이블만 사용
         }
-
-        return results;
-      });
-
-      console.log(`[Sminfo] Found ${candidates.length} candidates`);
-
-      if (candidates.length === 0) {
-        console.log('[Sminfo] No search results found');
-        await this.page.screenshot({ path: 'sminfo_debug_noresults.png', fullPage: true });
-        return null;
-      }
-
-      // 4. 멀티필드 확률 매칭
-      const scoredCandidates = candidates.map(candidate => ({
-        ...candidate,
-        score: this._calculateMatchScore(candidate, {
-          ...matchCriteria,
-          companyName: companyName
-        })
-      }));
-
-      scoredCandidates.sort((a, b) => b.score - a.score);
-      const bestMatch = scoredCandidates[0];
-
-      console.log(`[Sminfo] Best match: "${bestMatch.name}" (score: ${(bestMatch.score * 100).toFixed(1)}%)`);
-      if (scoredCandidates.length > 1) {
-        console.log(`[Sminfo] Runner-up: "${scoredCandidates[1].name}" (score: ${(scoredCandidates[1].score * 100).toFixed(1)}%)`);
-      }
-
-      if (bestMatch.score < 0.4) {
-        console.log(`[Sminfo] Match score too low (${(bestMatch.score * 100).toFixed(1)}%), skipping`);
-        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
-      }
-
-      // 5. 최고 확률 기업 클릭 → 상세 페이지 이동
-      const clicked = await this.page.evaluate((idx) => {
-        const tables = document.querySelectorAll('table');
-        for (const table of tables) {
-          const rows = table.querySelectorAll('tbody tr, tr');
-          let candidateIdx = 0;
-          for (const row of rows) {
-            const cells = Array.from(row.querySelectorAll('td'));
-            if (cells.length >= 3) {
-              const name = cells[0]?.textContent?.trim() || '';
-              if (name && name !== '번호' && name !== 'No' && !name.match(/^\d+$/)) {
-                if (candidateIdx === idx) {
-                  const link = cells[0]?.querySelector('a') || row.querySelector('a');
-                  if (link) {
-                    link.click();
-                    return true;
-                  }
-                  // fallback: row click
-                  row.click();
-                  return true;
-                }
-                candidateIdx++;
-              }
-            }
-          }
-        }
-        return false;
-      }, bestMatch.rowIndex);
-
-      if (!clicked) {
-        console.warn('[Sminfo] Could not click on best match result');
-        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
-      }
-
-      await this.sleep(3000);
-
-      // 6. 재무정보 추출 (기존 evaluate 패턴 재사용)
-      const financialData = await this.page.evaluate(() => {
-        const data = {};
-        const tables = document.querySelectorAll('table');
-
-        tables.forEach(table => {
-          const rows = table.querySelectorAll('tr');
-          rows.forEach(row => {
-            const cells = row.querySelectorAll('td, th');
-            if (cells.length >= 2) {
-              const label = cells[0].textContent.trim();
-              const value = cells[cells.length > 2 ? cells.length - 1 : 1].textContent.trim();
-
-              if (label.match(/매출|revenue|sales/i) && !data.revenue) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.revenue = num;
-              }
-              if (label.match(/영업이익|operating.*profit/i) && !data.operating_profit) {
-                const num = parseInt(value.replace(/[^0-9-]/g, ''));
-                if (!isNaN(num)) data.operating_profit = num;
-              }
-              if (label.match(/당기순이익|순이익|net.*profit|net.*income/i) && !data.net_profit) {
-                const num = parseInt(value.replace(/[^0-9-]/g, ''));
-                if (!isNaN(num)) data.net_profit = num;
-              }
-              if (label.match(/자산총계|총자산|total.*asset/i) && !data.total_assets) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_assets = num;
-              }
-              if (label.match(/부채총계|총부채|total.*liabilit/i) && !data.total_liabilities) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_liabilities = num;
-              }
-              if (label.match(/자본총계|총자본|자기자본|total.*equity/i) && !data.total_equity) {
-                const num = parseInt(value.replace(/[^0-9]/g, ''));
-                if (num > 0) data.total_equity = num;
-              }
-            }
-          });
-        });
 
         return data;
       });
 
-      if (Object.keys(financialData).length === 0) {
-        console.log('[Sminfo] No financial data found on detail page');
-        await this.page.screenshot({ path: 'sminfo_debug_nofinancial.png', fullPage: true });
+      const total = parseInt(searchResult.totalText?.replace(/,/g, '') || '0');
+      console.log(`[Sminfo] Search results: ${total} 건, parsed ${searchResult.candidates.length} candidates`);
+
+      if (searchResult.candidates.length === 0) {
+        console.log('[Sminfo] No results found');
+        return null;
+      }
+
+      // 3. 멀티필드 확률 매칭
+      const scoredCandidates = searchResult.candidates.map((c, i) => ({
+        ...c,
+        rowIndex: i,
+        score: this._calculateMatchScore(c, { ...matchCriteria, companyName })
+      }));
+      scoredCandidates.sort((a, b) => b.score - a.score);
+      const bestMatch = scoredCandidates[0];
+
+      console.log(`[Sminfo] Best match: "${bestMatch.name}" (${(bestMatch.score * 100).toFixed(0)}%)`);
+      if (scoredCandidates.length > 1) {
+        console.log(`[Sminfo] Runner-up: "${scoredCandidates[1].name}" (${(scoredCandidates[1].score * 100).toFixed(0)}%)`);
+      }
+
+      if (bestMatch.score < 0.4) {
+        console.log(`[Sminfo] Match score too low, skipping detail`);
         return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
       }
 
-      console.log(`[Sminfo] Financial data extracted:`, Object.keys(financialData).join(', '));
+      // 4. 최고 매칭 기업 클릭 → 상세 페이지 이동
+      if (bestMatch.onclick) {
+        await Promise.all([
+          this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+          this.page.evaluate((onclick) => eval(onclick), bestMatch.onclick)
+        ]);
+      } else {
+        // onclick 없으면 행 인덱스로 클릭
+        await Promise.all([
+          this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
+          this.page.evaluate((idx) => {
+            for (const table of document.querySelectorAll('table')) {
+              const ths = Array.from(table.querySelectorAll('th')).map(th => th.textContent.trim());
+              if (!ths.includes('기업명')) continue;
+              const tds = table.querySelectorAll('tr td:first-child a');
+              if (tds[idx]) { tds[idx].click(); return; }
+            }
+          }, bestMatch.rowIndex)
+        ]);
+      }
+      await this.sleep(3000);
+
+      console.log(`[Sminfo] Detail page: ${this.page.url()}`);
+
+      // 5. 재무정보 추출
+      const financialData = await this._extractFinancials();
+
+      if (!financialData || Object.keys(financialData).length === 0) {
+        console.log('[Sminfo] No financial data on detail page');
+        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
+      }
+
+      console.log(`[Sminfo] ✅ Financial data: ${Object.keys(financialData).join(', ')}`);
+
+      // 6. 기업정보 페이지로 복귀 (다음 검색 대비)
+      await this.page.goBack({ waitUntil: 'networkidle2', timeout: 15000 }).catch(() => null);
+      await this.sleep(1000);
 
       const normalized = this.normalizeData(null, financialData);
       return {
@@ -704,6 +425,55 @@ class SminfoClient {
       console.error(`[Sminfo] searchByCompanyName error:`, error.message);
       return null;
     }
+  }
+
+  /**
+   * 상세 페이지에서 재무정보 추출
+   */
+  async _extractFinancials() {
+    return this.page.evaluate(() => {
+      const data = {};
+      for (const table of document.querySelectorAll('table')) {
+        for (const row of table.querySelectorAll('tr')) {
+          const cells = row.querySelectorAll('td, th');
+          if (cells.length < 2) continue;
+
+          const label = cells[0].textContent.trim();
+          // 가장 마지막 또는 두 번째 셀의 값 사용 (최신 연도)
+          const value = cells[cells.length > 2 ? cells.length - 1 : 1].textContent.trim();
+
+          if (label.match(/매출액|매출/) && !data.revenue) {
+            const num = parseInt(value.replace(/[^0-9]/g, ''));
+            if (num > 0) data.revenue = num;
+          }
+          if (label.match(/영업이익/) && !data.operating_profit) {
+            const num = parseInt(value.replace(/[^0-9-]/g, ''));
+            if (!isNaN(num) && num !== 0) data.operating_profit = num;
+          }
+          if (label.match(/당기순이익|순이익/) && !data.net_profit) {
+            const num = parseInt(value.replace(/[^0-9-]/g, ''));
+            if (!isNaN(num) && num !== 0) data.net_profit = num;
+          }
+          if (label.match(/자산총계|총자산/) && !data.total_assets) {
+            const num = parseInt(value.replace(/[^0-9]/g, ''));
+            if (num > 0) data.total_assets = num;
+          }
+          if (label.match(/부채총계|총부채/) && !data.total_liabilities) {
+            const num = parseInt(value.replace(/[^0-9]/g, ''));
+            if (num > 0) data.total_liabilities = num;
+          }
+          if (label.match(/자본총계|자기자본|총자본/) && !data.total_equity) {
+            const num = parseInt(value.replace(/[^0-9]/g, ''));
+            if (num > 0) data.total_equity = num;
+          }
+          if (label.match(/종업원/) && !data.employee_count) {
+            const num = parseInt(value.replace(/[^0-9]/g, ''));
+            if (num > 0) data.employee_count = num;
+          }
+        }
+      }
+      return Object.keys(data).length > 0 ? data : null;
+    });
   }
 
   /**

@@ -105,6 +105,19 @@
   padding: var(--spacing-sm);
 }
 
+.results-instruction {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  padding: var(--spacing-xs) var(--spacing-md);
+  margin: 0;
+}
+
+.results-filtered {
+  font-weight: 400;
+  font-size: 0.8rem;
+  color: var(--warning);
+}
+
 .result-item {
   display: flex;
   justify-content: space-between;
@@ -116,7 +129,8 @@
   gap: var(--spacing-lg);
 }
 
-.result-item:hover {
+.result-item:hover,
+.result-item.selected {
   background: var(--bg-surface-hover);
 }
 
