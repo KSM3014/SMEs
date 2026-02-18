@@ -170,6 +170,32 @@ backend/single_session_collection_log*.json
 backend/scripts/_*.py
 backend/scripts/_*.cjs
 
+# Debug/collection scripts (not needed in production)
+backend/scripts/collect_*.js
+backend/scripts/collect_*.cjs
+backend/scripts/debug_*.js
+backend/scripts/debug_*.cjs
+backend/scripts/inspect_*.js
+backend/scripts/inspect_*.cjs
+backend/scripts/test_*.js
+backend/scripts/test_*.cjs
+backend/scripts/test_*.mjs
+backend/scripts/explore_*.mjs
+backend/scripts/find_*.js
+backend/scripts/check_*.js
+backend/scripts/check_*.cjs
+backend/scripts/fix_*.cjs
+backend/scripts/verify_*.js
+backend/scripts/run_*.js
+backend/scripts/scrape_*.js
+backend/scripts/comprehensive_*.js
+backend/scripts/extract_*.js
+backend/scripts/*Login*.js
+backend/scripts/copy_cookies.ps1
+backend/scripts/start_chrome_debug.bat
+backend/scripts/*_output.txt
+backend/scripts/*.csv
+
 # Playwright MCP
 .playwright-mcp/
 
