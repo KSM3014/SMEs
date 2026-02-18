@@ -461,10 +461,14 @@ function resolveEntities(apiResponses) {
 function selectCanonicalName(names) {
   if (names.length === 0) return null;
 
+  // Sanitize: NPS returns "회사명/고용형태/프로젝트명" — extract first part
+  const sanitized = names.map(n => sanitizeCompanyName(n)).filter(Boolean);
+  if (sanitized.length === 0) return names[0];
+
   const normCounts = new Map();
   const normToOriginal = new Map();
 
-  for (const name of names) {
+  for (const name of sanitized) {
     const norm = normalizeCompanyName(name);
     if (!norm) continue;
     normCounts.set(norm, (normCounts.get(norm) || 0) + 1);
@@ -480,7 +484,23 @@ function selectCanonicalName(names) {
     return a[0].length - b[0].length;
   });
 
-  return sorted.length > 0 ? sorted[0][0] : names[0];
+  return sorted.length > 0 ? sorted[0][0] : sanitized[0];
+}
+
+/**
+ * 회사명 정제 — NPS 프로젝트명/고용형태 제거, HTML 엔티티 디코딩
+ */
+function sanitizeCompanyName(name) {
+  if (!name) return null;
+  let clean = name;
+  // Decode HTML entities: &amp; → &, etc.
+  clean = clean.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(/&gt;/g, '>').replace(/&quot;/g, '"');
+  // NPS pattern: "회사명/고용형태/프로젝트명" → extract first part
+  if (clean.includes('/')) {
+    const first = clean.split('/')[0].trim();
+    if (first.length >= 2) clean = first;
+  }
+  return clean.trim() || null;
 }
 
 /**

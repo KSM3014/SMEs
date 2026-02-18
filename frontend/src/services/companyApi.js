@@ -1,7 +1,9 @@
 import axios from 'axios';
 
+const API_BASE = import.meta.env.VITE_API_URL || '';
+
 const api = axios.create({
-  baseURL: '/api/company',
+  baseURL: `${API_BASE}/api/company`,
   timeout: 60000,
   headers: { 'Content-Type': 'application/json' }
 });

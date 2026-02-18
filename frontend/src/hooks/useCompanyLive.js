@@ -47,7 +47,8 @@ export function useCompanyLive(brno) {
     // Reset state for new brno
     setState({ ...INITIAL_STATE, status: 'connecting' });
 
-    const es = new EventSource(`/api/company/live/${brno}`);
+    const apiBase = import.meta.env.VITE_API_URL || '';
+    const es = new EventSource(`${apiBase}/api/company/live/${brno}`);
     esRef.current = es;
 
     // Timeout: close SSE if no complete event within 120s

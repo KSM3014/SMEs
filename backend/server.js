@@ -31,9 +31,17 @@ const PORT = process.env.PORT || 3000;
 app.use(helmet());
 
 // CORS configuration
+const allowedOrigins = (process.env.CORS_ORIGIN || 'http://localhost:3001')
+  .split(',').map(s => s.trim());
 app.use(cors({
-  origin: process.env.CORS_ORIGIN || 'http://localhost:3001',
-  credentials: process.env.CORS_CREDENTIALS === 'true'
+  origin: (origin, cb) => {
+    if (!origin || allowedOrigins.some(o => origin === o || origin.endsWith('.pages.dev'))) {
+      cb(null, true);
+    } else {
+      cb(null, false);
+    }
+  },
+  credentials: true
 }));
 
 // Request parsing
