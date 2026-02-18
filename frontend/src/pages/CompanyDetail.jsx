@@ -91,18 +91,9 @@ function CompanyDetail() {
     </section>
   );
 
-  // Show "DART 데이터 없음" message for non-listed companies
-  const NoDartMessage = ({ title }) => (
-    <section className="section-no-data">
-      <h2>{title}</h2>
-      <p className="no-data-text">비상장 기업 - DART 데이터 없음</p>
-    </section>
-  );
-
   // Determine what to show for DART-dependent sections
   const dartLoaded = events.includes('dart_data');
   const showDartSkeleton = !dartLoaded && isLoading;
-  const showNoDart = dartLoaded && dartAvailable === false;
 
   return (
     <div className="company-detail">

@@ -158,7 +158,7 @@ class SminfoClient {
       await Promise.all([
         this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
         this.page.evaluate(() => {
-          fnSubmit('/gc/sf/GSF002R0.print', '421010100', true);
+          window.fnSubmit('/gc/sf/GSF002R0.print', '421010100', true);
         })
       ]);
       await this.sleep(2000);
@@ -205,7 +205,7 @@ class SminfoClient {
 
       await Promise.all([
         this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
-        this.page.evaluate(() => searchByTarget(1, '_self'))
+        this.page.evaluate(() => window.searchByTarget(1, '_self'))
       ]);
       await this.sleep(2000);
 
@@ -302,7 +302,7 @@ class SminfoClient {
       // searchByTarget 호출 (ckInput → form POST)
       await Promise.all([
         this.page.waitForNavigation({ waitUntil: 'networkidle2', timeout: 30000 }).catch(() => null),
-        this.page.evaluate(() => searchByTarget(1, '_self'))
+        this.page.evaluate(() => window.searchByTarget(1, '_self'))
       ]);
       await this.sleep(2000);
 
