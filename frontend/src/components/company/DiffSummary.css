@@ -1,5 +1,5 @@
 .diff-summary {
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
   padding: var(--spacing-lg);
@@ -29,7 +29,7 @@
 .diff-summary__header h3 {
   margin: 0;
   font-size: 1rem;
-  color: var(--gray-800);
+  color: var(--text-primary);
 }
 
 .diff-summary__meta {
@@ -69,7 +69,7 @@
   flex-wrap: wrap;
   gap: var(--spacing-xs);
   padding-top: var(--spacing-md);
-  border-top: 1px solid var(--gray-100);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .diff-tag {

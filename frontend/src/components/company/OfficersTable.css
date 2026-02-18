@@ -18,25 +18,25 @@
   width: 100%;
   min-width: 800px;
   border-collapse: collapse;
-  background: white;
+  background: var(--bg-surface);
 }
 
 .officers-table thead {
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
 }
 
 .officers-table th {
   padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
   font-weight: 600;
-  color: var(--gray-700);
-  border-bottom: 2px solid var(--gray-200);
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .officers-table td {
   padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-100);
-  color: var(--gray-700);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 
 .officers-table tr.ceo {
@@ -94,7 +94,7 @@
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   border-radius: var(--radius-md);
 }
 
@@ -114,7 +114,64 @@
 .summary-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--text-primary);
+}
+
+/* Compact mode for 3-column grid */
+.officers-compact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.compact-count {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.compact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.compact-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.compact-item strong {
+  color: var(--text-primary);
+}
+
+.compact-role {
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+}
+
+.compact-career {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+  display: block;
+  width: 100%;
+}
+
+.compact-more {
+  font-size: 0.8rem;
+  color: var(--primary);
+  padding-top: var(--spacing-xs);
+  cursor: default;
 }
 
 @media (max-width: 768px) {

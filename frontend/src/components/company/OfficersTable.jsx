@@ -1,10 +1,31 @@
 import './OfficersTable.css';
 
-function OfficersTable({ officers }) {
+function OfficersTable({ officers, compact = false }) {
   if (!officers || officers.length === 0) {
     return (
       <div className="officers-table empty">
         <p className="text-muted">임원 정보가 없습니다.</p>
+      </div>
+    );
+  }
+
+  // Compact mode: bullet-point list for 3-column grid
+  if (compact) {
+    return (
+      <div className="officers-compact">
+        <p className="compact-count">{officers.length}명</p>
+        <ul className="compact-list">
+          {officers.slice(0, 8).map((officer, i) => (
+            <li key={i} className="compact-item">
+              <strong>{officer.name}</strong>
+              <span className="compact-role">{officer.position}</span>
+              {officer.career && <span className="compact-career">{officer.career}</span>}
+            </li>
+          ))}
+          {officers.length > 8 && (
+            <li className="compact-more">+{officers.length - 8}명 더보기</li>
+          )}
+        </ul>
       </div>
     );
   }

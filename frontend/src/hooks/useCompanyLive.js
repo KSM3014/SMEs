@@ -18,6 +18,7 @@ const INITIAL_STATE = {
   status: 'idle',       // idle | connecting | db_loaded | dart_loaded | complete | error
   company: null,        // current company data (mapEntityToCompanyDetail format)
   dartAvailable: null,  // null = unknown, true/false after dart_data event
+  sminfoAvailable: null, // null = unknown, true/false after sminfo_data event
   diff: null,           // { added, updated, removed, unchangedCount, hasChanges }
   meta: null,           // { apisAttempted, apisSucceeded, durationMs }
   conflicts: [],        // cross-check conflicts from complete event
@@ -138,6 +139,44 @@ export function useCompanyLive(brno) {
       }
     });
 
+    // --- Event: sminfo_data (non-listed company financial data) ---
+    es.addEventListener('sminfo_data', (e) => {
+      try {
+        const payload = JSON.parse(e.data);
+
+        if (payload.available === false) {
+          setState(prev => ({
+            ...prev,
+            sminfoAvailable: false,
+            events: [...prev.events, 'sminfo_data'],
+          }));
+          return;
+        }
+
+        // Merge sminfo financial data into company
+        setState(prev => ({
+          ...prev,
+          sminfoAvailable: true,
+          company: prev.company ? {
+            ...prev.company,
+            financial_statements: payload.financial_statements || prev.company.financial_statements,
+            revenue: payload.revenue ?? prev.company.revenue,
+            operating_margin: payload.operating_margin ?? prev.company.operating_margin,
+            roe: payload.roe ?? prev.company.roe,
+            debt_ratio: payload.debt_ratio ?? prev.company.debt_ratio,
+            total_assets: payload.total_assets ?? prev.company.total_assets,
+            net_profit: payload.net_profit ?? prev.company.net_profit,
+            _hasSminfo: true,
+            _sminfoMatchScore: payload.matchScore,
+            _sminfoMatchedCompany: payload.matchedCompany,
+          } : null,
+          events: [...prev.events, 'sminfo_data'],
+        }));
+      } catch (err) {
+        console.error('[useCompanyLive] sminfo_data parse error:', err);
+      }
+    });
+
     // --- Event: live_diff (DB vs live comparison) ---
     es.addEventListener('live_diff', (e) => {
       try {
@@ -198,6 +237,7 @@ export function useCompanyLive(brno) {
     isComplete: state.status === 'complete',
     hasData: state.company !== null,
     hasDart: state.dartAvailable === true,
+    hasSminfo: state.sminfoAvailable === true,
     hasDiff: state.diff !== null && state.diff.hasChanges,
   };
 }

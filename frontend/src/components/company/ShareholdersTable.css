@@ -18,25 +18,25 @@
   width: 100%;
   min-width: 800px;
   border-collapse: collapse;
-  background: white;
+  background: var(--bg-surface);
 }
 
 .shareholders-table thead {
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
 }
 
 .shareholders-table th {
   padding: var(--spacing-md) var(--spacing-lg);
   text-align: left;
   font-weight: 600;
-  color: var(--gray-700);
-  border-bottom: 2px solid var(--gray-200);
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .shareholders-table td {
   padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-100);
-  color: var(--gray-700);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 
 .shareholders-table tr.founder {
@@ -94,10 +94,10 @@
 }
 
 .total-row td {
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   font-weight: 700;
-  border-top: 2px solid var(--gray-300);
-  border-bottom: 2px solid var(--gray-300);
+  border-top: 2px solid var(--border-default);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .text-right {
@@ -109,7 +109,7 @@
   grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
   gap: var(--spacing-md);
   padding: var(--spacing-lg);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   border-radius: var(--radius-md);
   margin-bottom: var(--spacing-xl);
 }
@@ -130,20 +130,20 @@
 .summary-value {
   font-size: 1.25rem;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .ownership-chart {
   padding: var(--spacing-lg);
-  background: white;
-  border: 1px solid var(--gray-200);
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
 }
 
 .chart-title {
   font-weight: 600;
   margin-bottom: var(--spacing-md);
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .chart-bar {
@@ -233,6 +233,62 @@
 .legend-text {
   font-size: 0.875rem;
   color: var(--gray-700);
+}
+
+/* Compact mode for 3-column grid */
+.shareholders-compact {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.shareholders-compact .compact-count {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0 0 var(--spacing-sm) 0;
+}
+
+.shareholders-compact .compact-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+}
+
+.shareholders-compact .compact-item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-xs) 0;
+  border-bottom: 1px solid var(--border-subtle);
+  font-size: 0.875rem;
+  line-height: 1.4;
+}
+
+.shareholders-compact .compact-item strong {
+  color: var(--text-primary);
+}
+
+.compact-pct {
+  color: var(--primary);
+  font-weight: 600;
+  font-size: 0.875rem;
+}
+
+.compact-shares {
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.shareholders-compact .compact-more {
+  font-size: 0.8rem;
+  color: var(--primary);
+  padding-top: var(--spacing-xs);
+  cursor: default;
 }
 
 @media (max-width: 768px) {

@@ -10,12 +10,12 @@
 
 .company-search .page-header h1 {
   font-size: 2rem;
-  color: var(--gray-900);
+  color: var(--text-primary);
   margin-bottom: var(--spacing-sm);
 }
 
 .company-search .page-header p {
-  color: var(--gray-500);
+  color: var(--text-muted);
   font-size: 1rem;
 }
 
@@ -34,7 +34,9 @@
   flex: 1;
   padding: 0.875rem 1.25rem;
   font-size: 1.125rem;
-  border: 2px solid var(--gray-300);
+  background: var(--bg-input);
+  color: var(--text-primary);
+  border: 2px solid var(--border-default);
   border-radius: var(--radius-lg);
   transition: border-color 0.2s;
 }
@@ -83,8 +85,8 @@
 .search-examples button {
   font-size: 0.875rem;
   color: var(--primary);
-  background: var(--gray-100);
-  border: 1px solid var(--gray-200);
+  background: var(--bg-surface-hover);
+  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
   padding: 0.25rem 0.75rem;
   cursor: pointer;
@@ -140,7 +142,7 @@
 
 /* Entity Card */
 .entity-card {
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   padding: var(--spacing-lg);
   box-shadow: var(--shadow-md);
@@ -273,7 +275,7 @@
 }
 
 .entity-detail-header {
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   padding: var(--spacing-xl);
   box-shadow: var(--shadow-md);
@@ -293,7 +295,7 @@
 }
 
 .api-data-section {
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-sm);
   overflow: hidden;
@@ -304,8 +306,8 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--gray-50);
-  border-bottom: 1px solid var(--gray-200);
+  background: var(--bg-surface-hover);
+  border-bottom: 1px solid var(--border-default);
   cursor: pointer;
   user-select: none;
 }
@@ -313,6 +315,7 @@
 .api-section-header h4 {
   margin-bottom: 0;
   font-size: 1rem;
+  color: var(--text-secondary);
 }
 
 .api-section-header .toggle-icon {
@@ -343,13 +346,13 @@
 
 .api-data-table td:first-child {
   font-weight: 600;
-  color: var(--gray-600);
+  color: var(--text-secondary);
   width: 35%;
   white-space: nowrap;
 }
 
 .api-data-table td:last-child {
-  color: var(--gray-800);
+  color: var(--text-primary);
   word-break: break-all;
 }
 

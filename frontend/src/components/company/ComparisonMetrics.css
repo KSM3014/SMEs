@@ -1,5 +1,5 @@
 .comparison-metrics {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -14,7 +14,7 @@
 .comparison-header h2 {
   font-size: 1.5rem;
   margin: 0 0 var(--spacing-sm) 0;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .metrics-grid {
@@ -24,10 +24,10 @@
 }
 
 .metric-card {
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   padding: var(--spacing-lg);
   border-radius: var(--radius-lg);
-  border: 2px solid var(--gray-200);
+  border: 2px solid var(--border-default);
   transition: all 0.2s ease;
 }
 
@@ -79,7 +79,7 @@
 .value {
   font-size: 1.125rem;
   font-weight: 700;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .vs-divider {
@@ -92,7 +92,7 @@
 .metric-change {
   text-align: center;
   padding-top: var(--spacing-md);
-  border-top: 1px solid var(--gray-300);
+  border-top: 1px solid var(--border-default);
 }
 
 .change-indicator {

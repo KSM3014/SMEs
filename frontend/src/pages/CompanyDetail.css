@@ -24,7 +24,7 @@
 .error-message {
   text-align: center;
   padding: var(--spacing-2xl);
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
 }
@@ -36,7 +36,7 @@
 
 /* Company Header */
 .company-header {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -49,13 +49,13 @@
   align-items: flex-start;
   margin-bottom: var(--spacing-xl);
   padding-bottom: var(--spacing-lg);
-  border-bottom: 2px solid var(--gray-200);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .company-title-row h1 {
   font-size: 2rem;
   margin: 0;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .badges {
@@ -66,8 +66,8 @@
 
 .badge-outline {
   background: transparent;
-  border: 1px solid var(--gray-300);
-  color: var(--gray-600);
+  border: 1px solid var(--border-default);
+  color: var(--text-secondary);
   font-size: 0.75rem;
   padding: 2px 8px;
   border-radius: 12px;
@@ -88,14 +88,14 @@
 .info-label {
   font-size: 0.875rem;
   font-weight: 600;
-  color: var(--gray-600);
+  color: var(--text-muted);
   text-transform: uppercase;
   letter-spacing: 0.5px;
 }
 
 .info-value {
   font-size: 1rem;
-  color: var(--gray-900);
+  color: var(--text-primary);
   word-break: break-word;
 }
 
@@ -108,13 +108,150 @@
   text-decoration: underline;
 }
 
+/* Company Overview — Card Grid */
+.company-overview {
+  background: var(--bg-surface);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.company-overview h2 {
+  font-size: 1.5rem;
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-primary);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-default);
+}
+
+.overview-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: var(--spacing-md);
+}
+
+.overview-card {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-xs);
+  padding: var(--spacing-md);
+  background: var(--bg-surface-hover);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border-subtle);
+}
+
+.overview-card.full-width {
+  grid-column: 1 / -1;
+}
+
+.overview-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.overview-value {
+  font-size: 1rem;
+  color: var(--text-primary);
+  word-break: break-word;
+}
+
+.overview-value.mono {
+  font-family: 'Courier New', monospace;
+  letter-spacing: 0.5px;
+}
+
+.overview-value a {
+  color: var(--primary);
+  text-decoration: none;
+}
+
+.overview-value a:hover {
+  text-decoration: underline;
+}
+
+/* Personnel Section — 3 Column Grid */
+.personnel-section {
+  background: var(--bg-surface);
+  padding: var(--spacing-2xl);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  margin-bottom: var(--spacing-xl);
+}
+
+.personnel-section h2 {
+  font-size: 1.5rem;
+  margin: 0 0 var(--spacing-xl) 0;
+  color: var(--text-primary);
+  padding-bottom: var(--spacing-md);
+  border-bottom: 2px solid var(--border-default);
+}
+
+.personnel-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: var(--spacing-lg);
+}
+
+.personnel-card {
+  background: var(--bg-surface-hover);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-lg);
+  border: 1px solid var(--border-subtle);
+  min-height: 200px;
+}
+
+.personnel-card h3 {
+  font-size: 1rem;
+  margin: 0 0 var(--spacing-md) 0;
+  color: var(--text-secondary);
+  padding-bottom: var(--spacing-sm);
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+.ceo-info {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-sm);
+}
+
+.ceo-name {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+}
+
+.ceo-role {
+  font-size: 0.875rem;
+  color: var(--text-secondary);
+  margin: 0;
+}
+
+.ceo-source {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  margin: var(--spacing-sm) 0 0 0;
+}
+
+/* Section Source Tag (sminfo / DART) */
+.section-source-tag {
+  font-size: 0.75rem;
+  font-weight: 400;
+  color: var(--text-muted);
+  margin-left: var(--spacing-sm);
+}
+
 /* Section Styles */
 .financial-chart-section,
 .financial-statements-section,
 .officers-section,
 .shareholders-section,
 .sources-section {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -128,14 +265,14 @@
 .sources-section h2 {
   font-size: 1.5rem;
   margin: 0 0 var(--spacing-xl) 0;
-  color: var(--gray-900);
+  color: var(--text-primary);
   padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--gray-200);
+  border-bottom: 2px solid var(--border-default);
 }
 
 /* Skeleton loading (DART data pending) */
 .section-skeleton {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -145,9 +282,9 @@
 .section-skeleton h2 {
   font-size: 1.5rem;
   margin: 0 0 var(--spacing-xl) 0;
-  color: var(--gray-400);
+  color: var(--text-muted);
   padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--gray-100);
+  border-bottom: 2px solid var(--border-subtle);
 }
 
 .skeleton-content {
@@ -180,7 +317,7 @@
 
 /* No data message (non-listed company) */
 .section-no-data {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -190,13 +327,13 @@
 .section-no-data h2 {
   font-size: 1.5rem;
   margin: 0 0 var(--spacing-lg) 0;
-  color: var(--gray-400);
+  color: var(--text-muted);
   padding-bottom: var(--spacing-md);
-  border-bottom: 2px solid var(--gray-100);
+  border-bottom: 2px solid var(--border-subtle);
 }
 
 .no-data-text {
-  color: var(--gray-400);
+  color: var(--text-muted);
   font-size: 0.9rem;
   text-align: center;
   padding: var(--spacing-xl) 0;
@@ -219,6 +356,8 @@
   }
 
   .company-header,
+  .company-overview,
+  .personnel-section,
   .financial-chart-section,
   .financial-statements-section,
   .officers-section,
@@ -236,6 +375,14 @@
 
   .company-title-row h1 {
     font-size: 1.5rem;
+  }
+
+  .overview-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .personnel-grid {
+    grid-template-columns: 1fr;
   }
 
   .company-info-grid {

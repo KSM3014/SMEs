@@ -117,7 +117,7 @@ function CompanyDetail() {
         <StatusBar status="complete" meta={meta} diff={diff} events={events} />
       )}
 
-      {/* 1. Company Basic Info — available immediately from db_data */}
+      {/* 1. Company Header — Name + Badges */}
       {company && (
         <section className="company-header">
           <div className="company-title-row">
@@ -140,66 +140,144 @@ function CompanyDetail() {
               )}
             </div>
           </div>
+        </section>
+      )}
 
-          <div className="company-info-grid">
-            <div className="info-item">
-              <span className="info-label">대표이사</span>
-              <span className="info-value">{company.ceo_name || '-'}</span>
+      {/* 2. 기업 개요 — Card Grid */}
+      {company && (
+        <section className="company-overview">
+          <h2>기업 개요</h2>
+          <div className="overview-grid">
+            <div className="overview-card">
+              <span className="overview-label">기업명</span>
+              <span className="overview-value">{company.company_name || '-'}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">직원수</span>
-              <span className="info-value">{company.employee_count?.toLocaleString() || '-'}명</span>
+            <div className="overview-card">
+              <span className="overview-label">대표</span>
+              <span className="overview-value">{company.ceo_name || '-'}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">사업자등록번호</span>
-              <span className="info-value">{company.business_number || id}</span>
+            <div className="overview-card">
+              <span className="overview-label">직원수</span>
+              <span className="overview-value">{company.employee_count ? `${company.employee_count.toLocaleString()}명` : '-'}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">업종</span>
-              <span className="info-value">{company.industry_name || '-'}</span>
+            <div className="overview-card">
+              <span className="overview-label">사업주체</span>
+              <span className="overview-value">{company.corp_code || company.corp_cls ? '법인기업' : '개인사업자'}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">설립일</span>
-              <span className="info-value">{formatDate(company.establishment_date)}</span>
+            <div className="overview-card">
+              <span className="overview-label">기업유형</span>
+              <span className="overview-value">
+                {company.corp_cls === 'Y' ? '유가증권 상장법인'
+                  : company.corp_cls === 'K' ? '코스닥 상장법인'
+                  : company.corp_cls === 'N' ? '코넥스 상장법인'
+                  : company.listed ? '상장법인'
+                  : '비상장법인'}
+              </span>
             </div>
-            <div className="info-item">
-              <span className="info-label">주소</span>
-              <span className="info-value">{company.address || '-'}</span>
+            <div className="overview-card">
+              <span className="overview-label">사업자등록번호</span>
+              <span className="overview-value mono">{company.business_number || id}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">연락처</span>
-              <span className="info-value">{company.phone || '-'}</span>
+            {company.corp_registration_no && (
+              <div className="overview-card">
+                <span className="overview-label">법인등록번호</span>
+                <span className="overview-value mono">{company.corp_registration_no}</span>
+              </div>
+            )}
+            <div className="overview-card">
+              <span className="overview-label">업종</span>
+              <span className="overview-value">{company.industry_display || company.industry_name || '-'}</span>
             </div>
-            <div className="info-item">
-              <span className="info-label">홈페이지</span>
-              <span className="info-value">
+            <div className="overview-card full-width">
+              <span className="overview-label">설립일</span>
+              <span className="overview-value">{formatDate(company.establishment_date)}</span>
+            </div>
+            <div className="overview-card full-width">
+              <span className="overview-label">주소</span>
+              <span className="overview-value">{company.address || '-'}</span>
+            </div>
+            <div className="overview-card">
+              <span className="overview-label">대표연락처</span>
+              <span className="overview-value">{company.phone || '-'}</span>
+            </div>
+            <div className="overview-card">
+              <span className="overview-label">홈페이지</span>
+              <span className="overview-value">
                 {company.website ? (
-                  <a href={company.website} target="_blank" rel="noopener noreferrer">
+                  <a href={company.website.startsWith('http') ? company.website : `http://${company.website}`} target="_blank" rel="noopener noreferrer">
                     {company.website}
                   </a>
-                ) : (
-                  '-'
-                )}
+                ) : '-'}
               </span>
             </div>
           </div>
         </section>
       )}
 
-      {/* 2. Diff Summary — appears after live_diff */}
+      {/* 3. 인물 정보 (DART) — 3-Column Grid */}
+      {showDartSkeleton && <SectionSkeleton title="인물 정보 (DART)" />}
+      {dartLoaded && (company?.officers?.length > 0 || company?.shareholders?.length > 0) && (
+        <section className="personnel-section">
+          <h2>인물 정보 (DART)</h2>
+          <div className="personnel-grid">
+            {/* CEO Card */}
+            <div className="personnel-card">
+              <h3>대표자</h3>
+              <div className="ceo-info">
+                <p className="ceo-name">{company.ceo_name || '-'}</p>
+                {company.officers && (() => {
+                  const ceos = company.officers.filter(o =>
+                    o.position?.includes('대표이사') || o.position?.includes('CEO')
+                  );
+                  if (ceos.length > 0) {
+                    return <p className="ceo-role">{ceos.map(c => c.position).join(', ')}</p>;
+                  }
+                  return null;
+                })()}
+                <p className="ceo-source">출처: DART</p>
+              </div>
+            </div>
+
+            {/* Officers Compact */}
+            <div className="personnel-card">
+              <h3>임원 현황</h3>
+              {company.officers && company.officers.length > 0 ? (
+                <OfficersTable officers={company.officers} compact />
+              ) : (
+                <p className="no-data-text">임원 정보 없음</p>
+              )}
+            </div>
+
+            {/* Shareholders Compact */}
+            <div className="personnel-card">
+              <h3>지분 현황</h3>
+              {company.shareholders && company.shareholders.length > 0 ? (
+                <ShareholdersTable shareholders={company.shareholders} compact />
+              ) : (
+                <p className="no-data-text">주주 정보 없음</p>
+              )}
+            </div>
+          </div>
+        </section>
+      )}
+      {showNoDart && (!company?.officers?.length && !company?.shareholders?.length) && (
+        <NoDartMessage title="인물 정보 (DART)" />
+      )}
+
+      {/* 4. Diff Summary — appears after live_diff */}
       {diff && <DiffSummary diff={diff} meta={meta} />}
 
-      {/* 3. 3-Year Average Comparison — from DART */}
+      {/* 5. 3-Year Average Comparison — from DART */}
       {company?.three_year_average && (
         <ComparisonMetrics current={company} average={company.three_year_average} />
       )}
 
-      {/* 4. Red Flags — from entity cross-check + DART */}
+      {/* 6. Red Flags — from entity cross-check + DART */}
       {company?.red_flags && company.red_flags.length > 0 && (
         <RedFlags flags={company.red_flags} />
       )}
 
-      {/* 5. Financial Chart — from DART */}
+      {/* 7. Financial Chart — from DART */}
       {showDartSkeleton && <SectionSkeleton title="재무 성과 추이" />}
       {showNoDart && <NoDartMessage title="재무 성과 추이" />}
       {company?.financial_history && company.financial_history.length > 0 && (
@@ -209,32 +287,38 @@ function CompanyDetail() {
         </section>
       )}
 
-      {/* 6. Financial Statements — from DART */}
+      {/* 8. Financial Statements — from DART or sminfo */}
       {showDartSkeleton && <SectionSkeleton title="재무제표" />}
       {showNoDart && !company?.financial_statements && <NoDartMessage title="재무제표" />}
       {company?.financial_statements && (
         <section className="financial-statements-section">
-          <h2>재무제표</h2>
+          <h2>
+            재무제표
+            {company._hasSminfo && (
+              <span className="section-source-tag">
+                출처: sminfo ({Math.round((company._sminfoMatchScore || 0) * 100)}% 매칭)
+              </span>
+            )}
+            {company._hasDart && !company._hasSminfo && (
+              <span className="section-source-tag">출처: DART</span>
+            )}
+          </h2>
           <FinancialStatements statements={company.financial_statements} />
         </section>
       )}
 
-      {/* 7. Officers Table — from DART */}
-      {showDartSkeleton && <SectionSkeleton title="임원 현황" />}
-      {showNoDart && (!company?.officers || company.officers.length === 0) && <NoDartMessage title="임원 현황" />}
+      {/* 9. Officers Full Table — from DART (detailed view below compact) */}
       {company?.officers && company.officers.length > 0 && (
         <section className="officers-section">
-          <h2>임원 현황</h2>
+          <h2>임원 현황 (상세)</h2>
           <OfficersTable officers={company.officers} />
         </section>
       )}
 
-      {/* 8. Shareholders Table — from DART */}
-      {showDartSkeleton && <SectionSkeleton title="주주 현황" />}
-      {showNoDart && (!company?.shareholders || company.shareholders.length === 0) && <NoDartMessage title="주주 현황" />}
+      {/* 10. Shareholders Full Table — from DART (detailed view below compact) */}
       {company?.shareholders && company.shareholders.length > 0 && (
         <section className="shareholders-section">
-          <h2>주주 현황</h2>
+          <h2>주주 현황 (상세)</h2>
           <ShareholdersTable shareholders={company.shareholders} />
         </section>
       )}

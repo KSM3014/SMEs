@@ -16,7 +16,7 @@ import {
 import { EXPANDED_API_REGISTRY } from '../services/apiAdapters/apiRegistryExpanded.js';
 import { MISC_API_REGISTRY } from '../services/apiAdapters/apiRegistryMisc.js';
 import { persistCompanyResult, loadEntityFromDb, computeDiff } from '../services/entityPersistence.js';
-import { mapEntityToCompanyDetail, fetchDartData } from '../services/entityDataMapper.js';
+import { mapEntityToCompanyDetail, fetchDartData, mapSminfoToFinancials } from '../services/entityDataMapper.js';
 import sequelize from '../config/database.js';
 import adminAuth from '../middleware/adminAuth.js';
 import { safeErrorMessage } from '../middleware/safeError.js';
@@ -277,7 +277,54 @@ router.get('/live/:brno', async (req, res) => {
             debt_ratio: dartMapped.debt_ratio
           });
         } else {
-          send('dart_data', { available: false, message: 'DART 데이터 없음 (비상장 기업)' });
+          send('dart_data', { available: false, message: 'DART 데이터 없음, sminfo 조회 중...' });
+
+          // Sminfo fallback for non-listed companies
+          try {
+            const SminfoClient = (await import('../services/sminfoClient.js')).default;
+            const sminfo = new SminfoClient();
+
+            const sminfoMatchCriteria = {
+              companyName: entityForDart.canonicalName,
+              ceoName: mappedDb?.ceo_name || null,
+              industry: mappedDb?.industry_name || null,
+              address: mappedDb?.address || null,
+              companyType: null
+            };
+
+            const sminfoResult = await sminfo.searchByCompanyName(
+              entityForDart.canonicalName, sminfoMatchCriteria
+            );
+
+            if (sminfoResult && sminfoResult.financials && sminfoResult.matchScore >= 0.6) {
+              const sminfoFinancials = mapSminfoToFinancials(sminfoResult.financials);
+              send('sminfo_data', {
+                available: true,
+                source: 'sminfo',
+                matchScore: sminfoResult.matchScore,
+                matchedCompany: sminfoResult.matchedCompany,
+                financial_statements: sminfoFinancials,
+                revenue: sminfoResult.financials.revenue,
+                operating_margin: sminfoResult.financials.operating_margin,
+                roe: sminfoResult.financials.roe,
+                debt_ratio: sminfoResult.financials.debt_ratio,
+                total_assets: sminfoResult.financials.total_assets,
+                net_profit: sminfoResult.financials.net_profit
+              });
+            } else {
+              send('sminfo_data', {
+                available: false,
+                message: sminfoResult
+                  ? `매칭 확률 부족 (${(sminfoResult.matchScore * 100).toFixed(0)}%)`
+                  : 'sminfo 검색 결과 없음'
+              });
+            }
+
+            await sminfo.close();
+          } catch (sminfoErr) {
+            console.error('[Company] Sminfo fallback error:', sminfoErr.message);
+            send('sminfo_data', { available: false, message: `sminfo 조회 실패: ${sminfoErr.message}` });
+          }
         }
         return dartData;
       } catch (err) {

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import './Header.css';
 
-function Header() {
+function Header({ theme, onToggleTheme }) {
   return (
     <header className="header">
       <div className="container">
@@ -20,6 +20,9 @@ function Header() {
             <a href="https://dart.fss.or.kr/" target="_blank" rel="noopener noreferrer" className="nav-link">
               DART
             </a>
+            <button className="theme-toggle" onClick={onToggleTheme} title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
+              {theme === 'dark' ? 'Light' : 'Dark'}
+            </button>
           </nav>
         </div>
       </div>

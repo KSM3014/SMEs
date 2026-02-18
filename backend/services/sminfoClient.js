@@ -415,6 +415,354 @@ class SminfoClient {
   }
 
   /**
+   * 회사명으로 기업 검색 + 확률 매칭 + 재무정보 추출
+   * @param {string} companyName - 검색할 회사명 (일부 또는 전체)
+   * @param {Object} matchCriteria - 매칭 기준 데이터
+   *   { companyName, ceoName, industry, address, companyType }
+   * @returns {Object|null} { financials, matchScore, matchedCompany }
+   */
+  async searchByCompanyName(companyName, matchCriteria = {}) {
+    try {
+      await this.checkRateLimit();
+
+      if (!this.isLoggedIn) {
+        const loggedIn = await this.login();
+        if (!loggedIn) {
+          console.error('[Sminfo] Login failed, cannot search by company name');
+          return null;
+        }
+      }
+
+      console.log(`[Sminfo] Searching by company name: "${companyName}"`);
+
+      // 1. 기업정보 페이지로 이동
+      const infoUrl = 'https://sminfo.mss.go.kr/cm/sv/CSV001R0.do';
+      await this.page.goto(infoUrl, { waitUntil: 'networkidle2', timeout: 30000 });
+      await this.sleep(1000);
+
+      // 2. 기업통합검색 탭/모드 선택 + 회사명 입력 + 검색 실행
+      const searchResult = await this.page.evaluate((name) => {
+        // "기업통합검색" 탭 또는 라디오 버튼 선택
+        const tabs = Array.from(document.querySelectorAll('a, button, label, li'));
+        const integSearchTab = tabs.find(el =>
+          el.textContent?.includes('기업통합검색') || el.textContent?.includes('통합검색')
+        );
+        if (integSearchTab) {
+          integSearchTab.click();
+        }
+
+        // 회사명 입력 필드 찾기
+        const nameSelectors = [
+          'input[name="searchNm"]', 'input[name="companyName"]', 'input[name="srchWrd"]',
+          'input[name="searchKeyword"]', 'input#searchNm', 'input#companyName',
+          'input[name="schWrd"]', 'input[name="entNm"]'
+        ];
+
+        let nameInput = null;
+        for (const selector of nameSelectors) {
+          const input = document.querySelector(selector);
+          if (input && input.type !== 'hidden' && input.offsetParent !== null) {
+            nameInput = input;
+            break;
+          }
+        }
+
+        // fallback: placeholder나 label에 "기업명", "회사명" 있는 input
+        if (!nameInput) {
+          const allTextInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'));
+          nameInput = allTextInputs.find(input =>
+            input.offsetParent !== null &&
+            (input.placeholder?.includes('기업명') || input.placeholder?.includes('회사명') ||
+             input.placeholder?.includes('검색') ||
+             input.parentElement?.textContent?.includes('기업명') ||
+             input.parentElement?.textContent?.includes('회사명'))
+          );
+        }
+
+        // 최종 fallback: 모든 visible text input 중 첫 번째
+        if (!nameInput) {
+          const allTextInputs = Array.from(document.querySelectorAll('input[type="text"], input:not([type])'));
+          nameInput = allTextInputs.find(input => input.offsetParent !== null);
+        }
+
+        if (!nameInput) {
+          return { success: false, error: 'Company name input not found' };
+        }
+
+        nameInput.value = name;
+        nameInput.dispatchEvent(new Event('input', { bubbles: true }));
+        nameInput.dispatchEvent(new Event('change', { bubbles: true }));
+
+        // 검색 버튼 클릭
+        const searchBtns = Array.from(document.querySelectorAll('button, input[type="submit"], input[type="image"], a'));
+        const searchBtn = searchBtns.find(btn =>
+          btn.offsetParent !== null &&
+          ((btn.textContent?.includes('검색') || btn.textContent?.includes('조회')) ||
+           (btn.value?.includes('검색') || btn.value?.includes('조회')) ||
+           (btn.alt?.includes('검색') || btn.alt?.includes('조회')) ||
+           btn.classList.contains('btn_search') || btn.classList.contains('searchBtn'))
+        );
+
+        if (searchBtn) {
+          searchBtn.click();
+          return { success: true, clicked: true, selector: nameInput.name || nameInput.id };
+        }
+
+        // form submit fallback
+        const form = nameInput.closest('form');
+        if (form) {
+          form.submit();
+          return { success: true, clicked: true, selector: nameInput.name || nameInput.id, method: 'form.submit' };
+        }
+
+        return { success: true, clicked: false, selector: nameInput.name || nameInput.id };
+      }, companyName);
+
+      console.log('[Sminfo] Name search result:', searchResult);
+
+      if (!searchResult.success) {
+        console.warn('[Sminfo] Could not find company name input field');
+        await this.page.screenshot({ path: 'sminfo_debug_namesearch.png', fullPage: true });
+        return null;
+      }
+
+      // 검색 결과 대기
+      await this.sleep(3000);
+
+      // 3. 결과 테이블에서 후보 목록 추출
+      const candidates = await this.page.evaluate(() => {
+        const results = [];
+        const tables = document.querySelectorAll('table');
+
+        for (const table of tables) {
+          const rows = table.querySelectorAll('tbody tr, tr');
+          for (const row of rows) {
+            const cells = Array.from(row.querySelectorAll('td'));
+            if (cells.length >= 3) {
+              const name = cells[0]?.textContent?.trim() || '';
+              const ceoName = cells[1]?.textContent?.trim() || '';
+              // 다양한 테이블 구조 대응
+              const type = cells[2]?.textContent?.trim() || '';
+              const industry = cells.length > 3 ? cells[3]?.textContent?.trim() || '' : '';
+              const address = cells.length > 4 ? cells[4]?.textContent?.trim() || '' : '';
+
+              // 빈 행 스킵
+              if (name && name !== '번호' && name !== 'No' && !name.match(/^\d+$/)) {
+                // 클릭 가능한 링크 찾기
+                const link = cells[0]?.querySelector('a') || row.querySelector('a');
+                results.push({
+                  name,
+                  ceoName,
+                  type,
+                  industry,
+                  address,
+                  hasLink: !!link,
+                  linkHref: link?.href || null,
+                  linkOnclick: link?.getAttribute('onclick') || null,
+                  rowIndex: results.length
+                });
+              }
+            }
+          }
+        }
+
+        return results;
+      });
+
+      console.log(`[Sminfo] Found ${candidates.length} candidates`);
+
+      if (candidates.length === 0) {
+        console.log('[Sminfo] No search results found');
+        await this.page.screenshot({ path: 'sminfo_debug_noresults.png', fullPage: true });
+        return null;
+      }
+
+      // 4. 멀티필드 확률 매칭
+      const scoredCandidates = candidates.map(candidate => ({
+        ...candidate,
+        score: this._calculateMatchScore(candidate, {
+          ...matchCriteria,
+          companyName: companyName
+        })
+      }));
+
+      scoredCandidates.sort((a, b) => b.score - a.score);
+      const bestMatch = scoredCandidates[0];
+
+      console.log(`[Sminfo] Best match: "${bestMatch.name}" (score: ${(bestMatch.score * 100).toFixed(1)}%)`);
+      if (scoredCandidates.length > 1) {
+        console.log(`[Sminfo] Runner-up: "${scoredCandidates[1].name}" (score: ${(scoredCandidates[1].score * 100).toFixed(1)}%)`);
+      }
+
+      if (bestMatch.score < 0.4) {
+        console.log(`[Sminfo] Match score too low (${(bestMatch.score * 100).toFixed(1)}%), skipping`);
+        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
+      }
+
+      // 5. 최고 확률 기업 클릭 → 상세 페이지 이동
+      const clicked = await this.page.evaluate((idx) => {
+        const tables = document.querySelectorAll('table');
+        for (const table of tables) {
+          const rows = table.querySelectorAll('tbody tr, tr');
+          let candidateIdx = 0;
+          for (const row of rows) {
+            const cells = Array.from(row.querySelectorAll('td'));
+            if (cells.length >= 3) {
+              const name = cells[0]?.textContent?.trim() || '';
+              if (name && name !== '번호' && name !== 'No' && !name.match(/^\d+$/)) {
+                if (candidateIdx === idx) {
+                  const link = cells[0]?.querySelector('a') || row.querySelector('a');
+                  if (link) {
+                    link.click();
+                    return true;
+                  }
+                  // fallback: row click
+                  row.click();
+                  return true;
+                }
+                candidateIdx++;
+              }
+            }
+          }
+        }
+        return false;
+      }, bestMatch.rowIndex);
+
+      if (!clicked) {
+        console.warn('[Sminfo] Could not click on best match result');
+        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
+      }
+
+      await this.sleep(3000);
+
+      // 6. 재무정보 추출 (기존 evaluate 패턴 재사용)
+      const financialData = await this.page.evaluate(() => {
+        const data = {};
+        const tables = document.querySelectorAll('table');
+
+        tables.forEach(table => {
+          const rows = table.querySelectorAll('tr');
+          rows.forEach(row => {
+            const cells = row.querySelectorAll('td, th');
+            if (cells.length >= 2) {
+              const label = cells[0].textContent.trim();
+              const value = cells[cells.length > 2 ? cells.length - 1 : 1].textContent.trim();
+
+              if (label.match(/매출|revenue|sales/i) && !data.revenue) {
+                const num = parseInt(value.replace(/[^0-9]/g, ''));
+                if (num > 0) data.revenue = num;
+              }
+              if (label.match(/영업이익|operating.*profit/i) && !data.operating_profit) {
+                const num = parseInt(value.replace(/[^0-9-]/g, ''));
+                if (!isNaN(num)) data.operating_profit = num;
+              }
+              if (label.match(/당기순이익|순이익|net.*profit|net.*income/i) && !data.net_profit) {
+                const num = parseInt(value.replace(/[^0-9-]/g, ''));
+                if (!isNaN(num)) data.net_profit = num;
+              }
+              if (label.match(/자산총계|총자산|total.*asset/i) && !data.total_assets) {
+                const num = parseInt(value.replace(/[^0-9]/g, ''));
+                if (num > 0) data.total_assets = num;
+              }
+              if (label.match(/부채총계|총부채|total.*liabilit/i) && !data.total_liabilities) {
+                const num = parseInt(value.replace(/[^0-9]/g, ''));
+                if (num > 0) data.total_liabilities = num;
+              }
+              if (label.match(/자본총계|총자본|자기자본|total.*equity/i) && !data.total_equity) {
+                const num = parseInt(value.replace(/[^0-9]/g, ''));
+                if (num > 0) data.total_equity = num;
+              }
+            }
+          });
+        });
+
+        return data;
+      });
+
+      if (Object.keys(financialData).length === 0) {
+        console.log('[Sminfo] No financial data found on detail page');
+        await this.page.screenshot({ path: 'sminfo_debug_nofinancial.png', fullPage: true });
+        return { financials: null, matchScore: bestMatch.score, matchedCompany: bestMatch };
+      }
+
+      console.log(`[Sminfo] Financial data extracted:`, Object.keys(financialData).join(', '));
+
+      const normalized = this.normalizeData(null, financialData);
+      return {
+        financials: normalized,
+        matchScore: bestMatch.score,
+        matchedCompany: {
+          name: bestMatch.name,
+          ceoName: bestMatch.ceoName,
+          type: bestMatch.type,
+          industry: bestMatch.industry,
+          address: bestMatch.address
+        }
+      };
+
+    } catch (error) {
+      console.error(`[Sminfo] searchByCompanyName error:`, error.message);
+      return null;
+    }
+  }
+
+  /**
+   * 멀티필드 확률 매칭 점수 계산
+   */
+  _calculateMatchScore(candidate, criteria) {
+    let score = 0;
+    let totalWeight = 0;
+
+    // 기업명: 0.4 weight
+    if (criteria.companyName) {
+      totalWeight += 0.4;
+      const nameA = criteria.companyName.replace(/[()주식회사㈜\s]/g, '').trim();
+      const nameB = candidate.name.replace(/[()주식회사㈜\s]/g, '').trim();
+      if (nameA === nameB) {
+        score += 0.4;
+      } else if (nameB.includes(nameA) || nameA.includes(nameB)) {
+        score += 0.4 * (Math.min(nameA.length, nameB.length) / Math.max(nameA.length, nameB.length));
+      }
+    }
+
+    // 대표자명: 0.25 weight
+    if (criteria.ceoName && candidate.ceoName) {
+      totalWeight += 0.25;
+      const ceos = criteria.ceoName.split(/[,\s]+/).filter(Boolean);
+      const matched = ceos.some(c => candidate.ceoName.includes(c));
+      if (matched) score += 0.25;
+    }
+
+    // 업종: 0.15 weight
+    if (criteria.industry && candidate.industry) {
+      totalWeight += 0.15;
+      if (candidate.industry.includes(criteria.industry) || criteria.industry.includes(candidate.industry)) {
+        score += 0.15;
+      }
+    }
+
+    // 주소: 0.15 weight (시/구 레벨)
+    if (criteria.address && candidate.address) {
+      totalWeight += 0.15;
+      const addrA = criteria.address.split(' ').slice(0, 2).join(' ');
+      const addrB = candidate.address.split(' ').slice(0, 2).join(' ');
+      if (addrA === addrB) {
+        score += 0.15;
+      } else if (addrA.split(' ')[0] === addrB.split(' ')[0]) {
+        score += 0.075; // 시 레벨만 일치
+      }
+    }
+
+    // 기업유형: 0.05 weight
+    if (criteria.companyType && candidate.type) {
+      totalWeight += 0.05;
+      if (candidate.type.includes(criteria.companyType)) score += 0.05;
+    }
+
+    return totalWeight > 0 ? score / totalWeight : 0;
+  }
+
+  /**
    * 데이터 정규화
    */
   normalizeData(businessNumber, rawData) {

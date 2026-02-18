@@ -1,4 +1,4 @@
-import { lazy, Suspense } from 'react';
+import { lazy, Suspense, useState, useEffect } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import Header from './components/layout/Header';
 import './App.css';
@@ -16,9 +16,18 @@ function PageLoader() {
 }
 
 function App() {
+  const [theme, setTheme] = useState(() => localStorage.getItem('sme-theme') || 'dark');
+
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme;
+    localStorage.setItem('sme-theme', theme);
+  }, [theme]);
+
+  const toggleTheme = () => setTheme(t => t === 'dark' ? 'light' : 'dark');
+
   return (
     <div className="app">
-      <Header />
+      <Header theme={theme} onToggleTheme={toggleTheme} />
       <main className="main-content">
         <Suspense fallback={<PageLoader />}>
           <Routes>

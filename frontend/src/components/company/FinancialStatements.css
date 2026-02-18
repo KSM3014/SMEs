@@ -13,7 +13,7 @@
   display: flex;
   gap: var(--spacing-sm);
   margin-bottom: var(--spacing-lg);
-  border-bottom: 2px solid var(--gray-200);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .tab-btn {
@@ -23,13 +23,13 @@
   border-bottom: 3px solid transparent;
   cursor: pointer;
   font-weight: 600;
-  color: var(--gray-600);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
 }
 
 .tab-btn:hover {
   color: var(--primary);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
 }
 
 .tab-btn.active {
@@ -49,22 +49,22 @@
 .statement-table table {
   width: 100%;
   border-collapse: collapse;
-  background: white;
+  background: var(--bg-surface);
 }
 
 .statement-table th {
   padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   text-align: left;
   font-weight: 600;
-  color: var(--gray-700);
-  border-bottom: 2px solid var(--gray-200);
+  color: var(--text-secondary);
+  border-bottom: 2px solid var(--border-default);
 }
 
 .statement-table td {
   padding: var(--spacing-sm) var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-100);
-  color: var(--gray-700);
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-secondary);
 }
 
 .statement-table .indent {
@@ -75,18 +75,18 @@
 .statement-table .section-header td {
   padding-top: var(--spacing-lg);
   padding-bottom: var(--spacing-sm);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   font-weight: 700;
-  color: var(--gray-900);
-  border-top: 2px solid var(--gray-200);
+  color: var(--text-primary);
+  border-top: 2px solid var(--border-default);
 }
 
 .statement-table .subtotal-row td {
   padding-top: var(--spacing-md);
   padding-bottom: var(--spacing-md);
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
   font-weight: 600;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .statement-table .total-row td {

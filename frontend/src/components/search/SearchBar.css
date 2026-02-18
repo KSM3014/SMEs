@@ -20,7 +20,9 @@
   flex: 1;
   padding: 1rem 1.5rem;
   font-size: 1.125rem;
-  border: 2px solid var(--gray-300);
+  border: 2px solid var(--border-default);
+  background: var(--bg-input);
+  color: var(--text-primary);
   border-right: none;
   border-radius: var(--radius-lg) 0 0 var(--radius-lg);
 }
@@ -53,7 +55,7 @@
   top: calc(100% + var(--spacing-sm));
   left: 0;
   right: 0;
-  background: white;
+  background: var(--bg-surface);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-xl);
   max-height: 500px;
@@ -66,10 +68,10 @@
   justify-content: space-between;
   align-items: center;
   padding: var(--spacing-md) var(--spacing-lg);
-  border-bottom: 1px solid var(--gray-200);
+  border-bottom: 1px solid var(--border-default);
   position: sticky;
   top: 0;
-  background: white;
+  background: var(--bg-surface);
   z-index: 1;
 }
 
@@ -95,7 +97,7 @@
 }
 
 .close-results:hover {
-  background: var(--gray-100);
+  background: var(--bg-surface-hover);
   color: var(--gray-600);
 }
 
@@ -115,7 +117,7 @@
 }
 
 .result-item:hover {
-  background: var(--gray-50);
+  background: var(--bg-surface-hover);
 }
 
 .result-main {
@@ -133,7 +135,7 @@
 .result-title h4 {
   margin: 0;
   font-size: 1.125rem;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .result-meta {
@@ -237,8 +239,8 @@
 }
 
 .example-query {
-  background: var(--gray-100);
-  color: var(--gray-700);
+  background: var(--bg-surface-hover);
+  color: var(--text-secondary);
   padding: 0.5rem 1rem;
   border-radius: var(--radius-md);
   border: none;

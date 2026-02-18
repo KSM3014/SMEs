@@ -1,10 +1,35 @@
 import './ShareholdersTable.css';
 
-function ShareholdersTable({ shareholders }) {
+function ShareholdersTable({ shareholders, compact = false }) {
   if (!shareholders || shareholders.length === 0) {
     return (
       <div className="shareholders-table empty">
         <p className="text-muted">주주 정보가 없습니다.</p>
+      </div>
+    );
+  }
+
+  // Compact mode: bullet-point list for 3-column grid
+  if (compact) {
+    return (
+      <div className="shareholders-compact">
+        <p className="compact-count">{shareholders.length}건</p>
+        <ul className="compact-list">
+          {shareholders.slice(0, 8).map((sh, i) => (
+            <li key={i} className="compact-item">
+              <strong>{sh.name}</strong>
+              {sh.percentage != null && (
+                <span className="compact-pct">{sh.percentage.toFixed(2)}%</span>
+              )}
+              {sh.shares != null && (
+                <span className="compact-shares">{sh.shares.toLocaleString()}주</span>
+              )}
+            </li>
+          ))}
+          {shareholders.length > 8 && (
+            <li className="compact-more">+{shareholders.length - 8}건 더보기</li>
+          )}
+        </ul>
       </div>
     );
   }

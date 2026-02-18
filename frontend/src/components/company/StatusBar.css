@@ -70,10 +70,10 @@
 
 .status-bar__tag {
   padding: 2px 8px;
-  background: var(--gray-100);
+  background: var(--bg-surface-hover);
   border-radius: var(--radius-sm, 4px);
   font-size: 0.75rem;
-  color: var(--gray-600);
+  color: var(--text-secondary);
   white-space: nowrap;
 }
 

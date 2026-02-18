@@ -6,6 +6,7 @@
 
 import dartApiService from './dartApiService.js';
 import DartClient from './dartClient.js';
+import { resolveIndustryName } from './ksicCodes.js';
 import dotenv from 'dotenv';
 
 dotenv.config();
@@ -64,8 +65,19 @@ export function mapEntityToCompanyDetail(entity, dartData) {
     phone: dartInfo?.phone || null,
     website: dartInfo?.homepage || null,
     establishment_date: formatDartDate(dartInfo?.establishment_date) || null,
-    industry_name: dartInfo?.industry_name || basic.industry_code || dartInfo?.industry_code || null,
     industry_code: dartInfo?.industry_code || basic.industry_code || null,
+    industry_name: (() => {
+      const code = dartInfo?.industry_code || basic.industry_code || null;
+      return dartInfo?.industry_name || resolveIndustryName(code) || code || null;
+    })(),
+    industry_display: (() => {
+      const code = dartInfo?.industry_code || basic.industry_code || null;
+      const name = dartInfo?.industry_name || resolveIndustryName(code) || null;
+      if (code && name) return `${code} (${name})`;
+      return name || code || null;
+    })(),
+    corp_registration_no: dartInfo?.jurir_no || null,
+    corp_cls: dartInfo?.corp_cls || null,
     employee_count: null, // not available from these sources
 
     // Certifications — extracted from raw API data
@@ -398,7 +410,42 @@ function formatKrw(amount) {
   return `${millions.toFixed(0)}만원`;
 }
 
+/**
+ * Map sminfo normalized data to frontend financial_statements structure.
+ * Used for non-listed companies where DART data is unavailable.
+ */
+export function mapSminfoToFinancials(sminfoData) {
+  if (!sminfoData) return null;
+  return {
+    balance_sheet: {
+      total_assets: sminfoData.total_assets || null,
+      total_liabilities: sminfoData.total_liabilities || null,
+      total_equity: sminfoData.total_equity || null,
+      current_assets: null,
+      non_current_assets: null,
+      current_liabilities: null,
+      non_current_liabilities: null,
+      capital_stock: null,
+      retained_earnings: null
+    },
+    income_statement: {
+      revenue: sminfoData.revenue || null,
+      operating_profit: sminfoData.operating_profit || null,
+      net_profit: sminfoData.net_profit || null,
+      cost_of_sales: null,
+      gross_profit: null,
+      operating_expenses: null,
+      non_operating_income: null,
+      non_operating_expenses: null,
+      profit_before_tax: null,
+      income_tax: null
+    },
+    cash_flow: null
+  };
+}
+
 export default {
   mapEntityToCompanyDetail,
-  fetchDartData
+  fetchDartData,
+  mapSminfoToFinancials
 };

@@ -1,5 +1,5 @@
 .red-flags {
-  background: white;
+  background: var(--bg-surface);
   padding: var(--spacing-2xl);
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-md);
@@ -15,7 +15,7 @@
 .red-flags-header h2 {
   font-size: 1.5rem;
   margin: 0 0 var(--spacing-sm) 0;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .flags-list {
@@ -65,7 +65,7 @@
 .flag-name {
   font-weight: 700;
   font-size: 1rem;
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 .severity-badge {
@@ -92,7 +92,7 @@
 }
 
 .flag-description {
-  color: var(--gray-700);
+  color: var(--text-secondary);
   line-height: 1.6;
   margin-bottom: var(--spacing-sm);
 }
@@ -101,12 +101,12 @@
   font-size: 0.875rem;
   color: var(--gray-600);
   padding: var(--spacing-sm) var(--spacing-md);
-  background: rgba(255, 255, 255, 0.7);
+  background: var(--bg-surface-hover);
   border-radius: var(--radius-sm);
 }
 
 .flag-details strong {
-  color: var(--gray-900);
+  color: var(--text-primary);
 }
 
 @media (max-width: 768px) {
