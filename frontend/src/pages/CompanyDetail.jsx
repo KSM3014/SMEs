@@ -22,7 +22,7 @@ import './CompanyDetail.css';
 function CompanyDetail() {
   const { id } = useParams();
 
-  // id = business_number (brno) from SearchBar navigation
+  // id = BRN (10 digits), CRNO (13 digits), or DART corp_code (8 digits)
   const {
     status,
     company,

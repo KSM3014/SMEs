@@ -301,11 +301,23 @@ router.get('/quick/:brno', async (req, res) => {
  * 4. live_diff  — DB vs Live 차이 비교
  * 5. complete   — 최종 데이터 + cross-check conflicts
  */
-router.get('/live/:brno', async (req, res) => {
-  const brno = normalizeBrno(req.params.brno);
-  if (!brno) {
-    return res.status(400).json({ success: false, error: 'Invalid brno' });
+router.get('/live/:identifier', async (req, res) => {
+  const raw = req.params.identifier;
+
+  // Resolve identifier type: BRN (10 digits), CRNO (13 digits), or corp_code (8 digits, DART)
+  const cleaned = raw.replace(/-/g, '');
+  const isBrno = /^\d{10}$/.test(cleaned);
+  const isCrno = /^\d{13}$/.test(cleaned);
+  const isCorpCode = /^\d{8}$/.test(cleaned);
+  const brno = isBrno ? cleaned : null;
+  const crno = isCrno ? cleaned : null;
+  const corpCode = isCorpCode ? cleaned : null;
+
+  if (!brno && !crno && !corpCode) {
+    return res.status(400).json({ success: false, error: 'Invalid identifier. Provide BRN (10 digits), CRNO (13 digits), or DART corp_code (8 digits).' });
   }
+
+  console.log(`[SSE] /live/${raw} → brno=${brno}, crno=${crno}, corpCode=${corpCode}`);
 
   // SSE 헤더 설정
   res.writeHead(200, {
@@ -320,10 +332,35 @@ router.get('/live/:brno', async (req, res) => {
   };
 
   let dartDataResult = null;
+  // For corp_code only lookups, resolve company name from dart_corp_codes
+  let resolvedCompanyName = null;
+  let resolvedBrno = brno;
 
   try {
+    // If we only have corpCode, resolve company info from DART DB
+    if (corpCode && !brno) {
+      const [dartRows] = await sequelize.query(
+        'SELECT corp_code, corp_name, stock_code FROM dart_corp_codes WHERE corp_code = $1 LIMIT 1',
+        { bind: [corpCode] }
+      );
+      if (dartRows.length > 0) {
+        resolvedCompanyName = dartRows[0].corp_name;
+        console.log(`[SSE] Resolved corp_code ${corpCode} → ${resolvedCompanyName}`);
+        // Try to find BRN from entity_registry by company name
+        const [entityRows] = await sequelize.query(
+          'SELECT brno, crno FROM entity_registry WHERE canonical_name = $1 AND brno IS NOT NULL LIMIT 1',
+          { bind: [resolvedCompanyName] }
+        );
+        if (entityRows.length > 0 && entityRows[0].brno) {
+          resolvedBrno = entityRows[0].brno;
+          console.log(`[SSE] Resolved company name → brno=${resolvedBrno}`);
+        }
+      }
+    }
+
     // 1. DB 데이터 즉시 전송 (mapped format)
-    const dbEntity = await loadEntityFromDb({ brno }, { allowStale: true });
+    const dbQuery = resolvedBrno ? { brno: resolvedBrno } : crno ? { crno } : null;
+    const dbEntity = dbQuery ? await loadEntityFromDb(dbQuery, { allowStale: true }) : null;
     const mappedDb = dbEntity ? mapEntityToCompanyDetail(dbEntity, null) : null;
 
     if (mappedDb) {
@@ -334,7 +371,20 @@ router.get('/live/:brno', async (req, res) => {
         conflictsCount: dbEntity.conflicts.length
       });
     } else {
-      send('db_data', { company: null, message: 'No cached data' });
+      // Even without DB data, send minimal company info if we resolved from DART
+      if (resolvedCompanyName) {
+        send('db_data', {
+          company: {
+            business_number: resolvedBrno,
+            company_name: resolvedCompanyName,
+            corp_code: corpCode,
+            _source: 'dart_corp_codes'
+          },
+          message: 'DB 캐시 없음 — DART 기본정보만 표시'
+        });
+      } else {
+        send('db_data', { company: null, message: 'No cached data' });
+      }
     }
 
     // 2. DART + 86 APIs 병렬 실행
@@ -343,15 +393,35 @@ router.get('/live/:brno', async (req, res) => {
     // DART: fetch and send as soon as ready
     const dartPromise = (async () => {
       try {
-        const entityForDart = dbEntity || { canonicalName: null, brno };
-        // If no canonicalName from DB, try to get it from a quick search
-        if (!entityForDart.canonicalName) {
-          entityForDart.canonicalName = brno; // fallback to brno
+        const canonicalName = dbEntity?.canonicalName || resolvedCompanyName || resolvedBrno || raw;
+        const entityForDart = dbEntity || { canonicalName, brno: resolvedBrno };
+        console.log(`[SSE] DART lookup: canonicalName=${entityForDart.canonicalName}, brno=${entityForDart.brno}, corpCode=${corpCode}`);
+
+        // If we have corpCode directly, use it to bypass name lookup
+        let dartData = null;
+        if (corpCode) {
+          const dartApiService = (await import('../services/dartApiService.js')).default;
+          const currentYear = new Date().getFullYear();
+          for (let y = currentYear; y >= currentYear - 2; y--) {
+            dartData = await dartApiService.collectCompanyData(corpCode, y);
+            if (dartData?.financials || dartData?.officers?.length > 0) {
+              dartData._fiscalYear = y;
+              break;
+            }
+          }
+          if (!dartData || (!dartData.financials && (!dartData.officers || dartData.officers.length === 0))) {
+            dartData = await dartApiService.collectCompanyData(corpCode, currentYear - 1);
+            if (dartData) dartData._fiscalYear = currentYear - 1;
+          }
+        } else {
+          dartData = await fetchDartData(entityForDart);
         }
-        console.log(`[SSE] DART lookup: canonicalName=${entityForDart.canonicalName}, brno=${entityForDart.brno}, dbEntity=${!!dbEntity}`);
-        const dartData = await fetchDartData(entityForDart);
+
         if (dartData && dartData.company_info) {
-          const dartMapped = mapEntityToCompanyDetail(dbEntity || { brno, entityId: `ent_${brno}`, apiData: [], conflicts: [], sources: [] }, dartData);
+          const dartMapped = mapEntityToCompanyDetail(
+            dbEntity || { brno: resolvedBrno, entityId: `ent_${resolvedBrno || corpCode}`, apiData: [], conflicts: [], sources: [] },
+            dartData
+          );
           send('dart_data', {
             available: true,
             financial_statements: dartMapped.financial_statements,
@@ -360,7 +430,6 @@ router.get('/live/:brno', async (req, res) => {
             shareholders: dartMapped.shareholders,
             three_year_average: dartMapped.three_year_average,
             red_flags: dartMapped.red_flags,
-            // Additional DART-specific basic info
             company_name: dartMapped.company_name,
             ceo_name: dartMapped.ceo_name,
             address: dartMapped.address,
@@ -428,10 +497,10 @@ router.get('/live/:brno', async (req, res) => {
       }
     })();
 
-    // 86 APIs
-    const livePromise = apiOrchestrator.searchCompany({
-      brno, crno: null, companyName: null
-    });
+    // 86 APIs — only run if we have a BRN (APIs require BRN)
+    const livePromise = resolvedBrno
+      ? apiOrchestrator.searchCompany({ brno: resolvedBrno, crno: crno || null, companyName: null })
+      : Promise.resolve(null);
 
     const [dartSettled, liveSettled] = await Promise.allSettled([dartPromise, livePromise]);
     dartDataResult = dartSettled.status === 'fulfilled' ? dartSettled.value : null;
@@ -460,10 +529,18 @@ router.get('/live/:brno', async (req, res) => {
 
       // 4. DB 업데이트
       await persistCompanyResult(liveResult, { batchId: 'live' });
+    } else if (!resolvedBrno) {
+      // No BRN → skip 86 APIs, send empty diff
+      send('live_diff', {
+        entity: null,
+        diff: null,
+        meta: { apisAttempted: 0, apisSucceeded: 0, durationMs: 0 },
+        message: '사업자등록번호 없음 — 공공데이터 API 조회 생략'
+      });
     }
 
     // 5. Complete — 최종 매핑된 데이터 전송
-    const updatedEntity = await loadEntityFromDb({ brno });
+    const updatedEntity = resolvedBrno ? await loadEntityFromDb({ brno: resolvedBrno }) : null;
     const sourceEntity = updatedEntity || dbEntity;
     const finalCompany = sourceEntity
       ? mapEntityToCompanyDetail(sourceEntity, dartDataResult)

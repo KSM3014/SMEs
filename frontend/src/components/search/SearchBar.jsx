@@ -57,12 +57,11 @@ function SearchBar() {
   };
 
   const handleSelect = (candidate) => {
-    const brno = candidate.business_number;
-    if (brno) {
-      navigate(`/company/${brno}`);
+    // Navigate using best available identifier: BRN > CRNO > corp_code (DART)
+    const identifier = candidate.business_number || candidate.corp_number || candidate.id;
+    if (identifier) {
+      navigate(`/company/${identifier}`);
     } else {
-      // DART-only 후보: 회사명으로 재검색 필요 — 일단 이름 표시
-      alert(`사업자등록번호 미확인 기업입니다. DART 코드: ${candidate.id}`);
       return;
     }
     setShowDropdown(false);
