@@ -62,23 +62,23 @@ export function mapEntityToCompanyDetail(entity, dartData) {
     company_name: dartInfo?.corp_name || entity.canonicalName || basic.company_name,
     ceo_name: dartInfo?.ceo_name || basic.representative || null,
     address: dartInfo?.address || basic.address || null,
-    phone: dartInfo?.phone || null,
-    website: dartInfo?.homepage || null,
-    establishment_date: formatDartDate(dartInfo?.establishment_date) || null,
+    phone: dartInfo?.phone || basic.phone || null,
+    website: dartInfo?.homepage || basic.website || null,
+    establishment_date: formatDartDate(dartInfo?.establishment_date) || formatDartDate(basic.establishment_date) || null,
     industry_code: dartInfo?.industry_code || basic.industry_code || null,
     industry_name: (() => {
       const code = dartInfo?.industry_code || basic.industry_code || null;
-      return dartInfo?.industry_name || resolveIndustryName(code) || code || null;
+      return dartInfo?.industry_name || basic.industry_name || resolveIndustryName(code) || code || null;
     })(),
     industry_display: (() => {
       const code = dartInfo?.industry_code || basic.industry_code || null;
-      const name = dartInfo?.industry_name || resolveIndustryName(code) || null;
+      const name = dartInfo?.industry_name || basic.industry_name || resolveIndustryName(code) || null;
       if (code && name) return `${code} (${name})`;
       return name || code || null;
     })(),
     corp_registration_no: dartInfo?.jurir_no || null,
     corp_cls: dartInfo?.corp_cls || null,
-    employee_count: null, // not available from these sources
+    employee_count: basic.employee_count || null,
 
     // Certifications — extracted from raw API data
     venture_certification: extractCertification(entity, 'venture'),
@@ -136,36 +136,150 @@ export function mapEntityToCompanyDetail(entity, dartData) {
 
 // ─── Internal helpers ─────────────────────────────────────
 
+/**
+ * Extract standardized fields from a single source's raw_data.
+ * Handles known API response patterns (NPS, FSC, FTC, 근로복지공단, etc.)
+ */
+function extractFieldsFromRawData(rawData) {
+  if (!rawData || typeof rawData !== 'object') return {};
+
+  // NPS (국민연금): nested data.detail structure
+  if (rawData.detail && typeof rawData.detail === 'object') {
+    const d = rawData.detail;
+    return {
+      companyName: d.companyName || null,
+      address: d.address || null,
+      industryCode: d.industryCode || null,
+      industryName: d.industryName || null,
+      employeeCount: d.employeeCount ? parseInt(d.employeeCount) : null,
+      establishmentDate: d.joinDate || null,
+    };
+  }
+
+  // FSC Discovery (금융위_기업기본정보): flat object with enpXxx fields
+  if (rawData.enpBsadr !== undefined || rawData.corpNm || rawData.enpRprFnm) {
+    return {
+      companyName: rawData.corpNm || null,
+      address: rawData.enpBsadr || null,
+      representative: rawData.enpRprFnm || null,
+      phone: rawData.enpTlno || null,
+      website: rawData.enpHmpgUrl || null,
+      industryCode: rawData.enpMainBizNm || null,
+      employeeCount: rawData.enpEmpeCnt ? parseInt(rawData.enpEmpeCnt) : null,
+      establishmentDate: rawData.enpEstbDt || null,
+    };
+  }
+
+  // Array of results (근로복지공단, FTC, FSC expanded, etc.)
+  if (Array.isArray(rawData) && rawData.length > 0) {
+    const d = rawData[0];
+    if (!d || typeof d !== 'object') return {};
+
+    // 근로복지공단_고용산재보험: addr, gyEopjongCd/Nm, etc.
+    if (d.gyEopjongNm || d.gyEopjongCd) {
+      return {
+        address: d.addr || null,
+        industryCode: d.gyEopjongCd?.toString() || null,
+        industryName: d.gyEopjongNm || null,
+        establishmentDate: d.seongripDt?.toString() || null,
+      };
+    }
+
+    // FTC (공정위_통신판매): bsnmNm, rprsNm, rprsBpladrs
+    if (d.bsnmNm || d.rprsNm) {
+      return {
+        companyName: d.bsnmNm || null,
+        address: d.rprsBpladrs || null,
+        representative: d.rprsNm || null,
+      };
+    }
+
+    // FSC expanded: corpNm, enpBsadr pattern in array
+    if (d.corpNm) {
+      return {
+        companyName: d.corpNm || null,
+        address: d.enpBsadr || null,
+        representative: d.enpRprFnm || null,
+      };
+    }
+  }
+
+  // NTS (국세청_사업자등록상태): b_no, b_stt, tax_type
+  if (rawData.b_no && rawData.b_stt) {
+    return {
+      taxType: rawData.tax_type || null,
+      businessStatus: rawData.b_stt || null,
+    };
+  }
+
+  return {};
+}
+
 function extractBasicInfo(entity) {
   const apiData = entity.apiData || [];
   if (apiData.length === 0) {
-    return { company_name: entity.canonicalName, address: null, representative: null, industry_code: null };
+    return { company_name: entity.canonicalName, address: null, representative: null, industry_code: null, industry_name: null, employee_count: null, phone: null, website: null, establishment_date: null };
   }
 
-  // Use majority voting: pick the most common non-null value for each field
-  const fields = ['companyName', 'address', 'representative', 'industryCode'];
-  const result = {};
+  // Phase 1: Collect from top-level DB-stored fields
+  const collected = {
+    companyName: [],
+    address: [],
+    representative: [],
+    industryCode: [],
+    industryName: [],
+    employeeCount: [],
+    phone: [],
+    website: [],
+    establishmentDate: [],
+  };
 
-  for (const field of fields) {
-    const values = apiData.map(s => s[field]).filter(Boolean);
-    if (values.length === 0) { result[field] = null; continue; }
+  for (const s of apiData) {
+    if (s.companyName) collected.companyName.push(s.companyName);
+    if (s.address) collected.address.push(s.address);
+    if (s.representative) collected.representative.push(s.representative);
+    if (s.industryCode) collected.industryCode.push(s.industryCode);
+  }
 
-    // Count occurrences
-    const counts = {};
-    for (const v of values) {
-      const key = v.trim();
-      counts[key] = (counts[key] || 0) + 1;
-    }
-    // Pick most frequent
-    result[field] = Object.entries(counts).sort((a, b) => b[1] - a[1])[0][0];
+  // Phase 2: Mine from raw_data (handles adapters that don't extract to top-level)
+  for (const s of apiData) {
+    const extracted = extractFieldsFromRawData(s.data);
+    if (extracted.companyName) collected.companyName.push(extracted.companyName);
+    if (extracted.address) collected.address.push(extracted.address);
+    if (extracted.representative) collected.representative.push(extracted.representative);
+    if (extracted.industryCode) collected.industryCode.push(String(extracted.industryCode));
+    if (extracted.industryName) collected.industryName.push(extracted.industryName);
+    if (extracted.employeeCount) collected.employeeCount.push(extracted.employeeCount);
+    if (extracted.phone) collected.phone.push(extracted.phone);
+    if (extracted.website) collected.website.push(extracted.website);
+    if (extracted.establishmentDate) collected.establishmentDate.push(extracted.establishmentDate);
   }
 
   return {
-    company_name: result.companyName,
-    address: result.address,
-    representative: result.representative,
-    industry_code: result.industryCode
+    company_name: mostFrequent(collected.companyName) || entity.canonicalName,
+    address: mostFrequent(collected.address),
+    representative: mostFrequent(collected.representative),
+    industry_code: mostFrequent(collected.industryCode),
+    industry_name: mostFrequent(collected.industryName),
+    employee_count: collected.employeeCount.length > 0 ? Math.max(...collected.employeeCount) : null,
+    phone: mostFrequent(collected.phone),
+    website: mostFrequent(collected.website),
+    establishment_date: mostFrequent(collected.establishmentDate),
   };
+}
+
+/** Pick the most frequent non-empty value from an array */
+function mostFrequent(arr) {
+  if (!arr || arr.length === 0) return null;
+  const counts = {};
+  for (const v of arr) {
+    const key = String(v).trim();
+    if (!key) continue;
+    counts[key] = (counts[key] || 0) + 1;
+  }
+  const entries = Object.entries(counts);
+  if (entries.length === 0) return null;
+  return entries.sort((a, b) => b[1] - a[1])[0][0];
 }
 
 function extractCertification(entity, type) {

@@ -13,6 +13,7 @@
  *   complete   → final merged data
  */
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { getApiUrl } from '../services/apiConfig';
 
 const INITIAL_STATE = {
   status: 'idle',       // idle | connecting | db_loaded | dart_loaded | complete | error
@@ -47,9 +48,13 @@ export function useCompanyLive(brno) {
     // Reset state for new brno
     setState({ ...INITIAL_STATE, status: 'connecting' });
 
-    const apiBase = import.meta.env.VITE_API_URL || '';
-    const es = new EventSource(`${apiBase}/api/company/live/${brno}`);
-    esRef.current = es;
+    let cancelled = false;
+
+    // Async: resolve API URL from runtime config, then open SSE
+    getApiUrl().then(apiBase => {
+      if (cancelled) return;
+      const es = new EventSource(`${apiBase}/api/company/live/${brno}`);
+      esRef.current = es;
 
     // Timeout: close SSE if no complete event within 120s
     const timeoutId = setTimeout(() => {
@@ -244,10 +249,14 @@ export function useCompanyLive(brno) {
     });
 
     // Cleanup on unmount or brno change
+    }); // end getApiUrl().then()
+
     return () => {
-      clearTimeout(timeoutId);
-      es.close();
-      esRef.current = null;
+      cancelled = true;
+      if (esRef.current) {
+        esRef.current.close();
+        esRef.current = null;
+      }
     };
   }, [brno, reset]);
 

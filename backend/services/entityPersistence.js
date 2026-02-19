@@ -63,24 +63,22 @@ export async function persistCompanyResult(orchestratorResult, opts = {}) {
     entitiesSaved++;
 
     // 2. Upsert entity_source_data (one per source)
-    // We need the flat fields from the original allResponses, but entity.data only has { source, rawData }.
-    // The unmatched array has the full flat fields. For matched data, we use entity-level identifiers.
+    // Extract fields from raw API data and adapter top-level fields.
     const sourceRows = [];
     for (const item of data) {
-      // Find matching flat response in unmatched to get per-source fields
-      // Fallback: use entity-level identifiers
-      const matchedUnmatched = (unmatched || []).find(u => u.source === item.source);
+      // item has: { source, rawData, companyName?, address?, representative?, industryCode? }
+      const rawFields = extractFieldsFromRaw(item.rawData);
 
       sourceRows.push({
         entity_id: entityId,
         source_name: item.source,
         raw_data: JSON.stringify(item.rawData || {}),
-        brno: matchedUnmatched?.brno || identifiers.brno || null,
-        crno: matchedUnmatched?.crno || identifiers.crno || null,
-        company_name: matchedUnmatched?.companyName || canonicalName || null,
-        address: matchedUnmatched?.address || null,
-        representative: matchedUnmatched?.representative || null,
-        industry_code: matchedUnmatched?.industryCode || null,
+        brno: item.brno || rawFields.brno || identifiers.brno || null,
+        crno: item.crno || rawFields.crno || identifiers.crno || null,
+        company_name: item.companyName || rawFields.companyName || canonicalName || null,
+        address: item.address || rawFields.address || null,
+        representative: item.representative || rawFields.representative || null,
+        industry_code: item.industryCode || rawFields.industryCode || null,
       });
     }
 
@@ -256,6 +254,52 @@ export function computeDiff(dbEntity, liveResult) {
 }
 
 // === Internal helpers ===
+
+/**
+ * Extract standardized fields from raw API response data.
+ * Mirrors the logic in entityDataMapper.extractFieldsFromRawData().
+ */
+function extractFieldsFromRaw(rawData) {
+  if (!rawData || typeof rawData !== 'object') return {};
+
+  // NPS: nested data.detail
+  if (rawData.detail && typeof rawData.detail === 'object') {
+    const d = rawData.detail;
+    return {
+      companyName: d.companyName || null,
+      address: d.address || null,
+      industryCode: d.industryCode || null,
+    };
+  }
+
+  // FSC Discovery: flat enpXxx fields
+  if (rawData.enpBsadr !== undefined || rawData.corpNm || rawData.enpRprFnm) {
+    return {
+      companyName: rawData.corpNm || null,
+      address: rawData.enpBsadr || null,
+      representative: rawData.enpRprFnm || null,
+    };
+  }
+
+  // Array results
+  if (Array.isArray(rawData) && rawData.length > 0) {
+    const d = rawData[0];
+    if (!d || typeof d !== 'object') return {};
+    // 근로복지공단
+    if (d.gyEopjongNm || d.gyEopjongCd) {
+      return { address: d.addr || null, industryCode: d.gyEopjongCd?.toString() || null };
+    }
+    // FTC
+    if (d.bsnmNm || d.rprsNm) {
+      return { companyName: d.bsnmNm || null, address: d.rprsBpladrs || null, representative: d.rprsNm || null };
+    }
+    if (d.corpNm) {
+      return { companyName: d.corpNm || null, address: d.enpBsadr || null, representative: d.enpRprFnm || null };
+    }
+  }
+
+  return {};
+}
 
 function buildCrossCheckRows(entityId, sourceRows) {
   const rows = [];

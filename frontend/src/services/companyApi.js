@@ -1,11 +1,16 @@
 import axios from 'axios';
-
-const API_BASE = import.meta.env.VITE_API_URL || '';
+import { getApiUrl, getApiUrlSync } from './apiConfig';
 
 const api = axios.create({
-  baseURL: `${API_BASE}/api/company`,
   timeout: 60000,
   headers: { 'Content-Type': 'application/json' }
+});
+
+// Inject runtime baseURL before each request (from /config.json)
+api.interceptors.request.use(async (config) => {
+  const base = getApiUrlSync() || await getApiUrl();
+  config.baseURL = `${base}/api/company`;
+  return config;
 });
 
 api.interceptors.response.use(

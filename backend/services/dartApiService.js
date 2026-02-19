@@ -123,6 +123,7 @@ class DartApiService {
 
   /**
    * 재무제표 데이터 파싱
+   * DART account_nm에는 "(손실)", "(이익)" 등 괄호 접미사가 붙을 수 있음
    */
   parseFinancialStatement(rawData) {
     if (!rawData || rawData.length === 0) {
@@ -135,7 +136,7 @@ class DartApiService {
       cf: {}  // 현금흐름표 (Cash Flow)
     };
 
-    // 계정과목별로 분류
+    // 계정과목별로 분류 — 키는 괄호 제거 후 매칭됨
     const accountMapping = {
       // 대차대조표
       '자산총계': 'total_assets',
@@ -148,41 +149,66 @@ class DartApiService {
       '자본금': 'capital_stock',
       '이익잉여금': 'retained_earnings',
 
-      // 손익계산서
+      // 손익계산서 — 괄호 변형도 매칭 (strip 후)
       '매출액': 'revenue',
+      '수익': 'revenue',            // 일부 기업은 "수익(매출액)" 사용
       '매출원가': 'cost_of_sales',
       '매출총이익': 'gross_profit',
       '판매비와관리비': 'operating_expenses',
-      '영업이익': 'operating_profit',
+      '영업이익': 'operating_profit', // DART: "영업이익(손실)"
       '영업외수익': 'non_operating_income',
       '영업외비용': 'non_operating_expenses',
+      '기타수익': 'non_operating_income',
+      '기타비용': 'non_operating_expenses',
+      '금융수익': 'finance_income',
+      '금융비용': 'finance_cost',
       '법인세비용차감전순이익': 'income_before_tax',
       '법인세비용': 'income_tax_expense',
-      '당기순이익': 'net_income',
+      '당기순이익': 'net_income',     // DART: "당기순이익(손실)"
+      '지배기업소유주지분순손익': 'net_income_controlling',
 
       // 현금흐름표
       '영업활동으로인한현금흐름': 'operating_cash_flow',
+      '영업활동현금흐름': 'operating_cash_flow',
       '투자활동으로인한현금흐름': 'investing_cash_flow',
+      '투자활동현금흐름': 'investing_cash_flow',
       '재무활동으로인한현금흐름': 'financing_cash_flow',
-      '현금의증가': 'cash_increase'
+      '재무활동현금흐름': 'financing_cash_flow',
+      '현금의증가': 'cash_increase',
+      '현금및현금성자산의순증가': 'cash_increase'
     };
 
     for (const item of rawData) {
-      const accountName = item.account_nm;
+      const rawName = item.account_nm;
       const value = this.parseAmount(item.thstrm_amount); // 당기금액
-      const category = item.sj_div; // BS=대차대조표, IS=손익계산서, CF=현금흐름표
+      const category = item.sj_div; // BS, IS, CF
 
-      if (accountMapping[accountName]) {
-        const fieldName = accountMapping[accountName];
+      // Strip parenthetical suffixes: "영업이익(손실)" → "영업이익"
+      const cleanName = rawName.replace(/\([^)]*\)$/, '').trim();
+      const fieldName = accountMapping[cleanName] || accountMapping[rawName];
 
+      if (fieldName && value !== null) {
         if (category === 'BS') {
           financial.bs[fieldName] = value;
         } else if (category === 'IS') {
-          financial.is[fieldName] = value;
+          // For duplicate keys (기타수익/영업외수익), keep first non-null
+          if (financial.is[fieldName] == null) {
+            financial.is[fieldName] = value;
+          }
         } else if (category === 'CF') {
           financial.cf[fieldName] = value;
         }
       }
+    }
+
+    // Derive revenue if not directly available: 매출원가 + 매출총이익
+    if (financial.is.revenue == null && financial.is.cost_of_sales != null && financial.is.gross_profit != null) {
+      financial.is.revenue = financial.is.cost_of_sales + financial.is.gross_profit;
+    }
+
+    // Use controlling interest net income if total not available
+    if (financial.is.net_income == null && financial.is.net_income_controlling != null) {
+      financial.is.net_income = financial.is.net_income_controlling;
     }
 
     return financial;

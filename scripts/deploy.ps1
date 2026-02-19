@@ -1,28 +1,31 @@
 # SME Investor Platform — Deploy Script
-# Usage: powershell -File scripts/deploy.ps1 [-TunnelUrl <url>] [-SkipTunnel] [-SkipFrontend]
+# Usage: powershell -File scripts/deploy.ps1 [-TunnelUrl <url>] [-SkipTunnel] [-SkipBuild]
 #
 # This script:
 # 1. Starts/restarts the Cloudflare quick tunnel (or uses provided URL)
-# 2. Builds the frontend with VITE_API_URL pointing to the tunnel
-# 3. Deploys to Cloudflare Pages (sme-investor.pages.dev)
+# 2. Builds the frontend (only needed for code changes, NOT for URL changes)
+# 3. Updates config.json with tunnel URL
+# 4. Deploys to Cloudflare Pages (sme-investor.pages.dev)
 
 param(
     [string]$TunnelUrl = "",
     [switch]$SkipTunnel,
-    [switch]$SkipFrontend,
+    [switch]$SkipBuild,
     [switch]$BackendOnly
 )
 
 $ErrorActionPreference = "Stop"
 $ProjectRoot = Split-Path -Parent (Split-Path -Parent $MyInvocation.MyCommand.Path)
 $LogFile = Join-Path $env:USERPROFILE ".cloudflared\tunnel.log"
+$ConfigFile = Join-Path $ProjectRoot "frontend\public\config.json"
+$DistConfig = Join-Path $ProjectRoot "frontend\dist\config.json"
 
 Write-Host "=== SME Investor Deploy ===" -ForegroundColor Cyan
 Write-Host "Project: $ProjectRoot"
 
 # --- Step 1: Backend Tunnel ---
 if (-not $SkipTunnel -and -not $TunnelUrl) {
-    Write-Host "`n[1/3] Starting Cloudflare Tunnel..." -ForegroundColor Yellow
+    Write-Host "`n[1/4] Starting Cloudflare Tunnel..." -ForegroundColor Yellow
 
     # Kill existing cloudflared
     $existing = Get-Process cloudflared -ErrorAction SilentlyContinue
@@ -66,9 +69,9 @@ if (-not $SkipTunnel -and -not $TunnelUrl) {
 
     Write-Host "  Tunnel URL: $TunnelUrl" -ForegroundColor Green
 } elseif ($TunnelUrl) {
-    Write-Host "`n[1/3] Using provided tunnel URL: $TunnelUrl" -ForegroundColor Yellow
+    Write-Host "`n[1/4] Using provided tunnel URL: $TunnelUrl" -ForegroundColor Yellow
 } else {
-    Write-Host "`n[1/3] Skipping tunnel setup" -ForegroundColor DarkGray
+    Write-Host "`n[1/4] Skipping tunnel setup" -ForegroundColor DarkGray
 }
 
 if ($BackendOnly) {
@@ -77,12 +80,9 @@ if ($BackendOnly) {
     exit 0
 }
 
-# --- Step 2: Build Frontend ---
-if (-not $SkipFrontend) {
-    Write-Host "`n[2/3] Building frontend with API URL..." -ForegroundColor Yellow
-    Write-Host "  VITE_API_URL=$TunnelUrl"
-
-    $env:VITE_API_URL = $TunnelUrl
+# --- Step 2: Build Frontend (skip if no code changes) ---
+if (-not $SkipBuild) {
+    Write-Host "`n[2/4] Building frontend..." -ForegroundColor Yellow
     Push-Location (Join-Path $ProjectRoot "frontend")
     try {
         npm run build 2>&1 | Out-Null
@@ -90,16 +90,31 @@ if (-not $SkipFrontend) {
             Write-Host "  ERROR: Frontend build failed" -ForegroundColor Red
             exit 1
         }
-        Write-Host "  Build OK (dist/)" -ForegroundColor Green
+        Write-Host "  Build OK" -ForegroundColor Green
     } finally {
         Pop-Location
     }
 } else {
-    Write-Host "`n[2/3] Skipping frontend build" -ForegroundColor DarkGray
+    Write-Host "`n[2/4] Skipping frontend build (no code changes)" -ForegroundColor DarkGray
 }
 
-# --- Step 3: Deploy to Cloudflare Pages ---
-Write-Host "`n[3/3] Deploying to Cloudflare Pages..." -ForegroundColor Yellow
+# --- Step 3: Update config.json with tunnel URL ---
+if ($TunnelUrl) {
+    Write-Host "`n[3/4] Updating config.json..." -ForegroundColor Yellow
+    $configContent = @{ apiUrl = $TunnelUrl } | ConvertTo-Json
+    # Update source
+    Set-Content -Path $ConfigFile -Value $configContent -Encoding UTF8
+    # Update dist (for deploy)
+    if (Test-Path (Split-Path $DistConfig)) {
+        Set-Content -Path $DistConfig -Value $configContent -Encoding UTF8
+    }
+    Write-Host "  apiUrl = $TunnelUrl" -ForegroundColor Green
+} else {
+    Write-Host "`n[3/4] No tunnel URL — config.json unchanged" -ForegroundColor DarkGray
+}
+
+# --- Step 4: Deploy to Cloudflare Pages ---
+Write-Host "`n[4/4] Deploying to Cloudflare Pages..." -ForegroundColor Yellow
 $distPath = Join-Path $ProjectRoot "frontend\dist"
 wrangler pages deploy $distPath --project-name sme-investor --commit-dirty=true 2>&1 | ForEach-Object {
     if ($_ -match "https://") {
@@ -121,5 +136,5 @@ if ($TunnelUrl) {
     Write-Host "Backend:  $TunnelUrl"
 }
 Write-Host ""
-Write-Host "Test: curl $TunnelUrl/health"
-Write-Host "Open: https://sme-investor.pages.dev"
+Write-Host "Next time tunnel dies, just run:"
+Write-Host "  powershell -File $($MyInvocation.MyCommand.Path)" -ForegroundColor Cyan
