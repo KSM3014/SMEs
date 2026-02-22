@@ -67,7 +67,7 @@
   line-height: 1;
 }
 
-/* Field grid */
+/* Field grid (key-value) */
 .source-card__fields {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
@@ -103,6 +103,81 @@
   word-break: break-all;
 }
 
+/* ── Table renderer ── */
+.source-table-wrap {
+  border-top: 1px solid var(--border-subtle);
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.source-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.8rem;
+}
+
+.source-table thead th {
+  position: sticky;
+  top: 0;
+  background: var(--bg-surface-hover);
+  padding: 6px 10px;
+  text-align: left;
+  font-weight: 600;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  border-bottom: 1px solid var(--border-default);
+  white-space: nowrap;
+}
+
+.source-table tbody td {
+  padding: 5px 10px;
+  border-bottom: 1px solid var(--border-subtle);
+  color: var(--text-primary);
+  white-space: nowrap;
+  max-width: 280px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.source-table tbody tr:hover td {
+  background: var(--bg-surface-hover);
+}
+
+.source-table tbody tr:last-child td {
+  border-bottom: none;
+}
+
+.source-table-more {
+  text-align: center;
+  padding: 6px;
+  font-size: 0.72rem;
+  color: var(--text-muted);
+  background: var(--bg-surface-hover);
+  border-top: 1px solid var(--border-subtle);
+}
+
+/* ── Pivot table (기업재무정보) ── */
+.source-table--pivot thead th {
+  text-align: right;
+}
+
+.source-table--pivot thead th:first-child {
+  text-align: left;
+}
+
+.source-table--pivot .pivot-row-label {
+  font-weight: 600;
+  color: var(--text-secondary);
+  white-space: nowrap;
+}
+
+.source-table--pivot .pivot-value {
+  text-align: right;
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, monospace);
+  font-size: 0.78rem;
+}
+
 /* Source tags (when no apiData) */
 .source-tags {
   display: flex;
@@ -121,5 +196,12 @@
 @media (max-width: 768px) {
   .source-card__fields {
     grid-template-columns: 1fr;
+  }
+  .source-table {
+    font-size: 0.72rem;
+  }
+  .source-table thead th,
+  .source-table tbody td {
+    padding: 4px 6px;
   }
 }

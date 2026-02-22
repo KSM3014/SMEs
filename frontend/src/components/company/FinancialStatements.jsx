@@ -14,7 +14,7 @@ function FinancialStatements({ statements }) {
 
   const formatCurrency = (value) => {
     if (!value) return '-';
-    return `${(value / 100000000).toFixed(0)}억`;
+    return `${Math.round(value / 100000000).toLocaleString()}억`;
   };
 
   const renderBalanceSheet = () => {

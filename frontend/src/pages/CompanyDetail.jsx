@@ -413,7 +413,7 @@ function CompanyDetail() {
             {/* Summary Stats */}
             <div className="procurement-summary">
               <div className="procurement-stat">
-                <span className="procurement-stat-value">{pd.contractCount}</span>
+                <span className="procurement-stat-value">{pd.contractCount?.toLocaleString()}</span>
                 <span className="procurement-stat-label">계약 건수</span>
               </div>
               <div className="procurement-stat">
@@ -422,7 +422,7 @@ function CompanyDetail() {
               </div>
               {pd.awardCount > 0 && (
                 <div className="procurement-stat">
-                  <span className="procurement-stat-value">{pd.awardCount}</span>
+                  <span className="procurement-stat-value">{pd.awardCount?.toLocaleString()}</span>
                   <span className="procurement-stat-label">낙찰 건수</span>
                 </div>
               )}

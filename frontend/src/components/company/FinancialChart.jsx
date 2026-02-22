@@ -43,7 +43,7 @@ function FinancialChart({ data }) {
 
   // Format currency for display (억원)
   const formatCurrency = (value) => {
-    return `${(value / 100000000).toFixed(0)}억`;
+    return `${Math.round(value / 100000000).toLocaleString()}억`;
   };
 
   // Format percent for display

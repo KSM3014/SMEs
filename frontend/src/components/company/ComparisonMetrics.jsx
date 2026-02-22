@@ -5,7 +5,7 @@ function ComparisonMetrics({ current, average, sourceRef }) {
 
   const formatCurrency = (value) => {
     if (!value) return '-';
-    return `${(value / 100000000).toFixed(0)}억원`;
+    return `${Math.round(value / 100000000).toLocaleString()}억원`;
   };
 
   const formatPercent = (value) => {

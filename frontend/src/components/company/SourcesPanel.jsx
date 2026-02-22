@@ -1,11 +1,49 @@
 /**
  * SourcesPanel — "기타" 섹션: API 소스 결과를 카드형으로 표시
  * 모든 소스 통일된 "+" 토글, 펼치면 추출된 key-value 표시 (raw JSON 아님)
+ *
+ * 배열형 데이터(근로복지공단, KRX 등)는 테이블로 표시
+ * 모든 숫자 필드는 천단위 콤마 자동 적용
  */
 import { useState } from 'react';
 import './SourcesPanel.css';
 
-// 주요 API 소스에서 표시할 필드 매핑 (한글 라벨)
+// ── 숫자 포맷 유틸리티 ──
+function formatNumber(val) {
+  if (val === null || val === undefined || val === '') return null;
+  const str = String(val).trim();
+  // 순수 숫자 (음수, 소수 포함)만 포맷
+  if (/^-?\d+(\.\d+)?$/.test(str)) {
+    const num = Number(str);
+    if (Number.isFinite(num)) return num.toLocaleString('ko-KR');
+  }
+  return null; // 숫자가 아니면 null
+}
+
+// 날짜 포맷: 20250319 → 2025-03-19
+function formatDate(val) {
+  if (!val) return null;
+  const s = String(val).trim();
+  if (/^\d{8}$/.test(s)) return `${s.slice(0, 4)}-${s.slice(4, 6)}-${s.slice(6, 8)}`;
+  return null;
+}
+
+// 값 표시: 날짜 → 숫자 → 원본
+function formatDisplayValue(val, key) {
+  if (val === null || val === undefined || val === '') return '';
+  const s = String(val);
+  // 날짜 키 패턴
+  if (/[Dd]t$|[Dd]ate$|일$/.test(key)) {
+    const d = formatDate(s);
+    if (d) return d;
+  }
+  // 숫자 포맷
+  const n = formatNumber(s);
+  if (n !== null) return n;
+  return s;
+}
+
+// ── 주요 API 소스에서 표시할 필드 매핑 (한글 라벨) ──
 const SOURCE_FIELD_MAP = {
   '금융위_기업기본정보': [
     { key: 'corpNm', label: '법인명' },
@@ -14,13 +52,14 @@ const SOURCE_FIELD_MAP = {
     { key: 'bzno', label: '사업자등록번호' },
     { key: 'enpRprFnm', label: '대표자' },
     { key: 'enpBsadr', label: '소재지' },
+    { key: 'enpDtadr', label: '상세주소' },
     { key: 'enpOzpno', label: '우편번호' },
     { key: 'enpTlno', label: '전화번호' },
     { key: 'enpFxno', label: '팩스번호' },
     { key: 'enpHmpgUrl', label: '홈페이지' },
     { key: 'enpEstbDt', label: '설립일' },
-    { key: 'fstOpegDt', label: '최초개업일' },
-    { key: 'lastOpegDt', label: '최종개업일' },
+    { key: 'fstOpegDt', label: 'FSS 정보등록일' },
+    { key: 'lastOpegDt', label: 'FSS 정보변경일' },
     { key: 'enpStacMm', label: '결산월' },
     { key: 'enpMainBizNm', label: '주업종명' },
     { key: 'sicNm', label: '표준산업분류명' },
@@ -33,8 +72,11 @@ const SOURCE_FIELD_MAP = {
     { key: 'audtRptOpnnCtt', label: '감사보고서의견' },
     { key: 'corpRegMrktDcdNm', label: '법인시장구분' },
     { key: 'enpPbanCmpyNm', label: '공시회사명' },
+    { key: 'enpKrxLstgDt', label: '유가증권상장일' },
+    { key: 'enpKosdaqLstgDt', label: '코스닥상장일' },
     { key: 'fssCorpChgDtm', label: '정보변경일시' },
   ],
+
   '국세청_사업자등록상태조회': [
     { key: 'b_stt', label: '사업자상태' },
     { key: 'b_stt_cd', label: '상태코드' },
@@ -44,6 +86,7 @@ const SOURCE_FIELD_MAP = {
     { key: 'utcc_yn', label: '단위과세전환' },
     { key: 'invoice_apply_dt', label: '세금계산서적용일' },
   ],
+
   '국민연금공단_가입사업장내역': [
     { key: 'wkplNm', label: '사업장명' },
     { key: 'bzowrRgstNo', label: '사업자등록번호' },
@@ -52,107 +95,162 @@ const SOURCE_FIELD_MAP = {
     { key: 'crrmmNtcAmt', label: '당월고지금액' },
     { key: 'jnngpCnt', label: '가입자수' },
   ],
+
+  // ── 금융위 배열형 API: 테이블 표시 ──
+  '금융위_주식권리일정': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    columns: [
+      { key: 'basDt', label: '기준일' },
+      { key: 'stckIssuRcdNm', label: '발행구분' },
+      { key: 'rgtExertRcdNm', label: '권리행사구분' },
+      { key: 'rgtExertSttgDt', label: '권리행사시작일' },
+      { key: 'rgtExertEdDt', label: '권리행사종료일' },
+      { key: 'stckParPrc', label: '주당액면가' },
+      { key: 'trsnmDptyDcdNm', label: '명의개서대리인' },
+      { key: 'stckIssuCmpyNm', label: '발행회사' },
+    ],
+  },
+
+  '금융위_주식발행공시정보': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    columns: [
+      { key: 'bizYear', label: '사업연도' },
+      { key: 'stckIssuTcntClsfNm', label: '구분' },
+      { key: 'maxIssuStckTcnt', label: '발행할주식총수' },
+      { key: 'acmlIssuStckTcnt', label: '누적발행주식수' },
+      { key: 'acmlDcrsStckTcnt', label: '누적감소주식수' },
+      { key: 'otsstcCnt', label: '유통주식수' },
+      { key: 'trsstcCnt', label: '자기주식수' },
+      { key: 'corpPtrnSeNm', label: '시장구분' },
+    ],
+  },
+
+  '금융위_자금조달공시정보': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    columns: [
+      { key: 'bizYr', label: '사업연도' },
+      { key: 'cmpyNm', label: '회사명' },
+      { key: 'cptUsePlanUsge', label: '자금사용계획(용도)' },
+      { key: 'cptUsePlanAmtCn', label: '계획금액' },
+      { key: 'realCptUsePres', label: '실제사용현황' },
+      { key: 'realCptUseAmtCn', label: '실제사용금액' },
+      { key: 'diffOcrnRsnCn', label: '차이원인' },
+      { key: 'corpPtrnSeNm', label: '시장구분' },
+    ],
+  },
+
+  '금융위_KRX상장종목정보': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    limit: 10,
+    columns: [
+      { key: 'basDt', label: '기준일' },
+      { key: 'itmsNm', label: '종목명' },
+      { key: 'srtnCd', label: '종목코드' },
+      { key: 'isinCd', label: 'ISIN' },
+      { key: 'mrktCtg', label: '시장구분' },
+      { key: 'corpNm', label: '법인명' },
+    ],
+  },
+
+  '금융위_공시정보_배당': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    columns: [
+      { key: 'basDt', label: '기준일' },
+      { key: 'crtmParPrc', label: '당기액면가' },
+      { key: 'crtmPstcNpf', label: '당기주당순이익' },
+      { key: 'crtmOnskCashDvdnAmt', label: '보통주현금배당(당기)' },
+      { key: 'pvtrOnskCashDvdnAmt', label: '보통주현금배당(전기)' },
+      { key: 'crtmOnskCashDvdnBnfRt', label: '보통주배당수익률(당기)' },
+      { key: 'crtmOnskStckDvdnAmt', label: '보통주주식배당(당기)' },
+      { key: 'crtmCashDvdnTndnCtt', label: '배당성향(당기)' },
+    ],
+  },
+
+  '금융위_주식발행': {
+    type: 'table',
+    sortKey: 'basDt',
+    sortDesc: true,
+    limit: 10,
+    columns: [
+      { key: 'basDt', label: '기준일' },
+      { key: 'stckIssuCmpyNm', label: '발행회사' },
+      { key: 'onskTisuCnt', label: '보통주발행수' },
+      { key: 'pfstTisuCnt', label: '우선주발행수' },
+    ],
+  },
+
+  '금융위_기업재무정보': {
+    type: 'pivot',
+    // 피벗: bizYear별 acitNm → crtmAcitAmt
+    pivotRow: 'acitNm',
+    pivotCol: 'bizYear',
+    pivotValue: 'crtmAcitAmt',
+    filterKey: 'fnclDcd',
+    filterValue: 'FS_ifrs_ConsolidatedMember', // 연결재무제표 우선
+    fallbackFilterValue: 'FS_ifrs_SeparateMember',
+    rowOrder: ['자산총계', '유동자산', '비유동자산', '부채총계', '유동부채', '비유동부채', '자본총계', '자본금', '이익잉여금', '이익잉여금(결손금)'],
+  },
+
+  '근로복지공단_고용산재보험': {
+    type: 'table',
+    sortKey: 'sangsiInwonCnt',
+    sortDesc: true,
+    columns: [
+      { key: 'saeopjangNm', label: '사업장명' },
+      { key: 'addr', label: '주소' },
+      { key: 'gyEopjongNm', label: '업종명' },
+      { key: 'sangsiInwonCnt', label: '상시근로자수' },
+      { key: 'seongripDt', label: '성립일' },
+      { key: 'opaBoheomFg', label: '산재보험' },
+    ],
+  },
 };
 
-// 범용 한글 필드명 매핑 — 모든 소스에서 자동 추출 시 사용
+// 범용 한글 필드명 매핑
 const FIELD_LABEL_MAP = {
-  // 법인/사업자 등록
   crno: '법인등록번호', bzno: '사업자등록번호', brno: '사업자등록번호',
   bzowrRgstNo: '사업자등록번호', b_no: '사업자등록번호',
   corpNm: '법인명', corpName: '법인명', bsnmNm: '상호명',
   cmpyNm: '회사명', stckIssuCmpyNm: '주식발행회사명', fncoNm: '금융회사명',
   enpRprFnm: '대표자', rprsNm: '대표자', ceoNm: '대표자',
-  applyRprsvNm: '신청대표자', applyBsnmNm: '신청상호명',
   enpBsadr: '소재지', addr: '주소', rprsBpladrs: '주소',
-  enpEstbDt: '설립일', estbDt: '설립일', seongripDt: '설립일',
+  enpEstbDt: '설립일', estbDt: '설립일',
   enpEmpeCnt: '종업원수', empeCnt: '종업원수',
   enpTlno: '전화번호', tlno: '전화번호',
   enpHmpgUrl: '홈페이지', hmUrl: '홈페이지',
-
-  // 금융/세금
-  smenpYn: '중소기업여부', lastModDt: '최종수정일',
+  smenpYn: '중소기업여부',
   b_stt: '사업자상태', b_stt_cd: '상태코드',
   tax_type: '과세유형', tax_type_cd: '과세유형코드',
   end_dt: '폐업일', utcc_yn: '단위과세전환',
   invoice_apply_dt: '세금계산서적용일',
-
-  // 국민연금공단
   wkplNm: '사업장명', wkplRoadNmDtlAddr: '주소',
-  wkplJnngStdt: '가입일', wkplJnngStcd: '가입상태코드',
-  crrmmNtcAmt: '당월고지금액', jnngpCnt: '가입자수',
-  nwAcqzrCnt: '신규가입자수', lssJnngpCnt: '소멸가입자수',
-  adptDt: '적용일', scsnDt: '탈퇴일',
-  wkplIntpCd: '사업장산업코드', wkplStylDvcd: '사업장유형코드',
-  dataCrtYm: '데이터생성연월', seq: '순번',
-  vldtVlKrnNm: '유효값한글명',
-
-  // 근로복지공단 (고용보험/산재보험)
+  wkplJnngStdt: '가입일', crrmmNtcAmt: '당월고지금액', jnngpCnt: '가입자수',
   saeopjangNm: '사업장명', saeopjaDrno: '사업장관리번호',
-  gyEopjongNm: '업종명', gyEopjongCd: '업종코드',
-  opaBoheomFg: '산재보험가입여부', sangsiInwonCnt: '상시근로자수',
-  grpSaeopjangYn: '그룹사업장여부',
-  goyongBoheomFg: '고용보험가입여부',
-  sanjaeSeolyipDt: '산재보험성립일',
-  goyongSeolyipDt: '고용보험성립일',
-  sanjaeSosimulDt: '산재보험소멸일',
-  goyongSosimulDt: '고용보험소멸일',
-  jisaCode: '지사코드', jisaNm: '지사명',
-  gwanhalJisaNm: '관할지사명',
-  eopjongCd: '업종코드', eopjongNm: '업종명',
-  saeopjangJusoDoroMyeong: '사업장도로명주소',
-  saeopjangJibeonJuso: '사업장지번주소',
-  saeopjangJusoPostNo: '사업장우편번호',
-  daepyojaMyeong: '대표자명',
-
-  // FSC 금융위
+  gyEopjongNm: '업종명', sangsiInwonCnt: '상시근로자수',
+  opaBoheomFg: '산재보험가입여부',
   enpMainBizNm: '주업종명', sicNm: '표준산업분류명',
-  fstOpnDt: '최초개업일', fstOpegDt: '최초개업일',
-  lastOpegDt: '최종개업일', enpStacMm: '결산월',
-  corpEnsnNm: '법인영문명', enpOzpno: '우편번호',
-  enpFxno: '팩스번호', enpDtadr: '상세주소',
-  corpDcd: '법인구분코드', corpDcdNm: '법인구분명',
+  fstOpegDt: 'FSS 정보등록일', lastOpegDt: 'FSS 정보변경일',
+  enpStacMm: '결산월', corpEnsnNm: '법인영문명',
+  enpOzpno: '우편번호', enpFxno: '팩스번호',
   actnAudpnNm: '감사인', audtRptOpnnCtt: '감사보고서의견',
   enpMntrBnkNm: '주거래은행', enpPbanCmpyNm: '공시회사명',
-  fssCorpUnqNo: '금감원고유번호', fssCorpChgDtm: '정보변경일시',
-  corpRegMrktDcd: '법인시장구분코드', corpRegMrktDcdNm: '법인시장구분',
-  enpKrxLstgDt: '유가증권상장일', enpKosdaqLstgDt: '코스닥상장일',
-  enpXchgLstgDt: '거래소상장일',
-  enpKrxLstgAbolDt: '유가증권상장폐지일', enpKosdaqLstgAbolDt: '코스닥상장폐지일',
-  enpXchgLstgAbolDt: '거래소상장폐지일',
+  fssCorpChgDtm: '정보변경일시', corpRegMrktDcdNm: '법인시장구분',
   enpPn1AvgSlryAmt: '1인평균급여액', empeAvgCnwkTermCtt: '평균근속연수',
-  aplcntNm: '신청인명',
-  applyCrno: '신청법인등록번호', applyBrno: '신청사업자등록번호',
-  rbf_tax_type: '간이과세유형', rbf_tax_type_cd: '간이과세유형코드',
-  tax_type_change_dt: '과세유형변경일',
-
-  // 환경공단 KECO
-  rBizNm: '업소명', totalSplyAmt: '공급량',
-  exhstAmt: '배출량', rcvryTrgtAmt: '회수목표량',
-  locplcAddr: '소재지', exhstPrmsnNo: '배출허가번호',
-
-  // 공정위 FTC
-  dcCpNm: '판매업체명', dcPrdNm: '상품명',
-  bzentyNm: '사업체명', groupNm: '그룹명',
-
-  // 식약처 MFDS
-  prdlstNm: '제품명', bsshNm: '제조업체명',
-  prmisnDt: '허가일', prdlstReportNo: '보고번호',
-
-  // 산업인력공단
-  v_saeopjaDrno: '사업장관리번호',
-
-  // 일반
-  status: '상태', type: '유형', name: '이름',
-  amount: '금액', count: '건수', date: '날짜',
-  description: '설명', note: '비고', category: '분류',
+  status: '상태', name: '이름', amount: '금액', date: '날짜',
   companyName: '기업명', address: '주소',
   industryCode: '업종코드', industryName: '업종명',
   representative: '대표자', phone: '전화번호',
   website: '홈페이지', establishmentDate: '설립일',
-  joinDate: '가입일', leaveDate: '탈퇴일',
-  newSubscribers: '신규가입자수', lostSubscribers: '소멸가입자수',
-  styleCode: '사업장유형코드', businessStatus: '사업자상태',
-  taxType: '과세유형',
 };
 
 // 메타/노이즈 키 — 자동 추출 시 스킵
@@ -163,24 +261,46 @@ const SKIP_KEYS = new Set([
   'response', 'data', 'list', 'result', 'rows',
 ]);
 
+// ── 산재보험 코드 → 텍스트 ──
+function formatInsuranceFlag(val) {
+  const v = Number(val);
+  if (v === 1) return '가입';
+  if (v === 2) return '소멸';
+  return String(val);
+}
+
 // 소스명에서 매칭되는 키 찾기
 function findSourceConfig(sourceName) {
-  for (const [key, fields] of Object.entries(SOURCE_FIELD_MAP)) {
+  for (const [key, config] of Object.entries(SOURCE_FIELD_MAP)) {
     if (sourceName?.includes(key) || key.includes(sourceName)) {
-      return { displayName: key, fields };
+      return { displayName: key, config };
     }
   }
   return null;
+}
+
+// raw_data → 아이템 배열로 변환 (indexed object 처리)
+function toItemArray(rawData) {
+  if (!rawData || typeof rawData !== 'object') return [];
+  if (Array.isArray(rawData)) return rawData;
+  if (rawData.items && Array.isArray(rawData.items)) return rawData.items;
+  // indexed object: { "0": {...}, "1": {...}, ... }
+  const keys = Object.keys(rawData);
+  if (keys.length > 0 && keys.every(k => /^\d+$/.test(k))) {
+    return keys.sort((a, b) => Number(a) - Number(b)).map(k => rawData[k]);
+  }
+  // 단일 객체
+  return [rawData];
 }
 
 // raw_data에서 실제 값 추출 (중첩 객체 지원)
 function extractValue(data, key) {
   if (!data) return null;
   if (data[key] !== undefined) return data[key];
-  if (Array.isArray(data.items)) {
-    for (const item of data.items) {
-      if (item[key] !== undefined) return item[key];
-    }
+  // indexed object의 첫 번째 아이템에서 찾기
+  const items = toItemArray(data);
+  if (items.length > 0 && items[0] && items[0][key] !== undefined) {
+    return items[0][key];
   }
   if (data.data && typeof data.data === 'object') {
     if (data.data[key] !== undefined) return data.data[key];
@@ -188,7 +308,7 @@ function extractValue(data, key) {
   return null;
 }
 
-// 필드 키 → 한글 라벨 변환
+// 필드 키 → 한글 라벨
 function getFieldLabel(key) {
   return FIELD_LABEL_MAP[key] || key;
 }
@@ -196,7 +316,6 @@ function getFieldLabel(key) {
 // 알 수 없는 소스에서 자동으로 의미있는 key-value 추출
 function autoExtractFields(rawData) {
   if (!rawData || typeof rawData !== 'object') return [];
-
   const fields = [];
   const seen = new Set();
 
@@ -224,15 +343,129 @@ function autoExtractFields(rawData) {
         }
       } else {
         seen.add(k);
-        fields.push({ key: k, label: getFieldLabel(k), value: String(v) });
+        fields.push({ key: k, label: getFieldLabel(k), value: formatDisplayValue(v, k) });
       }
     }
   }
 
-  walk(rawData);
+  // indexed object → 첫 번째 아이템만 walk
+  const items = toItemArray(rawData);
+  if (items.length > 1 && typeof items[0] === 'object') {
+    walk(items[0]);
+  } else {
+    walk(rawData);
+  }
   return fields;
 }
 
+// ── 테이블형 렌더러 ──
+function TableRenderer({ items, config }) {
+  const { columns, sortKey, sortDesc, limit } = config;
+
+  // 정렬
+  let sorted = [...items];
+  if (sortKey) {
+    sorted.sort((a, b) => {
+      const va = String(a[sortKey] || '');
+      const vb = String(b[sortKey] || '');
+      return sortDesc ? vb.localeCompare(va) : va.localeCompare(vb);
+    });
+  }
+  if (limit) sorted = sorted.slice(0, limit);
+
+  if (sorted.length === 0) {
+    return <div className="source-field source-field--empty"><span className="source-field__value">데이터 없음</span></div>;
+  }
+
+  return (
+    <div className="source-table-wrap">
+      <table className="source-table">
+        <thead>
+          <tr>
+            {columns.map(col => (
+              <th key={col.key}>{col.label}</th>
+            ))}
+          </tr>
+        </thead>
+        <tbody>
+          {sorted.map((item, i) => (
+            <tr key={i}>
+              {columns.map(col => {
+                let val = item[col.key];
+                if (val === null || val === undefined || val === '') return <td key={col.key}>-</td>;
+                // 산재보험 특수 포맷
+                if (col.key === 'opaBoheomFg') val = formatInsuranceFlag(val);
+                return <td key={col.key}>{formatDisplayValue(val, col.key)}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {limit && items.length > limit && (
+        <div className="source-table-more">외 {items.length - limit}건</div>
+      )}
+    </div>
+  );
+}
+
+// ── 피벗 테이블 렌더러 (기업재무정보용) ──
+function PivotRenderer({ items, config }) {
+  const { pivotRow, pivotCol, pivotValue, filterKey, filterValue, fallbackFilterValue, rowOrder } = config;
+
+  // 필터: 연결재무제표 우선, 없으면 별도재무제표
+  let filtered = items.filter(i => i[filterKey] === filterValue);
+  if (filtered.length === 0 && fallbackFilterValue) {
+    filtered = items.filter(i => i[filterKey] === fallbackFilterValue);
+  }
+  if (filtered.length === 0) filtered = items;
+
+  // 피벗 데이터 구축
+  const years = [...new Set(filtered.map(i => i[pivotCol]))].sort();
+  const rowMap = new Map(); // acitNm → { year: amount }
+  for (const item of filtered) {
+    const row = item[pivotRow];
+    const col = item[pivotCol];
+    const val = item[pivotValue];
+    if (!row || !col) continue;
+    if (!rowMap.has(row)) rowMap.set(row, {});
+    rowMap.get(row)[col] = val;
+  }
+
+  // 정렬
+  const orderedRows = rowOrder
+    ? rowOrder.filter(r => rowMap.has(r))
+    : [...rowMap.keys()];
+
+  if (orderedRows.length === 0) {
+    return <div className="source-field source-field--empty"><span className="source-field__value">데이터 없음</span></div>;
+  }
+
+  return (
+    <div className="source-table-wrap">
+      <table className="source-table source-table--pivot">
+        <thead>
+          <tr>
+            <th>항목</th>
+            {years.map(y => <th key={y}>{y}년</th>)}
+          </tr>
+        </thead>
+        <tbody>
+          {orderedRows.map(row => (
+            <tr key={row}>
+              <td className="pivot-row-label">{row}</td>
+              {years.map(y => {
+                const val = rowMap.get(row)?.[y];
+                return <td key={y} className="pivot-value">{val ? formatNumber(val) || val : '-'}</td>;
+              })}
+            </tr>
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+}
+
+// ── 메인 컴포넌트 ──
 function SourcesPanel({ entity, apiData }) {
   const [expanded, setExpanded] = useState(new Set());
 
@@ -255,25 +488,78 @@ function SourcesPanel({ entity, apiData }) {
           {data.map((src, idx) => {
             const sourceName = src.source || src.sourceName || `Source ${idx + 1}`;
             const rawData = src.data || src.rawData || src;
-            const config = findSourceConfig(sourceName);
+            const match = findSourceConfig(sourceName);
             const isOpen = expanded.has(idx);
 
-            // 필드 추출: 알려진 소스는 SOURCE_FIELD_MAP, 아닌 건 자동 추출
-            let fields;
-            if (config) {
-              fields = config.fields
-                .map(({ key, label }) => {
-                  const val = extractValue(rawData, key);
-                  if (val === null || val === undefined || val === '' || val === '0' || val === 0) return null;
-                  return { key, label, value: String(val) };
-                })
-                .filter(Boolean);
+            // 분기: 알려진 소스 vs 자동 추출
+            let renderContent;
+            let fieldCount = 0;
+
+            if (match) {
+              const { config } = match;
+
+              if (config.type === 'table') {
+                // 테이블형
+                const items = toItemArray(rawData);
+                fieldCount = items.length;
+                renderContent = isOpen ? <TableRenderer items={items} config={config} /> : null;
+
+              } else if (config.type === 'pivot') {
+                // 피벗 테이블형
+                const items = toItemArray(rawData);
+                fieldCount = items.length;
+                renderContent = isOpen ? <PivotRenderer items={items} config={config} /> : null;
+
+              } else {
+                // 기존 key-value 그리드
+                const fields = config
+                  .map(({ key, label }) => {
+                    const val = extractValue(rawData, key);
+                    if (val === null || val === undefined || val === '' || val === '0' || val === 0) return null;
+                    return { key, label, value: formatDisplayValue(val, key) };
+                  })
+                  .filter(Boolean);
+                fieldCount = fields.length;
+                renderContent = isOpen ? (
+                  <div className="source-card__fields">
+                    {fields.length > 0 ? (
+                      fields.map(({ key, label, value }) => (
+                        <div key={key} className="source-field">
+                          <span className="source-field__label">{label}</span>
+                          <span className="source-field__value">{value}</span>
+                        </div>
+                      ))
+                    ) : (
+                      <div className="source-field source-field--empty">
+                        <span className="source-field__value">데이터 없음</span>
+                      </div>
+                    )}
+                  </div>
+                ) : null;
+              }
             } else {
-              fields = autoExtractFields(rawData);
+              // 자동 추출
+              const fields = autoExtractFields(rawData);
+              fieldCount = fields.length;
+              renderContent = isOpen ? (
+                <div className="source-card__fields">
+                  {fields.length > 0 ? (
+                    fields.map(({ key, label, value }) => (
+                      <div key={key} className="source-field">
+                        <span className="source-field__label">{label}</span>
+                        <span className="source-field__value">{value}</span>
+                      </div>
+                    ))
+                  ) : (
+                    <div className="source-field source-field--empty">
+                      <span className="source-field__value">데이터 없음</span>
+                    </div>
+                  )}
+                </div>
+              ) : null;
             }
 
-            const displayName = config ? config.displayName : sourceName;
-            const fieldCount = fields.length;
+            const displayName = match ? match.displayName : sourceName;
 
             return (
               <div key={idx} className="source-card">
@@ -289,22 +575,7 @@ function SourcesPanel({ entity, apiData }) {
                     <span className="source-card__toggle">{isOpen ? '−' : '+'}</span>
                   </div>
                 </button>
-                {isOpen && (
-                  <div className="source-card__fields">
-                    {fields.length > 0 ? (
-                      fields.map(({ key, label, value }) => (
-                        <div key={key} className="source-field">
-                          <span className="source-field__label">{label}</span>
-                          <span className="source-field__value">{value}</span>
-                        </div>
-                      ))
-                    ) : (
-                      <div className="source-field source-field--empty">
-                        <span className="source-field__value">데이터 없음</span>
-                      </div>
-                    )}
-                  </div>
-                )}
+                {renderContent}
               </div>
             );
           })}
