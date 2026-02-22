@@ -20,11 +20,16 @@ const INITIAL_STATE = {
   company: null,        // current company data (mapEntityToCompanyDetail format)
   dartAvailable: null,  // null = unknown, true/false after dart_data event
   sminfoAvailable: null, // null = unknown, true/false after sminfo_data event
+  patentAvailable: null, // null = unknown, true/false after patent_data event
+  patentData: null,     // KIPRIS patent data { patents, trademarks, ipScore }
+  procurementAvailable: null, // null = unknown, true/false after procurement_data event
+  procurementData: null, // 조달청 procurement data { contracts, awards, ... }
   diff: null,           // { added, updated, removed, unchangedCount, hasChanges }
   meta: null,           // { apisAttempted, apisSucceeded, durationMs }
   conflicts: [],        // cross-check conflicts from complete event
   error: null,          // error message string
   events: [],           // received event names for debugging/UI
+  fetchedAt: null,      // ISO timestamp when SSE data fetch completed
 };
 
 export function useCompanyLive(brno) {
@@ -120,6 +125,10 @@ export function useCompanyLive(brno) {
             company_name: payload.company_name || prev.company.company_name,
             ceo_name: payload.ceo_name || prev.company.ceo_name,
             address: payload.address || prev.company.address,
+            phone: payload.phone || prev.company.phone,
+            website: payload.website || prev.company.website,
+            corp_registration_no: payload.corp_registration_no || prev.company.corp_registration_no,
+            corp_cls: payload.corp_cls || prev.company.corp_cls,
             listed: payload.listed ?? prev.company.listed,
             stock_code: payload.stock_code || prev.company.stock_code,
             revenue: payload.revenue ?? prev.company.revenue,
@@ -132,13 +141,25 @@ export function useCompanyLive(brno) {
             officers: payload.officers || prev.company.officers,
             shareholders: payload.shareholders || prev.company.shareholders,
             three_year_average: payload.three_year_average || prev.company.three_year_average,
+            latest_annual: payload.latest_annual || prev.company.latest_annual,
             red_flags: payload.red_flags || prev.company.red_flags,
+            report_period: payload.report_period || prev.company.report_period,
+            report_year: payload.report_year ?? prev.company.report_year,
+            // DART extended data
+            employee_status: payload.employee_status || prev.company.employee_status,
+            directors_compensation: payload.directors_compensation || prev.company.directors_compensation,
+            dividend_details: payload.dividend_details || prev.company.dividend_details,
+            financial_indicators: payload.financial_indicators || prev.company.financial_indicators,
             _hasDart: true,
           } : {
             // No DB data yet — create from DART only
             company_name: payload.company_name,
             ceo_name: payload.ceo_name,
             address: payload.address,
+            phone: payload.phone,
+            website: payload.website,
+            corp_registration_no: payload.corp_registration_no,
+            corp_cls: payload.corp_cls,
             listed: payload.listed,
             stock_code: payload.stock_code,
             revenue: payload.revenue,
@@ -150,7 +171,14 @@ export function useCompanyLive(brno) {
             officers: payload.officers,
             shareholders: payload.shareholders,
             three_year_average: payload.three_year_average,
+            latest_annual: payload.latest_annual,
             red_flags: payload.red_flags,
+            report_period: payload.report_period,
+            report_year: payload.report_year,
+            employee_status: payload.employee_status,
+            directors_compensation: payload.directors_compensation,
+            dividend_details: payload.dividend_details,
+            financial_indicators: payload.financial_indicators,
             _hasDart: true,
           },
           events: [...prev.events, 'dart_data'],
@@ -201,6 +229,96 @@ export function useCompanyLive(brno) {
       }
     });
 
+    // --- Event: patent_data (KIPRIS patent/trademark data) ---
+    es.addEventListener('patent_data', (e) => {
+      try {
+        const payload = JSON.parse(e.data);
+
+        if (payload.available === false) {
+          setState(prev => ({
+            ...prev,
+            patentAvailable: false,
+            events: [...prev.events, 'patent_data'],
+          }));
+          return;
+        }
+
+        setState(prev => ({
+          ...prev,
+          patentAvailable: true,
+          patentData: {
+            patents: payload.patents,
+            trademarks: payload.trademarks,
+            ipScore: payload.ipScore,
+            searchedName: payload.searchedName,
+          },
+          company: prev.company ? {
+            ...prev.company,
+            patent_data: {
+              patents: payload.patents,
+              trademarks: payload.trademarks,
+              ipScore: payload.ipScore,
+              searchedName: payload.searchedName,
+            },
+          } : prev.company,
+          events: [...prev.events, 'patent_data'],
+        }));
+      } catch (err) {
+        console.error('[useCompanyLive] patent_data parse error:', err);
+      }
+    });
+
+    // --- Event: procurement_data (조달청 procurement contracts/awards) ---
+    es.addEventListener('procurement_data', (e) => {
+      try {
+        const payload = JSON.parse(e.data);
+
+        if (payload.available === false) {
+          setState(prev => ({
+            ...prev,
+            procurementAvailable: false,
+            events: [...prev.events, 'procurement_data'],
+          }));
+          return;
+        }
+
+        setState(prev => ({
+          ...prev,
+          procurementAvailable: true,
+          procurementData: {
+            contracts: payload.contracts,
+            awards: payload.awards,
+            contractCount: payload.contractCount,
+            awardCount: payload.awardCount,
+            totalValue: payload.totalValue,
+            totalContractValue: payload.totalContractValue,
+            totalAwardValue: payload.totalAwardValue,
+            avgContractAmount: payload.avgContractAmount,
+            avgAwardRate: payload.avgAwardRate,
+            isGovernmentVendor: payload.isGovernmentVendor,
+            latestContract: payload.latestContract,
+            latestAward: payload.latestAward,
+            searchPeriod: payload.searchPeriod,
+          },
+          company: prev.company ? {
+            ...prev.company,
+            procurement: {
+              isGovernmentVendor: payload.isGovernmentVendor,
+              contractCount: payload.contractCount,
+              awardCount: payload.awardCount,
+              totalValue: payload.totalValue,
+              contracts: payload.contracts,
+              awards: payload.awards,
+              searchPeriod: payload.searchPeriod,
+            },
+          } : prev.company,
+          events: [...prev.events, 'procurement_data'],
+        }));
+      } catch (err) {
+        console.error('[useCompanyLive] procurement_data parse error:', err);
+      }
+    });
+
     // --- Event: live_diff (DB vs live comparison) ---
     es.addEventListener('live_diff', (e) => {
       try {
@@ -225,6 +343,7 @@ export function useCompanyLive(brno) {
           status: 'complete',
           company: payload.company || prev.company,
           conflicts: payload.conflicts || [],
+          fetchedAt: new Date().toISOString(),
           events: [...prev.events, 'complete'],
         }));
       } catch (err) {
@@ -268,6 +387,8 @@ export function useCompanyLive(brno) {
     hasData: state.company !== null,
     hasDart: state.dartAvailable === true,
     hasSminfo: state.sminfoAvailable === true,
+    hasPatent: state.patentAvailable === true,
+    hasProcurement: state.procurementAvailable === true,
     hasDiff: state.diff !== null && state.diff.hasChanges,
   };
 }

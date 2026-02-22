@@ -9,13 +9,16 @@ function ShareholdersTable({ shareholders, compact = false }) {
     );
   }
 
+  // "계" (총계) 행 제외
+  const filtered = shareholders.filter(sh => sh.name !== '계' && sh.name !== '합계');
+
   // Compact mode: bullet-point list for 3-column grid
   if (compact) {
     return (
       <div className="shareholders-compact">
-        <p className="compact-count">{shareholders.length}건</p>
+        <p className="compact-count">{filtered.length}건</p>
         <ul className="compact-list">
-          {shareholders.slice(0, 8).map((sh, i) => (
+          {filtered.slice(0, 8).map((sh, i) => (
             <li key={i} className="compact-item">
               <strong>{sh.name}</strong>
               {sh.percentage != null && (
@@ -26,8 +29,8 @@ function ShareholdersTable({ shareholders, compact = false }) {
               )}
             </li>
           ))}
-          {shareholders.length > 8 && (
-            <li className="compact-more">+{shareholders.length - 8}건 더보기</li>
+          {filtered.length > 8 && (
+            <li className="compact-more">+{filtered.length - 8}건 더보기</li>
           )}
         </ul>
       </div>
@@ -46,8 +49,10 @@ function ShareholdersTable({ shareholders, compact = false }) {
 
   const getShareholderType = (type) => {
     switch (type) {
-      case 'founder':
-        return '창업자';
+      case 'majority':
+        return '대주주';
+      case 'related':
+        return '특수관계자';
       case 'institutional':
         return '기관투자자';
       case 'individual':
@@ -65,8 +70,18 @@ function ShareholdersTable({ shareholders, compact = false }) {
     return type || 'general';
   };
 
-  const totalShares = shareholders.reduce((sum, sh) => sum + (sh.shares || 0), 0);
-  const totalPercentage = shareholders.reduce((sum, sh) => sum + (sh.percentage || 0), 0);
+  const totalShares = filtered.reduce((sum, sh) => sum + (sh.shares || 0), 0);
+  const totalPercentage = filtered.reduce((sum, sh) => sum + (sh.percentage || 0), 0);
+
+  // 최대주주 지분율
+  const majorityPct = filtered
+    .filter(sh => sh.type === 'majority')
+    .reduce((sum, sh) => sum + (sh.percentage || 0), 0);
+
+  // 특수관계자 지분율
+  const relatedPct = filtered
+    .filter(sh => sh.type === 'related')
+    .reduce((sum, sh) => sum + (sh.percentage || 0), 0);
 
   return (
     <div className="shareholders-table">
@@ -83,7 +98,7 @@ function ShareholdersTable({ shareholders, compact = false }) {
             </tr>
           </thead>
           <tbody>
-            {shareholders.map((shareholder, index) => (
+            {filtered.map((shareholder, index) => (
               <tr key={index} className={getTypeClass(shareholder.type)}>
                 <td>
                   <strong>{shareholder.name}</strong>
@@ -116,31 +131,25 @@ function ShareholdersTable({ shareholders, compact = false }) {
       <div className="shareholders-summary">
         <div className="summary-item">
           <span className="summary-label">전체 주주</span>
-          <span className="summary-value">{shareholders.length}명</span>
+          <span className="summary-value">{filtered.length}명</span>
         </div>
         <div className="summary-item">
-          <span className="summary-label">최대주주 지분율</span>
+          <span className="summary-label">대주주 지분율</span>
           <span className="summary-value">
-            {shareholders.length > 0
-              ? formatPercent(Math.max(...shareholders.map(sh => sh.percentage || 0)))
-              : '-'}
+            {majorityPct > 0 ? formatPercent(majorityPct) : formatPercent(Math.max(...filtered.map(sh => sh.percentage || 0)))}
           </span>
         </div>
-        <div className="summary-item">
-          <span className="summary-label">창업자 지분율</span>
-          <span className="summary-value">
-            {formatPercent(
-              shareholders
-                .filter(sh => sh.type === 'founder')
-                .reduce((sum, sh) => sum + (sh.percentage || 0), 0)
-            )}
-          </span>
-        </div>
+        {relatedPct > 0 && (
+          <div className="summary-item">
+            <span className="summary-label">특수관계자 지분율</span>
+            <span className="summary-value">{formatPercent(relatedPct)}</span>
+          </div>
+        )}
         <div className="summary-item">
           <span className="summary-label">외국인 지분율</span>
           <span className="summary-value">
             {formatPercent(
-              shareholders
+              filtered
                 .filter(sh => sh.type === 'foreign')
                 .reduce((sum, sh) => sum + (sh.percentage || 0), 0)
             )}
@@ -151,7 +160,7 @@ function ShareholdersTable({ shareholders, compact = false }) {
       <div className="ownership-chart">
         <div className="chart-title">지분 구조</div>
         <div className="chart-bar">
-          {shareholders.slice(0, 5).map((shareholder, index) => (
+          {filtered.slice(0, 5).map((shareholder, index) => (
             <div
               key={index}
               className={`chart-segment ${getTypeClass(shareholder.type)}`}
@@ -174,7 +183,7 @@ function ShareholdersTable({ shareholders, compact = false }) {
           )}
         </div>
         <div className="chart-legend">
-          {shareholders.slice(0, 5).map((shareholder, index) => (
+          {filtered.slice(0, 5).map((shareholder, index) => (
             <div key={index} className="legend-item">
               <span className={`legend-color ${getTypeClass(shareholder.type)}`}></span>
               <span className="legend-text">{shareholder.name} ({formatPercent(shareholder.percentage)})</span>

@@ -11,15 +11,6 @@ function Header({ theme, onToggleTheme }) {
             <p className="tagline">중소기업 재무 데이터 한눈에</p>
           </Link>
           <nav className="nav">
-            <Link to="/search" className="nav-link">
-              Entity Search
-            </Link>
-            <a href="https://www.data.go.kr/" target="_blank" rel="noopener noreferrer" className="nav-link">
-              공공데이터포털
-            </a>
-            <a href="https://dart.fss.or.kr/" target="_blank" rel="noopener noreferrer" className="nav-link">
-              DART
-            </a>
             <button className="theme-toggle" onClick={onToggleTheme} title={theme === 'dark' ? 'Switch to light mode' : 'Switch to dark mode'}>
               {theme === 'dark' ? 'Light' : 'Dark'}
             </button>

@@ -121,11 +121,16 @@ function calculateNameSimilarity(nameA, nameB) {
 }
 
 /**
- * 사업자번호 정규화 (하이픈 제거)
+ * 사업자번호 정규화 (하이픈 제거 + 마스킹 검출)
+ * NPS 등 일부 API는 BRN을 "142815****" 형태로 마스킹 반환 → null 처리
  */
 function normalizeBrno(brno) {
   if (!brno) return null;
-  return String(brno).replace(/[-\s]/g, '').trim() || null;
+  const cleaned = String(brno).replace(/[-\s]/g, '').trim();
+  if (!cleaned) return null;
+  // 마스킹된 BRN 거부 (*, x 등 비숫자 문자 포함)
+  if (/[^0-9]/.test(cleaned)) return null;
+  return cleaned;
 }
 
 /**

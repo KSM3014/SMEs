@@ -74,20 +74,21 @@ app.get('/', (req, res) => {
   res.json({
     name: 'SME Investor Service API',
     version: '1.0.0',
-    mode: 'MOCK',
+    mode: 'PRODUCTION',
     status: 'running',
     endpoints: {
       health: '/health',
+      healthPipeline: '/health/pipeline',
       companyApi: '/api/company',
       smeApi: '/api/sme',
-      mockApi: '/api/mock',
       frontend: 'http://localhost:3001'
     },
     availableCompanyEndpoints: [
+      'GET /api/company/suggest?q={query}',
       'GET /api/company/search?q={query}',
-      'GET /api/company/search?brno={brno}&crno={crno}&name={name}',
       'GET /api/company/analyze/:brno',
       'GET /api/company/quick/:brno',
+      'GET /api/company/live/:identifier (SSE)',
       'GET /api/company/sources',
       'POST /api/company/cache/clear'
     ],
@@ -118,6 +119,70 @@ app.get('/health', async (req, res) => {
       status: 'unhealthy',
       error: safeErrorMessage(error)
     });
+  }
+});
+
+/**
+ * GET /health/pipeline
+ * Data pipeline health check — tests the full flow with a known BRN:
+ *   DB load → extractBasicInfo → mapEntityToCompanyDetail → DART parse
+ * Returns pass/fail for each stage with field counts.
+ */
+app.get('/health/pipeline', async (req, res) => {
+  const testBrno = req.query.brno || '2108129428'; // Default: 아이센스 (known listed company)
+  const checks = {};
+
+  try {
+    // 1. DB connection
+    await sequelize.authenticate();
+    checks.database = { status: 'pass' };
+
+    // 2. Entity load from DB
+    const { loadEntityFromDb } = await import('./services/entityPersistence.js');
+    const entity = await loadEntityFromDb({ brno: testBrno }, { allowStale: true });
+    checks.entity_load = entity ? {
+      status: 'pass',
+      sourcesCount: entity.apiData?.length || 0,
+      hasRawData: entity.apiData?.filter(s => s.data && Object.keys(s.data).length > 0).length || 0
+    } : { status: 'fail', message: `No entity found for BRN ${testBrno}` };
+
+    if (!entity) {
+      return res.json({ status: 'degraded', brno: testBrno, checks });
+    }
+
+    // 3. Data extraction (extractBasicInfo via mapEntityToCompanyDetail)
+    const { mapEntityToCompanyDetail } = await import('./services/entityDataMapper.js');
+    const mapped = mapEntityToCompanyDetail(entity, null);
+    const keyFields = ['company_name', 'address', 'ceo_name', 'phone', 'employee_count', 'industry_display', 'establishment_date'];
+    const presentFields = keyFields.filter(f => mapped?.[f] != null);
+    checks.data_extraction = {
+      status: presentFields.length >= 4 ? 'pass' : presentFields.length >= 2 ? 'warn' : 'fail',
+      fieldsPresent: presentFields.length,
+      fieldsTotal: keyFields.length,
+      present: presentFields,
+      missing: keyFields.filter(f => mapped?.[f] == null)
+    };
+
+    // 4. DART API test (lightweight — just company info, skip financials)
+    try {
+      const { default: dartClient } = await import('./services/dartClient.js');
+      const dc = new dartClient(process.env.DART_API_KEY);
+      const corpCode = await dc.findCorpCodeByName(entity.canonicalName);
+      checks.dart_lookup = corpCode
+        ? { status: 'pass', corpCode }
+        : { status: 'warn', message: 'Corp code not found (may be non-listed)' };
+    } catch (dartErr) {
+      checks.dart_lookup = { status: 'fail', message: dartErr.message };
+    }
+
+    // Overall status
+    const allStatuses = Object.values(checks).map(c => c.status);
+    const overall = allStatuses.every(s => s === 'pass') ? 'healthy'
+      : allStatuses.some(s => s === 'fail') ? 'unhealthy' : 'degraded';
+
+    res.json({ status: overall, brno: testBrno, timestamp: new Date().toISOString(), checks });
+  } catch (error) {
+    res.status(500).json({ status: 'unhealthy', error: safeErrorMessage(error), checks });
   }
 });
 

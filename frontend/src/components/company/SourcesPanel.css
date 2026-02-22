@@ -6,7 +6,7 @@
 .sources-cards {
   display: flex;
   flex-direction: column;
-  gap: var(--spacing-md);
+  gap: var(--spacing-sm);
 }
 
 .source-card {
@@ -16,63 +16,64 @@
   overflow: hidden;
 }
 
+/* Unified clickable header with + toggle */
 .source-card__header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: var(--spacing-md) var(--spacing-lg);
-  background: var(--bg-surface-hover);
-  border-bottom: 1px solid var(--border-subtle);
-}
-
-.source-card__header h4 {
-  margin: 0;
-  font-size: 0.9rem;
-  color: var(--text-primary);
-  font-weight: 600;
-}
-
-.source-card__header--toggle {
   width: 100%;
+  padding: var(--spacing-sm) var(--spacing-lg);
+  background: var(--bg-surface-hover);
   border: none;
+  border-bottom: none;
   cursor: pointer;
   text-align: left;
   font: inherit;
   color: inherit;
-  background: var(--bg-surface-hover);
 }
 
-.source-card__header--toggle:hover {
+.source-card__header:hover {
   background: var(--bg-elevated);
 }
 
-.source-card__header--toggle span {
+.source-card__header h4 {
+  margin: 0;
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  font-weight: 600;
+}
+
+.source-card__meta {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+}
+
+.source-card__count {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  padding: 1px 6px;
+  background: var(--bg-surface);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border-subtle);
+}
+
+.source-card__toggle {
   font-size: 1.1rem;
   font-weight: bold;
   color: var(--text-muted);
+  width: 20px;
+  text-align: center;
+  line-height: 1;
 }
 
-.raw-toggle {
-  font-size: 0.7rem;
-  padding: 2px 8px;
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  background: var(--bg-surface);
-  color: var(--text-muted);
-  cursor: pointer;
-}
-
-.raw-toggle:hover {
-  background: var(--bg-surface-hover);
-  color: var(--text-secondary);
-}
-
-/* Field cards */
+/* Field grid */
 .source-card__fields {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
   gap: 1px;
   background: var(--border-subtle);
+  border-top: 1px solid var(--border-subtle);
 }
 
 .source-field {
@@ -83,11 +84,16 @@
   background: var(--bg-surface);
 }
 
+.source-field--empty {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: var(--spacing-md);
+}
+
 .source-field__label {
   font-size: 0.7rem;
   font-weight: 600;
   color: var(--text-muted);
-  text-transform: uppercase;
   letter-spacing: 0.3px;
 }
 
@@ -95,25 +101,6 @@
   font-size: 0.85rem;
   color: var(--text-primary);
   word-break: break-all;
-}
-
-/* Raw JSON */
-.source-card__raw {
-  margin: 0;
-  padding: var(--spacing-md);
-  background: var(--bg-surface-hover);
-  border-top: 1px solid var(--border-subtle);
-  font-size: 0.7rem;
-  line-height: 1.4;
-  color: var(--text-secondary);
-  overflow-x: auto;
-  max-height: 300px;
-  overflow-y: auto;
-}
-
-/* Minor source card */
-.source-card--minor .source-card__header {
-  border-bottom: none;
 }
 
 /* Source tags (when no apiData) */

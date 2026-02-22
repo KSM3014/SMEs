@@ -262,7 +262,7 @@ a:hover {
 
 .badge-primary { background: var(--primary-light); color: white; }
 .badge-success { background: var(--success); color: white; }
-.badge-warning { background: var(--warning); color: white; }
+.badge-warning { background: var(--warning); color: #1a1a2e; }
 .badge-danger { background: var(--danger); color: white; }
 
 /* Loading */

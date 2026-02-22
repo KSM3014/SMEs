@@ -40,71 +40,154 @@ router.get('/suggest', async (req, res) => {
     const candidates = [];
     console.log(`[Suggest] q="${query}" isNumber=${isNumber}`);
 
+    // 가비지 BRN — 여러 무관한 사업체가 공유하는 더미 번호, dedup에 사용 불가
+    const GARBAGE_BRNS = new Set(['0000000000', '5555555555', '1111111111', '9999999999']);
+    const isValidBrn = (brn) => brn && brn.length === 10 && !GARBAGE_BRNS.has(brn);
+
+    // BRN 기준 중복 병합 헬퍼 (짧은 이름 우선, 메타데이터 병합)
+    const mergeCandidate = (existing, newData) => {
+      if (newData.company_name && newData.company_name.length < existing.company_name.length) {
+        existing.company_name = newData.company_name;
+      }
+      existing.business_number = existing.business_number || newData.business_number;
+      existing.corp_number = existing.corp_number || newData.corp_number;
+      existing.stock_code = existing.stock_code || newData.stock_code;
+      existing.id = existing.business_number || existing.id;
+      if (newData.sourcesCount > existing.sourcesCount) existing.sourcesCount = newData.sourcesCount;
+      if (newData.confidence > existing.confidence) existing.confidence = newData.confidence;
+    };
+
+    const findExisting = (brno, name) => {
+      return candidates.find(c =>
+        (isValidBrn(brno) && c.business_number === brno) ||
+        c.company_name === name
+      );
+    };
+
     if (isNumber) {
-      // 사업자등록번호 또는 법인등록번호로 검색
+      // 사업자등록번호 또는 법인등록번호로 검색 — company_search + entity_registry
       const normalized = query.replace(/-/g, '');
+
+      const [csResults] = await sequelize.query(`
+        SELECT company_name, brno, corp_code, stock_code
+        FROM company_search
+        WHERE brno LIKE $1
+        ORDER BY is_listed DESC, LENGTH(company_name)
+        LIMIT 10
+      `, { bind: [`${normalized}%`] });
+
+      for (const r of csResults) {
+        const dup = isValidBrn(r.brno) && candidates.find(c => c.business_number === r.brno);
+        if (dup) {
+          mergeCandidate(dup, { company_name: r.company_name, stock_code: r.stock_code });
+          continue;
+        }
+        candidates.push({
+          id: r.brno || r.corp_code,
+          business_number: r.brno || null,
+          corp_number: null,
+          company_name: r.company_name,
+          stock_code: r.stock_code || null,
+          confidence: 1,
+          sourcesCount: 0,
+          source: r.corp_code ? 'dart' : 'comwel'
+        });
+      }
+
+      // entity_registry 보강
       const [entities] = await sequelize.query(`
-        SELECT entity_id, canonical_name, brno, crno, sources_count, confidence
+        SELECT canonical_name, brno, crno, sources_count, confidence
         FROM entity_registry
         WHERE brno = $1 OR crno = $1 OR brno LIKE $2
-        ORDER BY sources_count DESC
-        LIMIT 10
+        ORDER BY sources_count DESC LIMIT 10
       `, { bind: [normalized, `${normalized}%`] });
 
       for (const e of entities) {
-        candidates.push({
-          id: e.brno || e.entity_id,
-          business_number: e.brno,
-          corp_number: e.crno,
-          company_name: e.canonical_name,
-          confidence: parseFloat(e.confidence) || 1,
-          sourcesCount: parseInt(e.sources_count) || 0,
-          source: 'db'
-        });
+        const existing = findExisting(e.brno, e.canonical_name);
+        if (existing) {
+          mergeCandidate(existing, {
+            company_name: e.canonical_name,
+            business_number: e.brno,
+            corp_number: e.crno,
+            sourcesCount: parseInt(e.sources_count) || 0,
+            confidence: parseFloat(e.confidence) || 1
+          });
+        } else {
+          candidates.push({
+            id: e.brno,
+            business_number: e.brno,
+            corp_number: e.crno,
+            company_name: e.canonical_name,
+            confidence: parseFloat(e.confidence) || 1,
+            sourcesCount: parseInt(e.sources_count) || 0,
+            source: 'db'
+          });
+        }
       }
     } else {
-      // 회사명으로 검색 — entity_registry
+      // 회사명으로 검색 — company_search 통합 테이블 (dart + comwel + api, 235만건)
+      // prefix + contains 매칭 (주식회사/㈜ 접두사 뒤에 있는 이름도 검색)
+
+      const [csResults] = await sequelize.query(`
+        (SELECT company_name, brno, corp_code, stock_code, is_listed
+         FROM company_search
+         WHERE company_name LIKE $1
+         ORDER BY is_listed DESC, LENGTH(company_name)
+         LIMIT 15)
+        UNION
+        (SELECT company_name, brno, corp_code, stock_code, is_listed
+         FROM company_search
+         WHERE company_name LIKE $2
+         ORDER BY is_listed DESC, LENGTH(company_name)
+         LIMIT 15)
+        LIMIT 20
+      `, { bind: [`${query}%`, `%${query}%`] });
+
+      for (const r of csResults) {
+        const dup = isValidBrn(r.brno) && candidates.find(c => c.business_number === r.brno);
+        if (dup) {
+          mergeCandidate(dup, { company_name: r.company_name, stock_code: r.stock_code });
+          continue;
+        }
+        candidates.push({
+          id: r.brno || r.corp_code,
+          business_number: r.brno || null,
+          corp_number: null,
+          company_name: r.company_name,
+          stock_code: r.stock_code || null,
+          confidence: 1,
+          sourcesCount: 0,
+          source: r.corp_code ? 'dart' : 'comwel'
+        });
+      }
+
+      // entity_registry 보강 (BRN + 소스수 정보)
       const [entities] = await sequelize.query(`
-        SELECT entity_id, canonical_name, brno, crno, sources_count, confidence
+        SELECT canonical_name, brno, crno, sources_count, confidence
         FROM entity_registry
         WHERE canonical_name ILIKE $1
-        ORDER BY sources_count DESC
-        LIMIT 10
+        ORDER BY sources_count DESC LIMIT 10
       `, { bind: [`%${query}%`] });
 
       for (const e of entities) {
-        candidates.push({
-          id: e.brno || e.entity_id,
-          business_number: e.brno,
-          corp_number: e.crno,
-          company_name: e.canonical_name,
-          confidence: parseFloat(e.confidence) || 1,
-          sourcesCount: parseInt(e.sources_count) || 0,
-          source: 'db'
-        });
-      }
-
-      // dart_corp_codes에서도 검색 (entity_registry에 없는 것만)
-      const existingNames = new Set(candidates.map(c => c.company_name));
-      const [dartCodes] = await sequelize.query(`
-        SELECT corp_code, corp_name, stock_code
-        FROM dart_corp_codes
-        WHERE corp_name ILIKE $1
-        ORDER BY LENGTH(corp_name)
-        LIMIT 10
-      `, { bind: [`%${query}%`] });
-
-      for (const d of dartCodes) {
-        if (!existingNames.has(d.corp_name)) {
+        const existing = findExisting(e.brno, e.canonical_name);
+        if (existing) {
+          mergeCandidate(existing, {
+            company_name: e.canonical_name,
+            business_number: e.brno,
+            corp_number: e.crno,
+            sourcesCount: parseInt(e.sources_count) || 0,
+            confidence: parseFloat(e.confidence) || 1
+          });
+        } else {
           candidates.push({
-            id: d.corp_code,
-            business_number: null,
-            corp_number: null,
-            company_name: d.corp_name,
-            stock_code: d.stock_code?.trim() || null,
-            confidence: 1,
-            sourcesCount: 0,
-            source: 'dart'
+            id: e.brno || e.entity_id,
+            business_number: e.brno,
+            corp_number: e.crno,
+            company_name: e.canonical_name,
+            confidence: parseFloat(e.confidence) || 1,
+            sourcesCount: parseInt(e.sources_count) || 0,
+            source: 'db'
           });
         }
       }
@@ -337,7 +420,7 @@ router.get('/live/:identifier', async (req, res) => {
   let resolvedBrno = brno;
 
   try {
-    // If we only have corpCode, resolve company info from DART DB
+    // If we only have corpCode, resolve company info from DART DB + DART API
     if (corpCode && !brno) {
       const [dartRows] = await sequelize.query(
         'SELECT corp_code, corp_name, stock_code FROM dart_corp_codes WHERE corp_code = $1 LIMIT 1',
@@ -346,14 +429,32 @@ router.get('/live/:identifier', async (req, res) => {
       if (dartRows.length > 0) {
         resolvedCompanyName = dartRows[0].corp_name;
         console.log(`[SSE] Resolved corp_code ${corpCode} → ${resolvedCompanyName}`);
-        // Try to find BRN from entity_registry by company name
+
+        // 1차: entity_registry에서 BRN 찾기
         const [entityRows] = await sequelize.query(
           'SELECT brno, crno FROM entity_registry WHERE canonical_name = $1 AND brno IS NOT NULL LIMIT 1',
           { bind: [resolvedCompanyName] }
         );
         if (entityRows.length > 0 && entityRows[0].brno) {
           resolvedBrno = entityRows[0].brno;
-          console.log(`[SSE] Resolved company name → brno=${resolvedBrno}`);
+          console.log(`[SSE] Resolved from entity_registry → brno=${resolvedBrno}`);
+        }
+
+        // 2차: DART company.json API에서 BRN 가져오기 (entity_registry에 없을 때)
+        if (!resolvedBrno) {
+          try {
+            const dartApiService = (await import('../services/dartApiService.js')).default;
+            const dartCompanyInfo = await dartApiService.getCompanyInfo(corpCode);
+            if (dartCompanyInfo?.business_number) {
+              const dartBrno = dartCompanyInfo.business_number.replace(/-/g, '');
+              if (/^\d{10}$/.test(dartBrno)) {
+                resolvedBrno = dartBrno;
+                console.log(`[SSE] Resolved from DART API → brno=${resolvedBrno}`);
+              }
+            }
+          } catch (dartErr) {
+            console.warn(`[SSE] DART company info lookup failed: ${dartErr.message}`);
+          }
         }
       }
     }
@@ -387,8 +488,94 @@ router.get('/live/:identifier', async (req, res) => {
       }
     }
 
-    // 2. DART + 86 APIs 병렬 실행
-    send('live_start', { message: 'Fetching DART + 86 APIs...', timestamp: new Date().toISOString() });
+    // 1.5 벤처기업인증 조회 (DB 로컬 — 즉시)
+    let ventureInfo = null;
+    try {
+      const companyName = mappedDb?.company_name || resolvedCompanyName || '';
+      if (companyName) {
+        const normalized = companyName
+          .replace(/주식회사\s*/g, '').replace(/㈜\s*/g, '').replace(/\(주\)\s*/g, '')
+          .replace(/유한회사\s*/g, '').replace(/유한책임회사\s*/g, '').replace(/\s+/g, '').trim();
+        const [ventureRows] = await sequelize.query(`
+          SELECT company_name, venture_type, region, industry_name, main_products,
+                 valid_from, valid_to, certifier, is_new
+          FROM venture_certifications
+          WHERE company_name_normalized = $1
+          ORDER BY valid_to DESC
+        `, { bind: [normalized] });
+        if (ventureRows.length > 0) {
+          ventureInfo = ventureRows; // all certifications (array)
+          console.log(`[SSE] Venture match: "${companyName}" → ${ventureRows.length} certifications, latest: ${ventureRows[0].venture_type} (${ventureRows[0].valid_from}~${ventureRows[0].valid_to})`);
+        }
+      }
+    } catch (ventureErr) {
+      console.warn('[SSE] Venture lookup error:', ventureErr.message);
+    }
+
+    // 1.6 강소기업 조회 (Work24 — DB 로컬, brno 매칭 — 즉시)
+    let strongSmeInfo = null;
+    if (resolvedBrno) {
+      try {
+        const [smeRows] = await sequelize.query(`
+          SELECT company_name, brand_name, brand_code, selection_year,
+                 super_industry_name, industry_name, region_name, address,
+                 employee_count, main_products, strengths, homepage,
+                 is_youth_friendly
+          FROM work24_strong_smes
+          WHERE brno = $1
+          ORDER BY selection_year DESC LIMIT 1
+        `, { bind: [resolvedBrno] });
+        if (smeRows.length > 0) {
+          strongSmeInfo = smeRows[0];
+          console.log(`[SSE] Strong SME match: "${resolvedBrno}" → ${strongSmeInfo.brand_name} (${strongSmeInfo.selection_year})`);
+        }
+      } catch (smeErr) {
+        console.warn('[SSE] Strong SME lookup error:', smeErr.message);
+      }
+    }
+
+    // 1.7 KIPRIS 특허 정보 조회 (비동기 — DART/API와 병렬)
+    const patentPromise = (async () => {
+      try {
+        const companyName = mappedDb?.company_name || resolvedCompanyName || '';
+        if (!companyName) return null;
+        const { fetchPatentData } = await import('../services/apiAdapters/kiprisAdapter.js');
+        const result = await fetchPatentData(companyName);
+        if (result && (result.patents.total > 0 || result.trademarks.total > 0)) {
+          send('patent_data', { available: true, ...result });
+        } else {
+          send('patent_data', { available: false, message: '특허/상표 정보 없음' });
+        }
+        return result;
+      } catch (err) {
+        console.error('[SSE] KIPRIS patent lookup error:', err.message);
+        send('patent_data', { available: false, message: err.message });
+        return null;
+      }
+    })();
+
+    // 1.8 조달청 나라장터 계약/낙찰 조회 (비동기 — DART/API/KIPRIS와 병렬)
+    const procurementPromise = (async () => {
+      try {
+        const companyName = mappedDb?.company_name || resolvedCompanyName || '';
+        if (!companyName && !resolvedBrno) return null;
+        const { fetchProcurementData } = await import('../services/apiAdapters/procurementAdapter.js');
+        const result = await fetchProcurementData({ companyName, brno: resolvedBrno });
+        if (result && result.contractCount > 0) {
+          send('procurement_data', { available: true, ...result });
+        } else {
+          send('procurement_data', { available: false, message: '조달청 계약이력 없음 (최근 2개월 샘플 기준)' });
+        }
+        return result;
+      } catch (err) {
+        console.error('[SSE] Procurement lookup error:', err.message);
+        send('procurement_data', { available: false, message: err.message });
+        return null;
+      }
+    })();
+
+    // 2. DART + 86 APIs + KIPRIS + 조달청 병렬 실행
+    send('live_start', { message: 'Fetching DART + 86 APIs + KIPRIS + 조달청...', timestamp: new Date().toISOString() });
 
     // DART: fetch and send as soon as ready
     const dartPromise = (async () => {
@@ -397,31 +584,24 @@ router.get('/live/:identifier', async (req, res) => {
         const entityForDart = dbEntity || { canonicalName, brno: resolvedBrno };
         console.log(`[SSE] DART lookup: canonicalName=${entityForDart.canonicalName}, brno=${entityForDart.brno}, corpCode=${corpCode}`);
 
-        // If we have corpCode directly, use it to bypass name lookup
+        // DART 데이터 수집: collectCompanyDataFull = 최신보고서 탐색 + 다년도 이력
         let dartData = null;
         if (corpCode) {
           const dartApiService = (await import('../services/dartApiService.js')).default;
-          const currentYear = new Date().getFullYear();
-          for (let y = currentYear; y >= currentYear - 2; y--) {
-            dartData = await dartApiService.collectCompanyData(corpCode, y);
-            if (dartData?.financials || dartData?.officers?.length > 0) {
-              dartData._fiscalYear = y;
-              break;
-            }
-          }
-          if (!dartData || (!dartData.financials && (!dartData.officers || dartData.officers.length === 0))) {
-            dartData = await dartApiService.collectCompanyData(corpCode, currentYear - 1);
-            if (dartData) dartData._fiscalYear = currentYear - 1;
-          }
+          dartData = await dartApiService.collectCompanyDataFull(corpCode);
         } else {
           dartData = await fetchDartData(entityForDart);
         }
 
+        let dartMapped = null;
+        let isListed = false;
+
         if (dartData && dartData.company_info) {
-          const dartMapped = mapEntityToCompanyDetail(
+          dartMapped = mapEntityToCompanyDetail(
             dbEntity || { brno: resolvedBrno, entityId: `ent_${resolvedBrno || corpCode}`, apiData: [], conflicts: [], sources: [] },
             dartData
           );
+          isListed = dartMapped.listed || !!dartMapped.stock_code;
           send('dart_data', {
             available: true,
             financial_statements: dartMapped.financial_statements,
@@ -430,35 +610,67 @@ router.get('/live/:identifier', async (req, res) => {
             shareholders: dartMapped.shareholders,
             three_year_average: dartMapped.three_year_average,
             red_flags: dartMapped.red_flags,
+            report_period: dartMapped.report_period,
+            report_year: dartMapped.report_year,
             company_name: dartMapped.company_name,
             ceo_name: dartMapped.ceo_name,
             address: dartMapped.address,
+            phone: dartMapped.phone,
+            website: dartMapped.website,
+            corp_registration_no: dartMapped.corp_registration_no,
+            corp_cls: dartMapped.corp_cls,
             listed: dartMapped.listed,
             stock_code: dartMapped.stock_code,
             revenue: dartMapped.revenue,
             operating_margin: dartMapped.operating_margin,
             roe: dartMapped.roe,
-            debt_ratio: dartMapped.debt_ratio
+            debt_ratio: dartMapped.debt_ratio,
+            latest_annual: dartMapped.latest_annual,
+            employee_status: dartMapped.employee_status,
+            directors_compensation: dartMapped.directors_compensation,
+            dividend_details: dartMapped.dividend_details,
+            financial_indicators: dartMapped.financial_indicators
           });
         } else {
           send('dart_data', { available: false, message: 'DART 전자공시에 등록되지 않은 기업입니다.' });
+        }
 
-          // Sminfo fallback for non-listed companies
+        // Sminfo: 비상장 회사 전부 대상 (DART 유무와 무관)
+        // 상장기업(유가증권/코스닥)은 DART에 충분한 재무데이터가 있으므로 스킵
+        if (!isListed) {
           try {
             const SminfoClient = (await import('../services/sminfoClient.js')).default;
             const sminfo = new SminfoClient();
 
+            // Try full legal name first (주식회사 X), then canonical name
+            const canonName = entityForDart.canonicalName || mappedDb?.company_name || canonicalName;
+            // Find full company name from API raw data (e.g., "주식회사 고퀄" vs "고퀄")
+            const fullCorpName = (() => {
+              if (!dbEntity?.apiData) return null;
+              for (const src of dbEntity.apiData) {
+                const d = src.data;
+                if (d?.corpNm && d.corpNm !== canonName) return d.corpNm; // FSC Discovery
+                if (d?.detail?.companyName && d.detail.companyName !== canonName) return d.detail.companyName; // NPS
+              }
+              return null;
+            })();
+            const searchName = fullCorpName || canonName;
             const sminfoMatchCriteria = {
-              companyName: entityForDart.canonicalName,
-              ceoName: mappedDb?.ceo_name || null,
-              industry: mappedDb?.industry_name || null,
-              address: mappedDb?.address || null,
+              companyName: searchName,
+              ceoName: dartMapped?.ceo_name || mappedDb?.ceo_name || null,
+              industry: dartMapped?.industry_name || mappedDb?.industry_name || null,
+              address: dartMapped?.address || mappedDb?.address || null,
               companyType: null
             };
 
-            const sminfoResult = await sminfo.searchByCompanyName(
-              entityForDart.canonicalName, sminfoMatchCriteria
-            );
+            console.log(`[SSE] Sminfo lookup for non-listed: "${searchName}" (canonical: "${canonName}")`);
+            let sminfoResult = await sminfo.searchByCompanyName(searchName, sminfoMatchCriteria);
+
+            // Retry with canonical name if full name returned no results
+            if (!sminfoResult && searchName !== canonName) {
+              console.log(`[SSE] Sminfo retry with canonical name: "${canonName}"`);
+              sminfoResult = await sminfo.searchByCompanyName(canonName, sminfoMatchCriteria);
+            }
 
             if (sminfoResult && sminfoResult.financials && sminfoResult.matchScore >= 0.6) {
               const sminfoFinancials = mapSminfoToFinancials(sminfoResult.financials);
@@ -490,6 +702,7 @@ router.get('/live/:identifier', async (req, res) => {
             send('sminfo_data', { available: false, message: `sminfo 조회 실패: ${sminfoErr.message}` });
           }
         }
+
         return dartData;
       } catch (err) {
         send('dart_data', { available: false, message: `DART 조회 실패: ${err.message}` });
@@ -502,9 +715,11 @@ router.get('/live/:identifier', async (req, res) => {
       ? apiOrchestrator.searchCompany({ brno: resolvedBrno, crno: crno || null, companyName: null })
       : Promise.resolve(null);
 
-    const [dartSettled, liveSettled] = await Promise.allSettled([dartPromise, livePromise]);
+    const [dartSettled, liveSettled, patentSettled, procurementSettled] = await Promise.allSettled([dartPromise, livePromise, patentPromise, procurementPromise]);
     dartDataResult = dartSettled.status === 'fulfilled' ? dartSettled.value : null;
     const liveResult = liveSettled.status === 'fulfilled' ? liveSettled.value : null;
+    const patentResult = patentSettled.status === 'fulfilled' ? patentSettled.value : null;
+    const procurementResult = procurementSettled.status === 'fulfilled' ? procurementSettled.value : null;
 
     // 3. Diff 계산 및 전송
     if (liveResult) {
@@ -545,6 +760,74 @@ router.get('/live/:identifier', async (req, res) => {
     const finalCompany = sourceEntity
       ? mapEntityToCompanyDetail(sourceEntity, dartDataResult)
       : null;
+    // Inject venture certification into final company data (all certifications)
+    if (finalCompany && ventureInfo && ventureInfo.length > 0) {
+      const latest = ventureInfo[0]; // sorted by valid_to DESC
+      const isExpired = new Date(latest.valid_to) < new Date();
+      // Primary certification (latest) for badge display
+      finalCompany.venture_certification = {
+        certified: true,
+        expired: isExpired,
+        type: latest.venture_type,
+        valid_from: latest.valid_from,
+        valid_to: latest.valid_to,
+        certifier: latest.certifier,
+        industry: latest.industry_name,
+        main_products: latest.main_products,
+        is_new: latest.is_new,
+      };
+      // All certifications for detail display
+      finalCompany.venture_certifications = ventureInfo.map(v => ({
+        certified: true,
+        expired: new Date(v.valid_to) < new Date(),
+        type: v.venture_type,
+        valid_from: v.valid_from,
+        valid_to: v.valid_to,
+        certifier: v.certifier,
+        industry: v.industry_name,
+        main_products: v.main_products,
+        is_new: v.is_new,
+      }));
+    }
+
+    // Inject 강소기업 certification into final company data
+    if (finalCompany && strongSmeInfo) {
+      finalCompany.strong_sme = {
+        certified: true,
+        brand_name: strongSmeInfo.brand_name,
+        brand_code: strongSmeInfo.brand_code,
+        selection_year: strongSmeInfo.selection_year,
+        industry: strongSmeInfo.industry_name,
+        super_industry: strongSmeInfo.super_industry_name,
+        region: strongSmeInfo.region_name,
+        employee_count: strongSmeInfo.employee_count,
+        main_products: strongSmeInfo.main_products,
+        strengths: strongSmeInfo.strengths,
+        homepage: strongSmeInfo.homepage,
+        is_youth_friendly: strongSmeInfo.is_youth_friendly,
+      };
+    }
+
+    // Inject KIPRIS patent data into final company data
+    if (finalCompany && patentResult && patentResult.patents.total > 0) {
+      finalCompany.patent_data = patentResult;
+    }
+
+    // Inject procurement data into final company data
+    if (finalCompany && procurementResult && procurementResult.isGovernmentVendor) {
+      finalCompany.procurement = {
+        isGovernmentVendor: true,
+        contractCount: procurementResult.contractCount,
+        awardCount: procurementResult.awardCount,
+        totalValue: procurementResult.totalValue,
+        latestContract: procurementResult.latestContract,
+        latestAward: procurementResult.latestAward,
+        contracts: procurementResult.contracts,
+        awards: procurementResult.awards,
+        searchPeriod: procurementResult.searchPeriod,
+      };
+    }
+
     send('complete', {
       company: finalCompany,
       conflicts: updatedEntity?.conflicts || [],

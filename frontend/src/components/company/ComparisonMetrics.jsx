@@ -1,6 +1,6 @@
 import './ComparisonMetrics.css';
 
-function ComparisonMetrics({ current, average }) {
+function ComparisonMetrics({ current, average, sourceRef }) {
   if (!average) return null;
 
   const formatCurrency = (value) => {
@@ -62,8 +62,13 @@ function ComparisonMetrics({ current, average }) {
   return (
     <section className="comparison-metrics">
       <div className="comparison-header">
-        <h2>📊 과거 3년 평균 대비 현재 성과</h2>
-        <p className="text-muted">최근 실적과 과거 3년 평균을 비교합니다</p>
+        <h2>과거 3년 평균 대비 현재 성과{sourceRef}</h2>
+        <p className="text-muted">
+          {current.year ? `${current.year}년 사업보고서` : '최근 실적'}과
+          {average._years?.length > 0
+            ? ` ${average._years[0]}~${average._years[average._years.length - 1]}년 평균`
+            : ' 과거 3년 평균'}을 비교합니다
+        </p>
       </div>
 
       <div className="metrics-grid">
@@ -72,12 +77,12 @@ function ComparisonMetrics({ current, average }) {
             <div className="metric-label">{metric.label}</div>
             <div className="metric-comparison">
               <div className="current-value">
-                <span className="value-label">현재</span>
+                <span className="value-label">{current.year ? `${current.year}년` : '현재'}</span>
                 <span className="value">{metric.current}</span>
               </div>
               <div className="vs-divider">vs</div>
               <div className="average-value">
-                <span className="value-label">3년 평균</span>
+                <span className="value-label">{average._count ? `${average._count}년 평균` : '3년 평균'}</span>
                 <span className="value">{metric.average}</span>
               </div>
             </div>

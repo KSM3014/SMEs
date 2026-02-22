@@ -24,19 +24,8 @@ export async function fetchDartData(entity) {
     const corpCode = await dartClient.findCorpCodeByName(entity.canonicalName);
     if (!corpCode) return null;
 
-    const currentYear = new Date().getFullYear();
-    // Try current year, then previous years until we find data
-    for (let y = currentYear; y >= currentYear - 2; y--) {
-      const data = await dartApiService.collectCompanyData(corpCode, y);
-      if (data.financials || data.officers?.length > 0) {
-        data._fiscalYear = y;
-        return data;
-      }
-    }
-    // Return whatever we got (at least company_info)
-    const data = await dartApiService.collectCompanyData(corpCode, currentYear - 1);
-    data._fiscalYear = currentYear - 1;
-    return data;
+    // collectCompanyDataFull: 최신 보고서 탐색 + 다년도 이력 + 임원/주주
+    return await dartApiService.collectCompanyDataFull(corpCode);
   } catch (err) {
     console.error('[DataMapper] DART fetch error:', err.message);
     return null;
@@ -62,8 +51,8 @@ export function mapEntityToCompanyDetail(entity, dartData) {
     company_name: dartInfo?.corp_name || entity.canonicalName || basic.company_name,
     ceo_name: dartInfo?.ceo_name || basic.representative || null,
     address: dartInfo?.address || basic.address || null,
-    phone: dartInfo?.phone || basic.phone || null,
-    website: dartInfo?.homepage || basic.website || null,
+    phone: dartInfo?.phone || dartInfo?.phn_no || basic.phone || null,
+    website: dartInfo?.homepage || dartInfo?.hm_url || basic.website || null,
     establishment_date: formatDartDate(dartInfo?.establishment_date) || formatDartDate(basic.establishment_date) || null,
     industry_code: dartInfo?.industry_code || basic.industry_code || null,
     industry_name: (() => {
@@ -76,9 +65,9 @@ export function mapEntityToCompanyDetail(entity, dartData) {
       if (code && name) return `${code} (${name})`;
       return name || code || null;
     })(),
-    corp_registration_no: dartInfo?.jurir_no || null,
+    corp_registration_no: dartInfo?.jurir_no || basic.corp_registration_no || null,
     corp_cls: dartInfo?.corp_cls || null,
-    employee_count: basic.employee_count || null,
+    employee_count: dartData?.employee_status?.total || basic.employee_count || null,
 
     // Certifications — extracted from raw API data
     venture_certification: extractCertification(entity, 'venture'),
@@ -88,30 +77,37 @@ export function mapEntityToCompanyDetail(entity, dartData) {
     stock_code: dartInfo?.stock_code?.trim() || null,
     corp_code: dartInfo?.corp_code || null,
 
-    // Financial metrics from DART
-    revenue: financials?.is?.revenue || null,
-    operating_profit: financials?.is?.operating_profit || null,
+    // Financial metrics from DART (use ?? to preserve 0 values)
+    revenue: financials?.is?.revenue ?? null,
+    operating_profit: financials?.is?.operating_profit ?? null,
     operating_margin: calcMargin(financials?.is?.operating_profit, financials?.is?.revenue),
     roe: calcROE(financials?.is?.net_income, financials?.bs?.total_equity),
     debt_ratio: calcDebtRatio(financials?.bs?.total_liabilities, financials?.bs?.total_equity),
-    total_assets: financials?.bs?.total_assets || null,
-    total_liabilities: financials?.bs?.total_liabilities || null,
-    total_equity: financials?.bs?.total_equity || null,
-    net_profit: financials?.is?.net_income || null,
+    total_assets: financials?.bs?.total_assets ?? null,
+    total_liabilities: financials?.bs?.total_liabilities ?? null,
+    total_equity: financials?.bs?.total_equity ?? null,
+    net_profit: financials?.is?.net_income ?? null,
 
     // Detailed financial sections
     financial_statements: mapFinancialStatements(financials),
-    financial_history: [], // Would need multi-year DART data
+    financial_history: mapFinancialHistory(dartData?.financial_history_raw),
     officers: mapOfficers(dartData?.officers),
     shareholders: mapShareholders(dartData?.ownership),
 
-    // 3-year comparison (single year available → use as current)
-    three_year_average: financials ? {
-      revenue: financials.is?.revenue || null,
-      operating_margin: calcMargin(financials.is?.operating_profit, financials.is?.revenue),
-      roe: calcROE(financials.is?.net_income, financials.bs?.total_equity),
-      debt_ratio: calcDebtRatio(financials.bs?.total_liabilities, financials.bs?.total_equity)
-    } : null,
+    // 보고서 기간 메타데이터
+    report_period: dartData?._reportLabel ?? null,
+    report_year: dartData?._fiscalYear ?? null,
+
+    // 3-year comparison — 실제 다년도 데이터에서 평균 계산
+    three_year_average: computeThreeYearAverage(dartData?.financial_history_raw),
+    // 최신 사업보고서 기준 지표 (3년 평균 대비 비교용 — Q3 등이면 연간 데이터 사용)
+    latest_annual: getLatestAnnualMetrics(dartData?.financial_history_raw),
+
+    // DART extended data
+    employee_status: dartData?.employee_status || null,
+    directors_compensation: dartData?.directors_compensation || null,
+    dividend_details: dartData?.dividend_details || null,
+    financial_indicators: dartData?.financial_indicators || null,
 
     // Red flags
     red_flags: generateRedFlags(entity, dartData),
@@ -167,6 +163,7 @@ function extractFieldsFromRawData(rawData) {
       industryCode: rawData.enpMainBizNm || null,
       employeeCount: rawData.enpEmpeCnt ? parseInt(rawData.enpEmpeCnt) : null,
       establishmentDate: rawData.enpEstbDt || null,
+      corpRegistrationNo: rawData.crno || null,
     };
   }
 
@@ -218,7 +215,7 @@ function extractFieldsFromRawData(rawData) {
 function extractBasicInfo(entity) {
   const apiData = entity.apiData || [];
   if (apiData.length === 0) {
-    return { company_name: entity.canonicalName, address: null, representative: null, industry_code: null, industry_name: null, employee_count: null, phone: null, website: null, establishment_date: null };
+    return { company_name: entity.canonicalName, address: null, representative: null, industry_code: null, industry_name: null, employee_count: null, phone: null, website: null, establishment_date: null, corp_registration_no: null };
   }
 
   // Phase 1: Collect from top-level DB-stored fields
@@ -232,6 +229,7 @@ function extractBasicInfo(entity) {
     phone: [],
     website: [],
     establishmentDate: [],
+    corpRegistrationNo: [],
   };
 
   for (const s of apiData) {
@@ -242,8 +240,16 @@ function extractBasicInfo(entity) {
   }
 
   // Phase 2: Mine from raw_data (handles adapters that don't extract to top-level)
+  let rawMined = 0;
+  let rawSkipped = 0;
   for (const s of apiData) {
     const extracted = extractFieldsFromRawData(s.data);
+    const hasAny = Object.values(extracted).some(v => v != null);
+    if (hasAny) {
+      rawMined++;
+    } else if (s.data && typeof s.data === 'object' && Object.keys(s.data).length > 0) {
+      rawSkipped++;
+    }
     if (extracted.companyName) collected.companyName.push(extracted.companyName);
     if (extracted.address) collected.address.push(extracted.address);
     if (extracted.representative) collected.representative.push(extracted.representative);
@@ -253,9 +259,24 @@ function extractBasicInfo(entity) {
     if (extracted.phone) collected.phone.push(extracted.phone);
     if (extracted.website) collected.website.push(extracted.website);
     if (extracted.establishmentDate) collected.establishmentDate.push(extracted.establishmentDate);
+    if (extracted.corpRegistrationNo) collected.corpRegistrationNo.push(extracted.corpRegistrationNo);
   }
 
-  return {
+  // Validation: warn only when NO sources were mined at all (true data loss)
+  // Many sources legitimately have non-company-info data (bond info, financial ratios, etc.)
+  if (rawMined === 0 && rawSkipped > 0) {
+    console.warn(`[DataMapper] ⚠️ extractBasicInfo: 0/${apiData.length} sources yielded fields (${rawSkipped} had raw_data). All raw_data formats unrecognized. Entity: ${entity.entityId || entity.canonicalName}`);
+    // Log first unrecognized source's keys for debugging
+    for (const s of apiData) {
+      if (s.data && typeof s.data === 'object' && Object.keys(s.data).length > 0) {
+        const keys = Array.isArray(s.data) ? (s.data[0] ? Object.keys(s.data[0]).slice(0, 8) : ['empty_array']) : Object.keys(s.data).slice(0, 8);
+        console.warn(`[DataMapper]   → Unrecognized source="${s.source}" raw_data keys: [${keys.join(', ')}]`);
+        break; // only log first unrecognized
+      }
+    }
+  }
+
+  const result = {
     company_name: mostFrequent(collected.companyName) || entity.canonicalName,
     address: mostFrequent(collected.address),
     representative: mostFrequent(collected.representative),
@@ -265,7 +286,16 @@ function extractBasicInfo(entity) {
     phone: mostFrequent(collected.phone),
     website: mostFrequent(collected.website),
     establishment_date: mostFrequent(collected.establishmentDate),
+    corp_registration_no: mostFrequent(collected.corpRegistrationNo),
   };
+
+  // Validation: warn if entity has many API sources but result is mostly null
+  const nonNullCount = Object.values(result).filter(v => v != null).length;
+  if (apiData.length >= 3 && nonNullCount <= 2) {
+    console.warn(`[DataMapper] ⚠️ extractBasicInfo: Only ${nonNullCount}/9 fields extracted from ${apiData.length} API sources. Silent data loss likely. Entity: ${entity.entityId || entity.canonicalName}`);
+  }
+
+  return result;
 }
 
 /** Pick the most frequent non-empty value from an array */
@@ -319,38 +349,38 @@ function mapFinancialStatements(financials) {
   if (!financials) return null;
 
   const { bs, is: income, cf } = financials;
-
+  // 주의: ?? null 사용 (|| null 은 0 값을 null로 변환하는 버그)
   return {
     balance_sheet: bs ? {
-      current_assets: bs.current_assets || null,
-      non_current_assets: bs.non_current_assets || null,
-      total_assets: bs.total_assets || null,
-      current_liabilities: bs.current_liabilities || null,
-      non_current_liabilities: bs.non_current_liabilities || null,
-      total_liabilities: bs.total_liabilities || null,
-      capital_stock: bs.capital_stock || null,
-      retained_earnings: bs.retained_earnings || null,
-      total_equity: bs.total_equity || null
+      current_assets: bs.current_assets ?? null,
+      non_current_assets: bs.non_current_assets ?? null,
+      total_assets: bs.total_assets ?? null,
+      current_liabilities: bs.current_liabilities ?? null,
+      non_current_liabilities: bs.non_current_liabilities ?? null,
+      total_liabilities: bs.total_liabilities ?? null,
+      capital_stock: bs.capital_stock ?? null,
+      retained_earnings: bs.retained_earnings ?? null,
+      total_equity: bs.total_equity ?? null
     } : null,
     income_statement: income ? {
-      revenue: income.revenue || null,
-      cost_of_sales: income.cost_of_sales || null,
-      gross_profit: income.gross_profit || null,
-      operating_expenses: income.operating_expenses || null,
-      operating_profit: income.operating_profit || null,
-      non_operating_income: income.non_operating_income || null,
-      non_operating_expenses: income.non_operating_expenses || null,
-      profit_before_tax: income.income_before_tax || null,
-      income_tax: income.income_tax_expense || null,
-      net_profit: income.net_income || null
+      revenue: income.revenue ?? null,
+      cost_of_sales: income.cost_of_sales ?? null,
+      gross_profit: income.gross_profit ?? null,
+      operating_expenses: income.operating_expenses ?? null,
+      operating_profit: income.operating_profit ?? null,
+      non_operating_income: income.non_operating_income ?? null,
+      non_operating_expenses: income.non_operating_expenses ?? null,
+      profit_before_tax: income.income_before_tax ?? null,
+      income_tax: income.income_tax_expense ?? null,
+      net_profit: income.net_income ?? null
     } : null,
     cash_flow: cf ? {
-      net_profit: cf.net_income || null,
+      net_profit: cf.net_income ?? null,
       operating_adjustments: null,
-      operating_cash_flow: cf.operating_cash_flow || null,
-      investing_cash_flow: cf.investing_cash_flow || null,
-      financing_cash_flow: cf.financing_cash_flow || null,
-      net_cash_flow: cf.cash_increase || null
+      operating_cash_flow: cf.operating_cash_flow ?? null,
+      investing_cash_flow: cf.investing_cash_flow ?? null,
+      financing_cash_flow: cf.financing_cash_flow ?? null,
+      net_cash_flow: cf.cash_increase ?? null
     } : null
   };
 }
@@ -374,9 +404,12 @@ function mapOfficers(officers) {
 function mapShareholders(ownership) {
   if (!ownership || ownership.length === 0) return [];
 
+  // "계" (총계) 행 제외
+  const filtered = ownership.filter(o => o.name !== '계' && o.name !== '합계');
+
   // Deduplicate by name (combine 보통주 + 우선주)
   const byName = new Map();
-  for (const o of ownership) {
+  for (const o of filtered) {
     const existing = byName.get(o.name);
     if (existing) {
       existing.shares += o.shares || 0;
@@ -397,14 +430,94 @@ function mapShareholders(ownership) {
 }
 
 function classifyShareholderType(ownership) {
-  const rel = (ownership.relation || '').toLowerCase();
-  if (rel.includes('본인') || rel.includes('최대주주')) return 'founder';
-  if (rel.includes('특수관계인')) return 'individual';
+  const rel = (ownership.relation || '');
+  const relLower = rel.toLowerCase();
+  // 최대주주 본인
+  if (relLower.includes('본인') || relLower.includes('최대주주')) return 'majority';
+  // 특수관계자: 특수관계인, 친인척, 임원, 계열사 등
+  if (relLower.includes('특수관계') || relLower.includes('친인척') || relLower.includes('임원') ||
+      relLower.includes('계열회사') || relLower.includes('관계회사')) return 'related';
+  // 자기주식
+  if (ownership.name?.includes('자사주') || ownership.name?.includes('자기주식')) return 'treasury';
+  // 기관투자자
   if (ownership.name?.includes('보험') || ownership.name?.includes('투자') ||
       ownership.name?.includes('은행') || ownership.name?.includes('증권') ||
-      ownership.name?.includes('자산운용')) return 'institutional';
-  if (ownership.name?.includes('자사주') || ownership.name?.includes('자기주식')) return 'treasury';
+      ownership.name?.includes('자산운용') || ownership.name?.includes('펀드')) return 'institutional';
+  // 외국인 (영문 이름 3자 이상)
+  if (ownership.name?.match(/[a-zA-Z]{3,}/)) return 'foreign';
   return 'individual';
+}
+
+/**
+ * 다년도 재무 이력 → FinancialChart 용 배열
+ * @param {Array<{ year, bs, is, cf }>} historyRaw - from dartApiService.getAnnualHistory
+ * @returns {Array<{ year, revenue, operating_profit, operating_margin, ... }>}
+ */
+function mapFinancialHistory(historyRaw) {
+  if (!historyRaw || historyRaw.length === 0) return [];
+
+  return historyRaw
+    .map(h => ({
+      year: h.year,
+      revenue: h.is?.revenue ?? null,
+      operating_profit: h.is?.operating_profit ?? null,
+      operating_margin: calcMargin(h.is?.operating_profit, h.is?.revenue),
+      net_income: h.is?.net_income ?? null,
+      total_assets: h.bs?.total_assets ?? null,
+      total_equity: h.bs?.total_equity ?? null,
+      debt_ratio: calcDebtRatio(h.bs?.total_liabilities, h.bs?.total_equity),
+      roe: calcROE(h.is?.net_income, h.bs?.total_equity),
+    }))
+    .sort((a, b) => a.year - b.year);
+}
+
+/**
+ * 다년도 이력에서 실제 3년 평균 계산
+ * @param {Array<{ year, bs, is, cf }>} historyRaw
+ * @returns {{ revenue, operating_margin, roe, debt_ratio } | null}
+ */
+function computeThreeYearAverage(historyRaw) {
+  if (!historyRaw || historyRaw.length === 0) return null;
+
+  const revenues = historyRaw.map(h => h.is?.revenue).filter(v => v != null);
+  const margins = historyRaw.map(h => calcMargin(h.is?.operating_profit, h.is?.revenue)).filter(v => v != null);
+  const roes = historyRaw.map(h => calcROE(h.is?.net_income, h.bs?.total_equity)).filter(v => v != null);
+  const debts = historyRaw.map(h => calcDebtRatio(h.bs?.total_liabilities, h.bs?.total_equity)).filter(v => v != null);
+
+  const avg = arr => arr.length > 0 ? arr.reduce((a, b) => a + b, 0) / arr.length : null;
+
+  const result = {
+    revenue: avg(revenues),
+    operating_margin: avg(margins),
+    roe: avg(roes),
+    debt_ratio: avg(debts),
+    _years: historyRaw.map(h => h.year).sort(),
+    _count: historyRaw.length,
+  };
+
+  // 평균값이 하나도 없으면 null 반환
+  if (result.revenue == null && result.operating_margin == null && result.roe == null && result.debt_ratio == null) {
+    return null;
+  }
+  return result;
+}
+
+/**
+ * 최신 사업보고서(연간) 기준 지표 — 3년 평균 대비 비교 시 "현재" 값으로 사용
+ * Q3/반기 보고서가 최신이면, financial_history_raw에서 가장 최근 연간 데이터를 가져옴
+ */
+function getLatestAnnualMetrics(historyRaw) {
+  if (!historyRaw || historyRaw.length === 0) return null;
+  // 가장 최근 연도의 연간 데이터 (이미 연도순으로 정렬됨)
+  const latest = historyRaw.sort((a, b) => b.year - a.year)[0];
+  if (!latest) return null;
+  return {
+    year: latest.year,
+    revenue: latest.is?.revenue ?? null,
+    operating_margin: calcMargin(latest.is?.operating_profit, latest.is?.revenue),
+    roe: calcROE(latest.is?.net_income, latest.bs?.total_equity),
+    debt_ratio: calcDebtRatio(latest.bs?.total_liabilities, latest.bs?.total_equity),
+  };
 }
 
 function generateRedFlags(entity, dartData) {
@@ -532,9 +645,9 @@ export function mapSminfoToFinancials(sminfoData) {
   if (!sminfoData) return null;
   return {
     balance_sheet: {
-      total_assets: sminfoData.total_assets || null,
-      total_liabilities: sminfoData.total_liabilities || null,
-      total_equity: sminfoData.total_equity || null,
+      total_assets: sminfoData.total_assets ?? null,
+      total_liabilities: sminfoData.total_liabilities ?? null,
+      total_equity: sminfoData.total_equity ?? null,
       current_assets: null,
       non_current_assets: null,
       current_liabilities: null,
@@ -543,9 +656,9 @@ export function mapSminfoToFinancials(sminfoData) {
       retained_earnings: null
     },
     income_statement: {
-      revenue: sminfoData.revenue || null,
-      operating_profit: sminfoData.operating_profit || null,
-      net_profit: sminfoData.net_profit || null,
+      revenue: sminfoData.revenue ?? null,
+      operating_profit: sminfoData.operating_profit ?? null,
+      net_profit: sminfoData.net_profit ?? null,
       cost_of_sales: null,
       gross_profit: null,
       operating_expenses: null,

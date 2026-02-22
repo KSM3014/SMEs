@@ -8,7 +8,7 @@ import sequelize from '../config/database.js';
 import { calculateNameSimilarity } from './entityResolver.js';
 
 const REFRESH_INTERVAL_HOURS = parseInt(process.env.ENTITY_REFRESH_INTERVAL_HOURS || '24', 10);
-const CROSS_CHECK_FIELDS = ['company_name', 'address', 'representative', 'industry_code'];
+const CROSS_CHECK_FIELDS = ['company_name', 'address', 'representative'];
 
 /**
  * Persist orchestrator result to DB.
@@ -305,7 +305,7 @@ function buildCrossCheckRows(entityId, sourceRows) {
   const rows = [];
   // Only compare sources that have meaningful data
   const comparableSources = sourceRows.filter(s =>
-    s.company_name || s.address || s.representative || s.industry_code
+    s.company_name || s.address || s.representative
   );
 
   for (let i = 0; i < comparableSources.length; i++) {
